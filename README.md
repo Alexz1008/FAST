@@ -21,7 +21,7 @@ Open up Main.js. This file acts as little more than a switch that displays somet
 
 Open up Home.js. Surprise! There's nothing there except for a crude message exclaiming how good our homepage is! This component is the component we'll be working on with the code in the next 12 weeks, along with all of the other components that are routed to by Main.
 
-Finalyl, open up Header.js. Here we have a list of 3 texts: "Home", "Profile", "My Listings". When you click one of these texts, your URL is automatically changed to whatever is inside the "Link to" portion. An important distinction to make is that the header DOES NOT control what is being displayed. All it's doing is allowing you to change the URL. Main.js is responsible for actually reacting to the change in URL and displaying something else.
+Finally, open up Header.js. Here we have a list of 3 texts: "Home", "Profile", "My Listings". When you click one of these texts, your URL is automatically changed to whatever is inside the "Link to" portion. An important distinction to make is that the header DOES NOT control what is being displayed. All it's doing is allowing you to change the URL. Main.js is responsible for actually reacting to the change in URL and displaying something else.
 
 Now that all that's done, if you haven't already, go ahead and type npm start in the folder containing the src directory. If done right, your internet browser should open up with the url localhost:3000/. Try clicking on any of the 3 links in the list and seeing what happens, paying attention to both the URL and what's being displayed.
 
