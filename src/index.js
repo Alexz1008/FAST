@@ -5,6 +5,9 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
+//Github Check-in List! Put your name down below!
+// Alex Z
+
 ReactDOM.render((
   <BrowserRouter>
     <App />
