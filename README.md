@@ -10,6 +10,15 @@
 7. npm install react-router-dom
 8. You should now be able to initialize the webpage with: npm start
 
+## How to contribute
+0. Before making any changes, be sure to type git pull. This assures that you receive any changes made by the team before you start changing things on your own.
+1. Type git status
+2. Note any files that have changed will be in red. You'll need to add those files and commit them before pushing to our repo.
+3. Type git add filename to add the file to your staged changes.
+4. Then, type git commit -m "Yourname-#: what you did".
+Alternatively, type git commit -a -m "Your-name#: what you did" to automatically add and commit all changed files (this skips part 3).
+5. To push, you should be able to simply type git push origin master.
+
 ## How it works currently
 To be honest, I'm learning at the same time all of you are, so note that most of my explanations for how things work could be flawed or entirely incorrect, but it should be enough to help you have a basic understanding of what's going on. On top of this, note that I have not taken much consideration into the "structuring" that Gary likes so much, so we may need to adjust things as we go.
 
