@@ -1,5 +1,5 @@
 ## Installation
-
+GARY WUZ HERE
 1. Install NodeJS. Use the labs if you are unsure how to do this.
 1. Create a new folder anywhere, call it anything you want
 2. Navigate to said folder and type: git pull https://github.com/Alexz1008/FAST
