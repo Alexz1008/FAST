@@ -7,6 +7,12 @@ import * as serviceWorker from './serviceWorker';
 
 //Github Check-in List! Put your name down below!
 // Alex Z
+// Qingtao
+// Ryan
+// Evan
+// Brayden
+// Johnny
+// Dean
 
 ReactDOM.render((
   <BrowserRouter>
