@@ -5,8 +5,7 @@ import Sidebar from '../Sidebar/sidebar'
 const Profile = () => (
   <div>
     <Header />
-    <Sidebar />
-    Goodass profile
+    Profile here!
   </div>
 )
 

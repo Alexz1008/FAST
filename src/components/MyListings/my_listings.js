@@ -1,12 +1,15 @@
 import React from 'react'
 import Header from '../Header/header'
 import Sidebar from '../Sidebar/sidebar'
+import './my_listings.css'
 
 const MyListings = () => (
   <div>
     <Header />
-    <Sidebar />
-    Goodass mylistings
+    <div className="content">
+      <Sidebar />
+      Your listings here!
+    </div>
   </div>
 )
 

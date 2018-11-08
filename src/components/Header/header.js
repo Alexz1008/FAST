@@ -6,15 +6,15 @@ import './header.css';
 // between routes.
 const Header = () => (
   <div className="navbar">
-    <div className="navbar-button">
-      <div className="navbar-text"><Link to='/home'>Home</Link></div>
-    </div>
-    <div className="navbar-button">
-      <div className="navbar-text"><Link to='/my_listings'>My Listings</Link></div>
-    </div>
-    <div className="navbar-button">
-      <div className="navbar-text"><Link to='/profile'>Profile</Link></div>
-    </div>
+    <Link to='/home'><div className="navbar-button">
+      <div className="navbar-text">Home</div>
+    </div></Link>
+    <Link to='/my_listings'><div className="navbar-button">
+      <div className="navbar-text">My Listings</div>
+    </div></Link>
+    <Link to='/profile'><div className="navbar-button">
+      <div className="navbar-text">Profile</div>
+    </div></Link>
   </div>
 )
 
