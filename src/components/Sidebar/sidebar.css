@@ -1,11 +1,13 @@
 .sidebar {
   color: #111111;
   box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
-  width: 100px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: left;
+  background-color: purple;
+  border-right: 2px solid black;
 }
 
 .sidebar-button {
