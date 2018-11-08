@@ -1,0 +1,29 @@
+.navbar {
+  color: #111111;
+  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar-button {
+  background-color: #3d70b2;
+  height: 80px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in;
+}
+
+.navbar-button:hover {
+  background-color: #5596e6;
+  transition: background-color 0.3s ease-in;
+}
+
+.navbar-text a {
+  text-decoration: none;
+  height: 80px;
+  width: 200px;
+}
