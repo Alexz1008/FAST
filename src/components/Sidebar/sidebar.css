@@ -4,9 +4,7 @@
   width: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: left;
-  background-color: purple;
   border-right: 2px solid black;
 }
 

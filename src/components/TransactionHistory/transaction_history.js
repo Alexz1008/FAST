@@ -4,7 +4,7 @@ import Header from '../Header/header'
 const Profile = () => (
   <div>
     <Header />
-    Profile here!
+    Transaction History here!
   </div>
 )
 

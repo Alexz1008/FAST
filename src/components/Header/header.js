@@ -22,10 +22,10 @@ const Header = () => (
       <div className="navbar-text">My Messages</div>
     </div></Link>
     <div className = "navbar-search">
-	<form action='/home'>
-	<input type="text" name="search"/>
-	<button type="submit"><img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" alt="Search" height = "30" width = "30"/></button>
-	</form>
+      <form action='/home'>
+        <input type="text" name="search"/>
+        <button type="submit"><img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" alt="Search" height = "30" width = "30"/></button>
+      </form>
     </div>
   </div>
 )
