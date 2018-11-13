@@ -13,8 +13,20 @@ const Header = () => (
       <div className="navbar-text">My Listings</div>
     </div></Link>
     <Link to='/profile'><div className="navbar-button">
-      <div className="navbar-text">Profile</div>
+      <div className="navbar-text">My Profile</div>
     </div></Link>
+    <Link to='/transaction_history'><div className="navbar-button">
+      <div className="navbar-text">Transaction History</div>
+    </div></Link>
+    <Link to='/messages'><div className="navbar-button">
+      <div className="navbar-text">My Messages</div>
+    </div></Link>
+    <div className = "navbar-search">
+	<form action='/home'>
+	<input type="text" name="search"/>
+	<button type="submit"><img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" alt="Search" height = "30" width = "30"/></button>
+	</form>
+    </div>
   </div>
 )
 

@@ -4,31 +4,60 @@ a{
 
 .navbar {
   box-shadow:	0 4px 8px 0 rgba(0,0,0,0.30);
-  height: 80px;
+  height: 40px;
   width: 100%;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+  background-color: #00487c;
 }
 
 .navbar-button {
-  height: 80px;
-  width: 200px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #00487C;
   transition: background-color 0.3s ease-in;
 }
+.navbar-search{
+  margin-left:auto;
+  margin-right: 0;
+  float:right;
+  border: none;
+}
+.navbar-search input{
+	height: 38px;
+	width: 300px;
+	border: none;
+	font-size: 14px;
+}
+.navbar-search button{
+	float:right;
+	background: #00487C;
+	cursor: pointer;
+	border: none;
+	height: 40px;
+	width: 40px;
+}
+.navbar-search button:hover{
+	background-color: #00A6FB;
 
+}
 .navbar-button:hover {
 	-webkit-animation: bounce-top 0.9s both;
 	        animation: bounce-top 0.9s both;
-  background-color: #5596e6;
+  background-color: #00A6FB;
   transition: background-color 0.3s ease-in;
 }
 
 .navbar-button:active {
   color: blue;
-  background-color: white;
+  background-color: #00487C;
   transition: background-color 0.1s ease-in;
 }
+
+.navbar-text{
+	color: white;
+	padding: 15px;
+}	
