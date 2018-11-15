@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../Header/header'
 import Sidebar from '../Sidebar/sidebar'
 import './home.css'
+import { Listing } from '../Listing/listing'
 const listingid = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const listingtitles = ["Buy this Banana", "Buy this house", "empty"];
 const images = ['https://i5.walmartimages.ca/images/Large/580/6_r/875806_R.jpg',
@@ -13,11 +14,9 @@ const listingdescriptions = ["this banana is so cheap you'd have to be stupid no
 
 const getListings = listingid.map((id) =>
   <div className="listing">
-    <div className="listing-title"><b>{listingtitles[id]}</b></div>
-    <img className="listing-picture" src={images[id]} alt="did not load" />
-    <center>${listingprice[id]}</center><br />
-    {listingdescriptions[id]}
+    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} />
   </div>
+  
 );
 
 const Home = () => (

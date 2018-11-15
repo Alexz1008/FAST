@@ -1,0 +1,23 @@
+.listing {
+  box-shadow:	0 4px 8px 0 rgba(0,0,0,0.30);
+  width: 300px;
+  height: 450px;
+  margin: 10px;
+}
+
+.listing-title {
+  background-color: #00487C;
+  height: 40px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.listing-picture {
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  height: 200px;
+  object-fit: scale-down;
+}
