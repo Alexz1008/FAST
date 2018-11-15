@@ -1,11 +1,13 @@
 import React from 'react'
 import Header from '../Header/header'
+import MessageSidebar from './MessageSidebar/message_sidebar'
 
-const Profile = () => (
+const Messages = () => (
   <div>
     <Header />
-    Messages here!
+    <MessageSidebar />
+    Actual messages here
   </div>
 )
 
-export default Profile
+export default Messages

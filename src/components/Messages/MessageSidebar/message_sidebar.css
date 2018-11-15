@@ -1,0 +1,13 @@
+.message-sidebar {
+  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.50);
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.conversation-button {
+  background-color: #3d70b2;
+  height: 80px;
+  width: 200px;
+}

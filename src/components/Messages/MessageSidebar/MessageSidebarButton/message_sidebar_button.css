@@ -1,0 +1,21 @@
+.conversation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 290px;
+  height: 100px;
+  background-color: transparent;
+  border: none;
+  margin: 5px;
+  border-radius: 1%;
+}
+
+.conversation-picture {
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.conversation-title {
+  padding-left: 5px;
+}
