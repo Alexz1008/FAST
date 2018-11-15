@@ -21,16 +21,8 @@ Alternatively, type git commit -a -m "Your-name#: what you did" to automatically
 ## How it works currently
 To be honest, I'm learning at the same time all of you are, so note that most of my explanations for how things work could be flawed or entirely incorrect, but it should be enough to help you have a basic understanding of what's going on. On top of this, note that I have not taken much consideration into the "structuring" that Gary likes so much, so we may need to adjust things as we go.
 
-To start, go into the src folder and open up index.js with your favorite text editor. You'll see that we are rendering our App encapsulated by a "BrowserRouter". Essentially this router will be what we use to make our otherwise single-page app have multiple pages. As a note, you should NEVER change index.js. It should never need any changes, all changes should go into the components.
+Index.js is in charge of rendering everything. This means there will be no point where you will actually have to do ReactDOM.render(), as it is already handled. This also means index.js should never actually change. Don't edit this file unless you know what you're doing.
 
-Now go into the components folder and open up App.js. This file will be used as a skeleton for everything we'll put in later. It'll help us keep certain parts of the page separate. Note that we have a header and a main in the app, and these parts are self-explanatory. App.js should also rarely change unless we are adjusting the skeleton of the app.
+Components are separated into folders. Some components may just be full pages, like home.js and profile.js, and others may be commonly used parts that can be reused, like listing.js and header.js.
 
-Open up Main.js. This file acts as little more than a switch that displays something different depending on what route (or URL) we're on. In other words, if we're on the "/" route (nothing), then we display the home component. If we're on the "/profile" route, then we display the profile component. In a real-world scenario, the url for a profile page would look like tritonmarket.com/profile.
-
-Open up Home.js. Surprise! There's nothing there except for a crude message exclaiming how good our homepage is! This component is the component we'll be working on with the code in the next 12 weeks, along with all of the other components that are routed to by Main.
-
-Finally, open up Header.js. Here we have a list of 3 texts: "Home", "Profile", "My Listings". When you click one of these texts, your URL is automatically changed to whatever is inside the "Link to" portion. An important distinction to make is that the header DOES NOT control what is being displayed. All it's doing is allowing you to change the URL. Main.js is responsible for actually reacting to the change in URL and displaying something else.
-
-Now that all that's done, if you haven't already, go ahead and type npm start in the folder containing the src directory. If done right, your internet browser should open up with the url localhost:3000/. Try clicking on any of the 3 links in the list and seeing what happens, paying attention to both the URL and what's being displayed.
-
-That's about it! You're ready to start working on the future of innovation that is triton market! You can start by adding your name to the comments in index.js. If you're feeling it, make some kind of improvement to the webpage too to get your feet wet!
+Main.js is responsible for all routing. In other words, Main.js is what handles what component to display when we're at a certain url. This is what you'd need to change if you wanted to add a new page URL in.
