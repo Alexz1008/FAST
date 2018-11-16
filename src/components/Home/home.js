@@ -16,7 +16,6 @@ const getListings = listingid.map((id) =>
   <div className="listing">
     <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} />
   </div>
-  
 );
 
 const Home = () => (

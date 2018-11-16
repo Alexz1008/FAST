@@ -1,9 +1,7 @@
 import React from 'react'
 import './sidebar.css';
 
-// The Header creates links that can be used to navigate
-// between routes.
-const Header = () => (
+const Sidebar = () => (
   <div className="sidebar">
     <div className="sidebar-button">
       <div className="sidebar-text">Sidebar Item 1</div>
@@ -17,4 +15,4 @@ const Header = () => (
   </div>
 )
 
-export default Header
+export default Sidebar
