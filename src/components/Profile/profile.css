@@ -1,3 +1,94 @@
 .content {
   display: flex;
 }
+.content-profile {
+  display: flex;
+}
+h1 {
+ margin-top: 2.5rem;
+ margin-bottom: 3.236rem;
+ margin-left: 2rem;
+ text-align: center;
+ font-size: 1.618rem;
+
+}
+hr {
+ width: 80%;
+ margin-left:0;
+}
+.profile-form label {
+ display: inline-block;
+ width: 30%;
+ margin-bottom: .5rem;
+ font-size: 1rem;
+ touch-action: manipulation;
+
+}
+.profile-form {
+ margin-top: 18%;
+ width: 100%;
+}
+.profile-form input,
+textarea {
+ /*display: block;*/
+ margin-right: 5%;
+ padding: .5rem .75rem;
+ font-size: 1rem;
+ line-height: 1.25;
+ color: #55595c;
+ background-color: #fff;
+ background-image: none;
+ background-clip: padding-box;
+ border-top: 0;
+ border-right: 0;
+ border-bottom: 1px solid $color-grey;
+ border-left: 0;
+ border-radius: $radius;
+ @include transition;
+
+ &:focus {
+  outline: 0;
+  border-bottom-color: $color-primary;
+ }
+}
+.profile-name{
+ color: black;
+ font-size: 2.5rem;
+ text-align: left;
+}
+.profile-form img{
+ width: 50%;
+ height: 10%;
+}
+.profile-form textarea {
+ resize: vertical;
+}
+.profile-button {
+ background-color: #FAF8D4;
+ display: inline-block;
+ padding: .75rem 1rem;
+ margin-top: 1.618rem;
+ margin-left: 5rem;
+ font-weight: 400;
+ text-align: center;
+ text-transform: uppercase;
+ color: black;
+ vertical-align: middle;
+ white-space: nowrap;
+ background-color: $color-primary;
+ border: 1px solid transparent;
+ box-shadow: 0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07);
+ cursor: pointer;
+ user-select: none;
+ @include transition;
+
+ &:focus,
+ &:hover {
+  background-color: lighten($color-primary, 13%);
+  box-shadow: 0 18px 35px rgba(50,50,93,.1),0 8px 15px rgba(0,0,0,.07);
+ }
+
+ &:focus {
+  outline: 0;
+ }
+}
