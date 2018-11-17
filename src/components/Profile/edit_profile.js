@@ -4,14 +4,15 @@ import Header from '../Header/header'
 import Sidebar from '../Sidebar/sidebar'
 import '../App.css'
 import './profile.css'
-import EditProfile from './edit_profile'
-import ViewProfile from './view_profile'
+import Edit from './edit'
 
-const Profile = () => (
+
+
+const EditProfile = () => (
   <div>
     <Header />
-      <div><ViewProfile /></div>
+    <div><Edit /></div>
   </div>
 )
 
-export default Profile
+export default EditProfile

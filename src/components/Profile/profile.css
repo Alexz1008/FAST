@@ -4,30 +4,26 @@
 .content-profile {
   display: flex;
 }
-h1 {
- margin-top: 2.5rem;
- margin-bottom: 3.236rem;
- margin-left: 2rem;
- text-align: center;
- font-size: 1.618rem;
 
+
+.profile-form{
+ margin: 5% auto;
+ width: 100%;
+ text-align: center;
+ line-height: 1.5rem;
 }
-hr {
- width: 80%;
- margin-left:0;
+.profile-form hr {
+ width: 50%;
+ margin:auto;
 }
 .profile-form label {
- display: inline-block;
- width: 30%;
+ /*display: inline-block;*/
+ text-align: left;
  margin-bottom: .5rem;
+ margin-left: 5%;
  font-size: 1rem;
- touch-action: manipulation;
+}
 
-}
-.profile-form {
- margin-top: 18%;
- width: 100%;
-}
 .profile-form input,
 textarea {
  /*display: block;*/
@@ -54,11 +50,15 @@ textarea {
 .profile-name{
  color: black;
  font-size: 2.5rem;
- text-align: left;
 }
-.profile-form img{
- width: 50%;
- height: 10%;
+.profile-img{
+  width: 250px;
+  height: 250px;
+  display: flex;
+  border-radius: 50%;
+  margin: auto;
+  justify-content: center;
+  overflow: hidden;
 }
 .profile-form textarea {
  resize: vertical;
@@ -68,7 +68,7 @@ textarea {
  display: inline-block;
  padding: .75rem 1rem;
  margin-top: 1.618rem;
- margin-left: 5rem;
+ margin-left: auto;
  font-weight: 400;
  text-align: center;
  text-transform: uppercase;
@@ -80,15 +80,16 @@ textarea {
  box-shadow: 0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07);
  cursor: pointer;
  user-select: none;
- @include transition;
+}
+.profile-button:hover{
+	-webkit-animation: bounce-top 0.9s both;
+	        animation: bounce-top 0.9s both;
+  background-color: #F5B700;
+  transition: background-color 0.3s ease-in;
+}
 
- &:focus,
- &:hover {
-  background-color: lighten($color-primary, 13%);
-  box-shadow: 0 18px 35px rgba(50,50,93,.1),0 8px 15px rgba(0,0,0,.07);
- }
-
- &:focus {
-  outline: 0;
- }
+.profile-button:active {
+  color: blue;
+  background-color: #FAF8D4;
+  transition: background-color 0.1s ease-in;
 }
