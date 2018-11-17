@@ -8,7 +8,8 @@ export class Listing extends React.Component {
         <div className="listing-title"><b>{this.props.title}</b></div>
         <img className="listing-picture" src={this.props.image} alt="did not load" />
         <center>${this.props.price}</center><br />
-        {this.props.desc}
+        {this.props.desc}<br />
+		{this.props.location}
       </div>
     );
   }
