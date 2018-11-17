@@ -1,0 +1,40 @@
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  display: inline-block;
+  text-align: left;
+  padding: 5px 10px 10px 10px;
+  margin: 100px;
+  border: 3px solid #00A6FB;
+}
+
+h3{
+  color: #00487C;
+}
+
+input[type=text]{
+  transition: .5s;
+  border: 3px solid #EEF8FE;
+  width: 400px;
+}
+
+
+input[type=text]:focus{
+  transition: .5s;
+  border: 3px solid #00A6FB;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  background-color: #00487C;
+  padding: 15px 32px;
+  border: none;
+  color: white;
+}
