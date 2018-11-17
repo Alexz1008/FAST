@@ -1,14 +1,15 @@
 import ReactDOM from 'react-dom';
 import React, {Component} from 'react';
 import './profile.css'
-
-class EditProfile extends Component {
+import ImageUploader from 'react-images-upload';
+class Edit extends Component {
       constructor(props) {
       super(props);
-      this.state = {name: 'Gary', rating: '3.5',image: 'https://jacobsschool.ucsd.edu/faculty/faculty_bios/photos/300.jpg', tel: '858-534-4725', email: 'gillespie@ucsd.edu', zipcode: '92000', city: 'San Diego'};
+      this.state = {name: 'Gary', rating: '3.5',picture: 'https://jacobsschool.ucsd.edu/faculty/faculty_bios/photos/300.jpg', tel: '858-534-4725', email: 'gillespie@ucsd.edu', zipcode: '92000', city: 'San Diego'};
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     handleChange(event) {
@@ -16,7 +17,7 @@ class EditProfile extends Component {
     }
 
     handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
+      alert('A change has been made: ' + this.state.value);
       event.preventDefault();
     }
 
@@ -24,14 +25,18 @@ class EditProfile extends Component {
     render(){
         return(
             <div>
-                
-                <form className="profile-form">
+                <form className="profile-form"  onSubmit={this.handleSubmit}>
+                <img className="profile-img" src={this.state.picture} alt="did not load" />
 
-                <div className="profile-name">{this.state.name}</div>
-                <hr/>
-                <label>  Overall Rating: {this.state.rating} </label>
-                  <br />
-                  <img className="profile-picture" src={this.state.image} alt="did not load" />
+                <ImageUploader
+                  withIcon={false}
+                  buttonText='CHANGE PICTURE'
+                  // onChange={e => this.setState({picture: e.target.picture})}
+                  imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                  maxFileSize={5242880}
+                />
+                  <label>Name:</label>
+                  <input onChange= {e => this.setState({tel: e.target.value})} value={this.state.name}/>
                   <br />
 
                   <label>Tel:</label>
@@ -53,4 +58,4 @@ class EditProfile extends Component {
     }
 }
 
-export default EditProfile;
+export default Edit;
