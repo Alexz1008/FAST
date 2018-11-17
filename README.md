@@ -7,6 +7,7 @@
 5. npm install expressjs
 6. npm install react-router
 7. npm install react-router-dom
+8. npm install react-images-upload
 8. You should now be able to initialize the webpage with: npm start
 
 ## How to contribute
