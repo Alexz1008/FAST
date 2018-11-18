@@ -1,8 +1,14 @@
 .content {
   display: flex;
+  width: 100%;
 }
 
+.content-sidebar {
+  width: 10%;
+  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
+}
 .content-listings {
   display: flex;
   flex-wrap: wrap;
+  width: 85%;
 }

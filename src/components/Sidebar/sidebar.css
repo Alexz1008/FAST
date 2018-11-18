@@ -1,29 +1,16 @@
 .sidebar {
-  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
-  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: left;
-  border-right: 2px solid black;
 }
 
 .sidebar-button {
-  background-color: #3d70b2;
-  height: 80px;
-  width: 200px;
+  height: 40px;
+  background-color: white;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s ease-in;
-}
-
-.sidebar-button:hover {
-  background-color: #5596e6;
-  transition: background-color 0.3s ease-in;
-}
-
-.sidebar-text a {
-  text-decoration: none;
-  height: 80px;
-  width: 200px;
+  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
+  margin-bottom: 5px;
 }

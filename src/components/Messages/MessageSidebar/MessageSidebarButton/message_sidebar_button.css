@@ -1,13 +1,15 @@
-.conversation {
+.conversation-button {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 290px;
+  justify-content: space-between;
+  width: 250px;
   height: 100px;
-  background-color: transparent;
+  background-color: white;
   border: none;
   margin: 5px;
   border-radius: 1%;
+  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.20);
+  color: black;
 }
 
 .conversation-picture {

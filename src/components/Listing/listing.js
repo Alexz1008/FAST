@@ -1,15 +1,63 @@
 import React from 'react'
 import './listing.css'
+import { Link } from 'react-router-dom'
 
 export class Listing extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleAddClickSaved = this.handleAddClickSaved.bind(this);
+    this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
+    this.handleAddClickConfirm = this.handleAddClickConfirm.bind(this);
+    this.handleRemoveClickConfirm = this.handleRemoveClickConfirm.bind(this);
+    this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id, isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed}
+  }
+
+  handleAddClickSaved() {
+    console.log(this.props);
+    this.setState({saved: true});
+  }
+
+  handleRemoveClickSaved() {
+    this.setState({saved: false});
+  }
+  handleAddClickConfirm() {
+    console.log(this.props);
+    this.setState({confirmed: true});
+  }
+
+  handleRemoveClickConfirm() {
+    this.setState({confirmed: false});
+  }
+
   render() {
+    const isInterested = this.state.isInterested;
     return (
+	  <div>
       <div>
-        <div className="listing-title"><b>{this.props.title}</b></div>
-        <img className="listing-picture" src={this.props.image} alt="did not load" />
-        <center>${this.props.price}</center><br />
-        {this.props.desc}
+        <div className="listing-title"><b>{this.state.title}</b></div>
+        <img className="listing-picture" src={this.state.image} alt="did not load" />
+        <center>${this.state.price}</center><br />
+        {this.state.desc}<br />
+        {this.props.location}<br />
+        <br />
+        <center>
+          <button id="saveButton" onClick={this.state.saved ? this.handleRemoveClickSaved : this.handleAddClickSaved}>
+            {this.state .saved ? 'Remove From Saved Listings' : 'Add to Saved Listings'}
+          </button>
+          <div>
+            {isInterested ? 
+              <button id="confirmTransaction" onClick={this.state.confirmed ? this.handleRemoveClickConfirm : this.handleAddClickConfirm}>
+                {this.state.confirmed ? 'Cancel Transaction' : 'Confirm Transaction'}
+               </button>
+            : <br/ > }
+          </div>
+      
+         
+        </center>
       </div>
+	  </div>
     );
   }
 }
+
+export default Listing

@@ -3,6 +3,7 @@
   width: 300px;
   height: 450px;
   margin: 10px;
+  position: relative;
 }
 
 .listing-title {
@@ -20,4 +21,16 @@
   width: 300px;
   height: 200px;
   object-fit: scale-down;
+}
+.listing-button{
+	position: absolute;
+	bottom:5px;
+	margin-top: auto;
+	display: flex;
+	justify-content: center;
+	width: 300px;
+	height: 60px;
+}
+.transaction-ok{
+	display:block;
 }

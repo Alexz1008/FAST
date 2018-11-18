@@ -1,0 +1,66 @@
+.center {
+  text-align: center;
+}
+
+.content-box {
+  border-radius: 8px;
+  display: inline-block;
+  text-align: left;
+  padding: 5px 10px 10px 10px;
+  margin-top: 40px;
+  border: 3px solid #EEF8FE;
+}
+
+.center h1 a {
+  font-family: 'Spectral', serif;
+  color:#00487C;
+  font-size: 40px;
+}
+
+.center a {
+  color:#00487C;
+}
+
+.center a:active{
+  color: #00A6FB;
+}
+
+
+#login-title, #register-title, #forgot-title{
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.login-input, .register-input, .forgot-input{
+  transition: .5s;
+  border: 3px solid #EEF8FE;
+  border-radius: 6px;
+  width: 400px;
+  height: 18px;
+}
+
+
+.center input[type=password]:focus, .center input[type=email]:focus{
+  transition: .5s;
+  border: 3px solid #00A6FB;
+  outline: none;
+}
+
+#login-button, #register-button, #forgot-button {
+  display: block;
+  margin: 0 auto;
+  background-color: #00487C;
+  border-radius: 4px;
+  padding: 15px 32px;
+  border: none;
+  color: white;
+}
+
+#login-button:active, #register-button:active, #forgot-button:active{
+  transform: translateY(1px);
+}
+
+#login-forgot-pass{
+  float: right;
+  margin-right: 5px;
+}
