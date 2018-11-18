@@ -1,4 +1,4 @@
-a{
+a {
   text-decoration: none;
 }
 
@@ -13,13 +13,16 @@ a{
 }
 .navbar-left{
 	display: flex;
+}
 
+.Test{
+  color: black;
 }
+
 .navbar-right{
-	display:flex;
-	background-color: black;
-	width: 500px;
+	display: flex;
 }
+
 .navbar-button {
   height: 40px;
   display: flex;
@@ -28,25 +31,46 @@ a{
   background-color: #00487C;
   transition: background-color 0.3s ease-in;
 }
+
 .navbar-search{
   display: flex;
   border: none;
- 
 }
+
+.navbar-search-form {
+  display: flex;
+}
+
 .navbar-search-input{
-	height: 38px;
-	width: 100px;
+	width: 300px;
 	border: none;
 	font-size: 14px;
+  height: 38px;
 }
-.navbar-search-button{
-	background: #00487C;
+
+.navbar-search-button {
+	background-color: #00487C;
 	cursor: pointer;
 	border: none;
-	height: 40px;
-	width: 40px;
+  padding: 0;
+  border-radius: 0;
+  height: 40px;
+  width: 40px;
+  display: block;
+  position: relative;
 }
-.navbar-search button:hover{
+
+.navbar-search-image {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 40px;
+  width: 40px;
+	background-size: 100%;
+}
+
+.navbar-search-button:hover{
 	background-color: #00A6FB;
 
 }

@@ -23,7 +23,9 @@ const Home = () => (
   <div>
     <Header />
     <div className="content">
-      <Sidebar />
+      <div className="content-sidebar">
+        <Sidebar />
+      </div>
       <div className="content-listings">
         {getListings}
       </div>
