@@ -54,3 +54,8 @@ button {
 button:active{
   transform: translateY(1px);
 }
+
+#forgot-pass{
+  float: right;
+  margin-right: 5px;
+}

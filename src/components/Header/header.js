@@ -27,6 +27,9 @@ const Header = () => (
         <button type="submit"><img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" alt="Search" height = "30" width = "30"/></button>
       </form>
     </div>
+      <Link to='/login'><div className='navbar-button'>
+          <div className="navbar-text">Logout</div>
+      </div></Link>
   </div>
 )
 
