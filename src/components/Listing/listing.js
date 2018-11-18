@@ -9,7 +9,8 @@ export class Listing extends React.Component {
     this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
     this.handleAddClickConfirm = this.handleAddClickConfirm.bind(this);
     this.handleRemoveClickConfirm = this.handleRemoveClickConfirm.bind(this);
-    this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id, isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed}
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id, isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing}
   }
 
   handleAddClickSaved() {
@@ -29,8 +30,14 @@ export class Listing extends React.Component {
     this.setState({confirmed: false});
   }
 
+  handleEditClick() {
+    console.log("edit listing");
+  }
+
+
   render() {
     const isInterested = this.state.isInterested;
+    const isMyListing= this.state.isMyListing;
     return (
 	  <div>
       <div>
@@ -45,14 +52,21 @@ export class Listing extends React.Component {
             {this.state .saved ? 'Remove From Saved Listings' : 'Add to Saved Listings'}
           </button>
           <div>
-            {isInterested ? 
+              {isMyListing ?
+                <button id="editListing" onClick={this.handleEditClick()}>
+                    Edit Listing
+                </button>
+              : console.log("invalid edit listing") }
+          </div>
+          <div>
+            {isInterested ?
               <button id="confirmTransaction" onClick={this.state.confirmed ? this.handleRemoveClickConfirm : this.handleAddClickConfirm}>
                 {this.state.confirmed ? 'Cancel Transaction' : 'Confirm Transaction'}
                </button>
             : <br/ > }
           </div>
-      
-         
+
+
         </center>
       </div>
 	  </div>
