@@ -1,7 +1,3 @@
-body {
-  background-color: rgb(255, 255, 255);
-}
-
 .center {
   text-align: center;
 }
@@ -15,18 +11,27 @@ body {
   border: 3px solid #EEF8FE;
 }
 
-h1 a {
+.center h1 a {
   font-family: 'Spectral', serif;
   color:#00487C;
   font-size: 40px;
 }
 
-h3{
+.center a {
+  color:#00487C;
+}
+
+.center a:active{
+  color: #00A6FB;
+}
+
+
+#login-title, #register-title, #forgot-title{
   font-size: 25px;
   font-weight: 500;
 }
 
-input[type=password], input[type=email]{
+.login-input, .register-input, .forgot-input{
   transition: .5s;
   border: 3px solid #EEF8FE;
   border-radius: 6px;
@@ -35,13 +40,13 @@ input[type=password], input[type=email]{
 }
 
 
-input[type=password]:focus, input[type=email]:focus{
+.center input[type=password]:focus, .center input[type=email]:focus{
   transition: .5s;
   border: 3px solid #00A6FB;
   outline: none;
 }
 
-button {
+#login-button, #register-button, #forgot-button {
   display: block;
   margin: 0 auto;
   background-color: #00487C;
@@ -51,11 +56,11 @@ button {
   color: white;
 }
 
-button:active{
+#login-button:active, #register-button:active, #forgot-button:active{
   transform: translateY(1px);
 }
 
-#forgot-pass{
+#login-forgot-pass{
   float: right;
   margin-right: 5px;
 }

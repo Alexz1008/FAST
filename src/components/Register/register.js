@@ -1,24 +1,24 @@
 import React from 'react'
-import './register.css';
+//by default, using styles from ./login.css
 
 
 const Home = () => (
   
   <div className="register-form" class="center">
-    <h1><a href="/login" >Triton Market</a></h1>
+    <h1><a href="/login" class="site-title">Triton Market</a></h1>
     <div class="content-box">
-      <h3>Register account</h3>
+      <h3 id="register-title">Register account</h3>
 
       <label for="email"><strong>UCSD Email:</strong></label><br />
-      <input type="email" name="email" id="email" /> <br />
+      <input type="email" class="register-input" name="email" id="email" /> <br />
 
       <label for="password"><strong>Password:</strong></label><br />
-      <input type="password" name="password" id="password" /> <br />
+      <input type="password" class="register-input" name="password" id="password" /> <br />
 
       <label for="repassword"><strong>Re-enter password:</strong></label><br />
-      <input type="password" name="password" id="repassword" /><br />
+      <input type="password" class="register-input" name="password" id="repassword" /><br />
       <br /><br />
-      <button type="submit" id="register">Register</button>
+      <button className="register-form" type="submit" id="register-button">Register</button>
     </div>
   </div>
 )
