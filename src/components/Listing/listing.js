@@ -38,6 +38,7 @@ export class Listing extends React.Component {
   render() {
     const isInterested = this.state.isInterested;
     const isMyListing= this.state.isMyListing;
+    const isConfirmed = this.state.confirmed;
     return (
 	  <div>
       <div>
@@ -65,6 +66,8 @@ export class Listing extends React.Component {
                </button>
             : <br/ > }
           </div>
+          
+
 
 
         </center>
