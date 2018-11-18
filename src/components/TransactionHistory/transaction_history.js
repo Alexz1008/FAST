@@ -17,9 +17,16 @@ const getListings = listingid.map((id) =>
   <div className="listing">
     <Listing title={titles[id]} image={images[id]} price={prices[id]} desc={descs[id]} />
     <div className="transaction_history-button">
-      <button id="modifyReview" onClick={review = true}> 
-        {review ? 'Write Review' : 'Edit Review'} 
-      </button> 
+      <div>
+        <button id="writeReview"> 
+          Write A Review 
+        </button>
+      </div>
+      <div>
+        <button id="editReview">
+          Edit Review
+        </button>
+      </div>
     </div>
   </div>
 );
