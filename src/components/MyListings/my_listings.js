@@ -36,13 +36,15 @@ const getListings = listingid.map((id) =>
 const MyListings = () => (
   <div>
     <Header />
-    <div className="content">
-		<h1>Interested Listings </h1>
-      <div className="content-listings">
-		<br/>
-        {getListings}
-      </div>
-    </div>
+		<div className="transaction-ok">
+			<div className="content">
+				<h1>Interested Listings </h1>
+				<div className="content-listings">
+					<br/>
+					{getListings}
+				</div>
+			</div>
+		</div>
 	    <div className="content">
 		<h1>Saved Listings </h1>
       <div className="content-listings">

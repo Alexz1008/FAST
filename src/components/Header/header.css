@@ -9,8 +9,17 @@ a{
   display: flex;
   align-items: center;
   background-color: #00487c;
+  justify-content: space-between;
 }
+.navbar-left{
+	display: flex;
 
+}
+.navbar-right{
+	display:flex;
+	background-color: black;
+	width: 500px;
+}
 .navbar-button {
   height: 40px;
   display: flex;
@@ -20,19 +29,17 @@ a{
   transition: background-color 0.3s ease-in;
 }
 .navbar-search{
-  margin-left:auto;
-  margin-right: 0;
-  float:right;
+  display: flex;
   border: none;
+ 
 }
-.navbar-search input{
+.navbar-search-input{
 	height: 38px;
-	width: 300px;
+	width: 100px;
 	border: none;
 	font-size: 14px;
 }
-.navbar-search button{
-	float:right;
+.navbar-search-button{
 	background: #00487C;
 	cursor: pointer;
 	border: none;

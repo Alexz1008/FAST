@@ -4,6 +4,7 @@ import './listing.css'
 export class Listing extends React.Component {
   render() {
     return (
+	  <div>
       <div>
         <div className="listing-title"><b>{this.props.title}</b></div>
         <img className="listing-picture" src={this.props.image} alt="did not load" />
@@ -11,6 +12,10 @@ export class Listing extends React.Component {
         {this.props.desc}<br />
 		{this.props.location}
       </div>
+	  <div className = "listing-button">
+		        <button type="submit"><b>Confirm Transaction</b></button>
+      </div>
+	  </div>
     );
   }
 }
