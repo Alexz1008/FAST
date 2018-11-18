@@ -11,10 +11,11 @@ const listingprice = [50, 1200, 20, 30, 40, 50, 40, 854, 234]
 const listingdescriptions = ["this banana is so cheap you'd have to be stupid not to buy it",
 "unbelievably expensive single in the living room for $1200 a month",
 "empty"];
+const saveStates = [false, true, false];
 
 const getListings = listingid.map((id) =>
   <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} />
+    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} id={id} saved={saveStates[id]}/>
   </div>
 );
 

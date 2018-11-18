@@ -3,6 +3,8 @@ import { Switch, Route } from 'react-router-dom'
 import CreateListing from '../CreateListing/create_listing'
 import ForgotPassword from '../ForgotPassword/forgot_password'
 import Home from '../Home/home'
+import Listing from '../Listing/listing'
+import ViewListing from '../Listing/view_listing'
 import Login from '../Login/login'
 import Messages from '../Messages/messages'
 import MyListings from '../MyListings/my_listings'
@@ -18,6 +20,7 @@ const Main = () => (
     <Route path='/forgot_password' component={ForgotPassword}/>
     <Route path='/home' component={Home}/>
     <Route path='/login' component={Login}/>
+    <Route path='/listing/:id' exact component={ViewListing}/>
     <Route path='/messages' component={Messages}/>
     <Route path='/my_listings' component={MyListings}/>
     <Route path='/profile' component={Profile}/>
