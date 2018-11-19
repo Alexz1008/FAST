@@ -18,13 +18,18 @@ const getListings = listingid.map((id) =>
     <Listing title={titles[id]} image={images[id]} price={prices[id]} desc={descs[id]} />
     <div className="transaction_history-button">
       <div>
-        <button id="writeReview"> 
-          Write A Review 
+        <button id="writeReview">
+          Write Review
         </button>
       </div>
       <div>
         <button id="editReview">
           Edit Review
+        </button>
+      </div>
+      <div>
+        <button id="deleteReview">
+          Delete Review
         </button>
       </div>
     </div>
@@ -37,6 +42,6 @@ const Profile = () => (
     <div className="content">
       {getListings}
     </div>
-  </div> 
+  </div>
 );
 export default Profile
