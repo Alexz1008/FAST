@@ -6,6 +6,19 @@
   position: relative;
 }
 
+.listing-container {
+  width: 300px;
+  height: 460px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.listing-lower {
+  display: flex;
+  margin: 5px;
+}
+
 .listing-title {
   background-color: #00487C;
   height: 40px;
@@ -22,15 +35,26 @@
   height: 200px;
   object-fit: scale-down;
 }
-.listing-button{
-	position: absolute;
-	bottom:5px;
-	margin-top: auto;
-	display: flex;
-	justify-content: center;
-	width: 300px;
-	height: 60px;
+.listing-button-unselected {
+  height: 40px;
+  width: 80px;
+  border: none;
+  color: white;
+  background-color: #00487C;
+  margin-left: 5px;
+  border-radius: 5%;
 }
+.listing-button-selected {
+  height: 40px;
+  width: 80px;
+  border: none;
+  color: white;
+  background-color: #00A6FB;
+  margin-left: 5px;
+  border-radius: 5%;
+}
+
+
 .transaction-ok{
 	display:block;
 }
