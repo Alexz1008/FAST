@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../Header/header'
 import ImageUploader from 'react-images-upload';
+import Tag from '../Listing/tag'
 
 const EditListing = () => (
     <div class="center">
@@ -26,6 +27,8 @@ const EditListing = () => (
                 <label for="listing-content"><strong>Describe your listing:</strong></label> <br />
                 <textarea id="listing-content" placeholder="This banana is really cool! Buy it!"/> <br />
 
+		<label for="listing-tag"><strong>Add Tags:</strong></label> <br />
+		<Tag /> <br />
 
                 <br />
 
