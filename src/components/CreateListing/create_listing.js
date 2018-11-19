@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Header from '../Header/header'
 import './create_listing.css'
 import ImageUploader from 'react-images-upload';
+import Tag from '../Listing/tag'
 //by default, also using styles from ./login.css
 
 class Create_Listing extends Component{
@@ -30,6 +31,8 @@ render () {
       <label for="listing-content"><strong>Describe your listing:</strong></label> <br /> 
       <textarea id="listing-content" /> <br />
 
+      <label for="listing-tag"><strong>Add Tags:</strong></label> <br />
+		  <Tag /> <br />
 
       <br />
 
