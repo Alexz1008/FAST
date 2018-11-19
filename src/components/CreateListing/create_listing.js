@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Header from '../Header/header'
 import './create_listing.css'
 import ImageUploader from 'react-images-upload';
 //by default, also using styles from ./login.css
 
-const Create_Listing = () => (
+class Create_Listing extends Component{
+render () {
+  return(
   <div class="center">
   <form className="listing-form" autocomplete="off">
   <Header />
@@ -36,6 +38,7 @@ const Create_Listing = () => (
     </div>
     </form>
   </div>
-)
-
+  );
+  }
+}
 export default Create_Listing;

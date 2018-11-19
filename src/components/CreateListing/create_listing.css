@@ -7,20 +7,18 @@
   transition: .5s;
   border: 3px solid #EEF8FE;
   border-radius: 6px;
-  width: 400px;
-  height: 40px;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+  width: 100%;
+  height: 140px;
+  resize: vertical;
 }
 
-.center textarea:focus{
+#listing-content:focus{
   transition: .5s;
   border: 3px solid #00A6FB;
   outline: none;
 }
-
-.center textarea {
-  resize: vertical;
-  width: 40px;
- }
 
 
 #create-listing-button {

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
 import './login.css'
 
-const Login = () => (
+class Login extends Component{
+render () {
+  return(
   <div class="center">
     <form className="login-form">
     <h1><a href="/login" >Triton Market</a></h1>
@@ -24,7 +26,8 @@ const Login = () => (
     </div>
     </form>
   </div>
-   
-)
+  );
+  }
+}
 
 export default Login;
