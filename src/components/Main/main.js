@@ -12,6 +12,7 @@ import EditProfile from '../Profile/edit_profile'
 import EditListing from '../EditListing/edit_listing'
 import Register from '../Register/register'
 import TransactionHistory from '../TransactionHistory/transaction_history'
+import firebase from 'firebase';
 
 const Main = () => (
   <Switch>
@@ -24,7 +25,7 @@ const Main = () => (
     <Route path='/my_listings' component={MyListings}/>
     <Route path='/profile' component={Profile}/>
     <Route path='/edit_profile' component={EditProfile}/>
-    <Route path='/register' component={Register}/>
+    <Route path='/register' component={Register db={firebase}/>
     <Route path='/transaction_history' component={TransactionHistory}/>
     <Route path='/edit_listing' component={EditListing}/>
   </Switch>
