@@ -1,6 +1,5 @@
 import React from 'react'
 import './listing.css'
-import { Link } from 'react-router-dom'
 
 export class Listing extends React.Component {
   constructor(props) {
@@ -71,7 +70,7 @@ export class Listing extends React.Component {
           </div>
           <div>
               {isMyListing ?
-                  <a href="/login" >Edit Listing</a>
+                  <a href="/edit_listing" >Edit Listing</a>
                   : console.log("invalid edit listing") }
           </div>
           <div>

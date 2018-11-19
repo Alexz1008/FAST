@@ -13,6 +13,7 @@ import * as serviceWorker from './serviceWorker';
 // Brayden
 // Johnny
 // Dean
+// Curtis
 
 ReactDOM.render((
   <BrowserRouter>
