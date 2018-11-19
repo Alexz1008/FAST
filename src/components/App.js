@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Main from './Main/main';
-import firebase from 'firebase';
-import Register from './Register/register.js'
 
 class App extends Component {
 
@@ -24,7 +22,6 @@ class App extends Component {
     return (
       <div>
         <Main />
-        <Register db={firebase}/>
       </div>
     );
   }
