@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React, {Component} from 'react';
+import { Link , Redirect } from 'react-router-dom'
 import './profile.css'
 import ImageUploader from 'react-images-upload';
 class Edit extends Component {
@@ -19,13 +20,14 @@ class Edit extends Component {
     handleSubmit(event) {
       alert('A change has been made: ' + this.state.value);
       event.preventDefault();
+      
     }
 
 
     render(){
         return(
             <div>
-                <form className="profile-form"  onSubmit={this.handleSubmit}>
+                <form className="profile-form"  >
                 <img className="profile-img" src={this.state.picture} alt="did not load" />
 
                 <ImageUploader
@@ -36,7 +38,7 @@ class Edit extends Component {
                   maxFileSize={5242880}
                 />
                   <label>Name:</label>
-                  <input onChange= {e => this.setState({tel: e.target.value})} value={this.state.name}/>
+                  <input onChange= {e => this.setState({name: e.target.value})} value={this.state.name}/>
                   <br />
 
                   <label>Tel:</label>
@@ -51,7 +53,7 @@ class Edit extends Component {
                   <label>City:</label>
                   <input onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
                   <br />
-                  <button className="profile-button" >Save Changes</button>
+                  <button className="profile-button" onClick={this.handleSubmit}><Link to='/profile'>Save Changes</Link></button>
                 </form>
             </div>
         );

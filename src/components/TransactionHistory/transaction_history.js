@@ -12,9 +12,27 @@ const descs = ["this banana is so cheap you'd have to be stupid not to buy it",
 "unbelievably expensive single in the living room for $1200 a month",
 "empty"];
 
+var review = false;
 const getListings = listingid.map((id) =>
   <div className="listing">
     <Listing title={titles[id]} image={images[id]} price={prices[id]} desc={descs[id]} />
+    <div className="transaction_history-button">
+      <div>
+        <button id="writeReview">
+          Write Review
+        </button>
+      </div>
+      <div>
+        <button id="editReview">
+          Edit Review
+        </button>
+      </div>
+      <div>
+        <button id="deleteReview">
+          Delete Review
+        </button>
+      </div>
+    </div>
   </div>
 );
 
@@ -25,6 +43,5 @@ const Profile = () => (
       {getListings}
     </div>
   </div>
-)
-
+);
 export default Profile

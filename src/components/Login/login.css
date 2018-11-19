@@ -1,3 +1,12 @@
+/* 
+#00487C (Darker Blue)
+#00A6FB (Lighter Blue)
+#FAF8D4 (Lighter Yellow)
+#F5B700 (Darker Yellow)
+#EEF8FE (Off-white)
+*/
+
+
 .center {
   text-align: center;
 }
@@ -11,7 +20,7 @@
   border: 3px solid #EEF8FE;
 }
 
-.center h1 a {
+.center h1 a, .center h1 a:active {
   font-family: 'Spectral', serif;
   color:#00487C;
   font-size: 40px;
@@ -26,12 +35,14 @@
 }
 
 
-#login-title, #register-title, #forgot-title{
+.basic-title{
   font-size: 25px;
   font-weight: 500;
 }
 
-.login-input, .register-input, .forgot-input{
+.basic-input{
+  display: block;
+  margin: 0 auto;
   transition: .5s;
   border: 3px solid #EEF8FE;
   border-radius: 6px;
@@ -40,13 +51,13 @@
 }
 
 
-.center input[type=password]:focus, .center input[type=email]:focus{
+.center input[type=password]:focus, .center input[type=email]:focus, .center input[type=text]:focus{
   transition: .5s;
   border: 3px solid #00A6FB;
   outline: none;
 }
 
-#login-button, #register-button, #forgot-button {
+.basic-button{
   display: block;
   margin: 0 auto;
   background-color: #00487C;

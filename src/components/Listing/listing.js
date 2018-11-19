@@ -1,6 +1,5 @@
 import React from 'react'
 import './listing.css'
-import { Link } from 'react-router-dom'
 
 export class Listing extends React.Component {
   constructor(props) {
@@ -9,7 +8,7 @@ export class Listing extends React.Component {
     this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
     this.handleAddClickConfirm = this.handleAddClickConfirm.bind(this);
     this.handleRemoveClickConfirm = this.handleRemoveClickConfirm.bind(this);
-    this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id, isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed}
+    this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id, isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing}
   }
 
   handleAddClickSaved() {
@@ -29,8 +28,17 @@ export class Listing extends React.Component {
     this.setState({confirmed: false});
   }
 
+  handleDeleteTagClick() {
+    console.log("delete tag(s)");
+  }
+
+  handleDeleteListingClick() {
+    console.log("delete listing");
+  }
   render() {
     const isInterested = this.state.isInterested;
+    const isMyListing= this.state.isMyListing;
+    const isConfirmed = this.state.confirmed;
     return (
 	  <div>
       <div>
@@ -45,14 +53,33 @@ export class Listing extends React.Component {
             {this.state .saved ? 'Remove From Saved Listings' : 'Add to Saved Listings'}
           </button>
           <div>
-            {isInterested ? 
+            {isMyListing ?
+              <button id="deleteTag" onClick={this.handleDeleteTagClick()}>
+                Delete Tag(s)
+              </button>
+
+            : console.log("invalid delete tag")}
+          </div>
+          <div>
+              {isMyListing ?
+                <button id="deleteListing" onclick={this.handleDeleteListingClick()}>
+                  Delete Listing
+                </button>
+
+              : console.log("invalid delete listing")}
+          </div>
+          <div>
+              {isMyListing ?
+                  <a href="/edit_listing" >Edit Listing</a>
+                  : console.log("invalid edit listing") }
+          </div>
+          <div>
+            {isInterested ?
               <button id="confirmTransaction" onClick={this.state.confirmed ? this.handleRemoveClickConfirm : this.handleAddClickConfirm}>
                 {this.state.confirmed ? 'Cancel Transaction' : 'Confirm Transaction'}
                </button>
             : <br/ > }
           </div>
-      
-         
         </center>
       </div>
 	  </div>

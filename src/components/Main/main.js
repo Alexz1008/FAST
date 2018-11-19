@@ -9,6 +9,7 @@ import Messages from '../Messages/messages'
 import MyListings from '../MyListings/my_listings'
 import Profile from '../Profile/profile'
 import EditProfile from '../Profile/edit_profile'
+import EditListing from '../EditListing/edit_listing'
 import Register from '../Register/register'
 import TransactionHistory from '../TransactionHistory/transaction_history'
 
@@ -25,6 +26,7 @@ const Main = () => (
     <Route path='/edit_profile' component={EditProfile}/>
     <Route path='/register' component={Register}/>
     <Route path='/transaction_history' component={TransactionHistory}/>
+    <Route path='/edit_listing' component={EditListing}/>
   </Switch>
 )
 
