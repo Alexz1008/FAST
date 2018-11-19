@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../Header/header'
-import Sidebar from '../Sidebar/sidebar'
+import MyListingsSidebar from '../MyListingsSidebar/my_listings_sidebar'
 import './my_listings.css'
 import { Listing } from '../Listing/listing'
 const listingid = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -37,37 +37,37 @@ const getInterestedListings = listingid.map((id) =>
 );
 const getSavedListings = listingid.map((id) =>
   <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} location={location[id]} listingSavedBool={listingSavedBool[id]} />
+    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} location={location[id]} saved={true} />
   </div>
 );
 const getMyListings = listingid.map((id) =>
   <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} location={location[id]} isMyListing={listingMyBool[id]}/>
+    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} location={location[id]} isMyListing={true}/>
           </div>
 );
+
 const MyListings = () => (
   <div>
     <Header />
-		<div className="transaction-ok">
-			<div className="content">
-				<h1>Interested Listings </h1>
-				<div className="content-listings">
-					<br/>
-					{getInterestedListings}
-				</div>
-			</div>
-		</div>
-	    <div className="content">
-		<h1>Saved Listings </h1>
-      <div className="content-listings">
-		<br/>
-        {getSavedListings}
+    <div className="content">
+      <div className="content-sidebar">
+        <div className="sidebar">
+          <button onclick= "changeDisplay(2)" className="sidebar-button">
+            <div className="sidebar-text">Interested Listings</div>
+            
+          </button> 
+          <button onclick="changeDisplay(getSavedListings)" className="sidebar-button">
+            <div className="sidebar-text">Saved Listings</div>
+          </button>
+          <button onclick="changeDisplay(getMyListings)" className="sidebar-button">
+            <div className="sidebar-text">My Posted Listings</div>
+          </button>
+        </div>
       </div>
-    </div>
-	    <div className="content">
-		<h1>My Posted Listings </h1>
       <div className="content-listings">
-		<br/>
+        
+        {getInterestedListings}
+        {getSavedListings}
         {getMyListings}
       </div>
     </div>
