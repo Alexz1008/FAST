@@ -20,7 +20,6 @@ const Login = () => (
       <button type="submit" class="basic-button" id="login-button" >Log in</button> <br />
 
       <a href="/register">Register account</a> <br />
-      <a href="/home">To skip this, click here</a>
 
     </div>
     </form>

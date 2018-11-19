@@ -14,21 +14,38 @@ import Register from '../Register/register'
 import TransactionHistory from '../TransactionHistory/transaction_history'
 import firebase from 'firebase';
 
-const Main = () => (
-  <Switch>
-    <Route exact path='/' component={Login}/>
-    <Route path='/create_listing' component={CreateListing}/>
-    <Route path='/forgot_password' component={ForgotPassword}/>
-    <Route path='/home' component={Home}/>
-    <Route path='/login' component={Login}/>
-    <Route path='/messages' component={Messages}/>
-    <Route path='/my_listings' component={MyListings}/>
-    <Route path='/profile' component={Profile}/>
-    <Route path='/edit_profile' component={EditProfile}/>
-    <Route path='/register' component={Register db={firebase}/>
-    <Route path='/transaction_history' component={TransactionHistory}/>
-    <Route path='/edit_listing' component={EditListing}/>
-  </Switch>
-)
+export class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAMVKcugugokMLjDfp4N8KVqsEpvnzcqwU",
+      authDomain: "fast-8cfa5.firebaseapp.com",
+      databaseURL: "https://fast-8cfa5.firebaseio.com",
+      projectId: "fast-8cfa5",
+      storageBucket: "fast-8cfa5.appspot.com",
+      messagingSenderId: "413458791050"
+    };
+    firebase.initializeApp(config);
+  }
+  render() {
+    return (
+      <Switch>
+        <Route exact path='/' component={Login}/>
+        <Route path='/create_listing' component={CreateListing}/>
+        <Route path='/forgot_password' component={ForgotPassword}/>
+        <Route path='/home' component={Home}/>
+        <Route path='/login' component={Login}/>
+        <Route path='/messages' component={Messages}/>
+        <Route path='/my_listings' component={MyListings}/>
+        <Route path='/profile' component={Profile}/>
+        <Route path='/edit_profile' component={EditProfile}/>
+        <Route path='/register' component=<Register db={firebase} />/>
+        <Route path='/transaction_history' component={TransactionHistory}/>
+        <Route path='/edit_listing' component={EditListing}/>
+      </Switch>
+    )
+  }
+}
 
 export default Main
