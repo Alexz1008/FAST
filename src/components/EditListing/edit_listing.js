@@ -32,7 +32,7 @@ const EditListing = () => (
 
                 <br />
 
-                <button type="submit" class="basic-button" id="create-listing-button">Create listing</button> <br />
+                <button type="submit" class="basic-button" id="create-listing-button">Save Changes</button> <br />
 
             </div>
         </form>

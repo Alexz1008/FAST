@@ -27,6 +27,14 @@
   display: flex;
   margin: 5px;
 }
+.listing-regular {
+  display: flex;
+  margin: 5px;
+}
+.listing-log {
+  display: flex;
+  margin: 5px;
+}
 
 .listing-title {
   background-color: #00487C;

@@ -12,6 +12,21 @@
   color: black;
 }
 
+.conversation-button-active {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 250px;
+  height: 100px;
+  background-color: white;
+  border: none;
+  margin: 5px;
+  border-radius: 1%;
+  box-shadow:	0px 0px 4px 4px #00A6FB;
+  color: black;
+}
+
+
 .conversation-picture {
   border-radius: 50%;
   height: 60px;
