@@ -1,5 +1,4 @@
 .listing {
-  box-shadow:	0 4px 8px 0 rgba(0,0,0,0.30);
   width: 300px;
   height: 460px;
   margin: 10px;
@@ -7,6 +6,16 @@
 }
 
 .listing-container {
+  box-shadow:	0 4px 8px 0 rgba(0,0,0,0.30);
+  width: 300px;
+  height: 460px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.listing-container-self {
+  box-shadow:	0 4px 8px 0 #FAF8D4;
+  border: solid 2px #FAF8D4;
   width: 300px;
   height: 460px;
   display: flex;
@@ -28,6 +37,10 @@
   align-items: center;
 }
 
+.listing-desc {
+  margin: 5px;
+}
+
 .listing-picture {
   display: flex;
   justify-content: center;
@@ -37,7 +50,7 @@
 }
 .listing-button-unselected {
   height: 40px;
-  width: 80px;
+  width: 90px;
   border: none;
   color: white;
   background-color: #00487C;
@@ -46,7 +59,7 @@
 }
 .listing-button-selected {
   height: 40px;
-  width: 80px;
+  width: 90px;
   border: none;
   color: white;
   background-color: #00A6FB;
