@@ -14,6 +14,11 @@ import Register from '../Register/register'
 import TransactionHistory from '../TransactionHistory/transaction_history'
 import firebase from 'firebase';
 
+const RegisterFB = () => (
+  <Register db={firebase} />
+)
+
+
 export class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +45,7 @@ export class Main extends React.Component {
         <Route path='/my_listings' component={MyListings}/>
         <Route path='/profile' component={Profile}/>
         <Route path='/edit_profile' component={EditProfile}/>
-        <Route path='/register' component=<Register db={firebase} />/>
+        <Route path='/register' component={RegisterFB}/>
         <Route path='/transaction_history' component={TransactionHistory}/>
         <Route path='/edit_listing' component={EditListing}/>
       </Switch>
