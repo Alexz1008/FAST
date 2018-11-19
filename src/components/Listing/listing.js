@@ -38,6 +38,9 @@ export class Listing extends React.Component {
     console.log("delete tag(s)");
   }
 
+  handleDeleteListingClick() {
+    console.log("delete listing");
+  }
   render() {
     const isInterested = this.state.isInterested;
     const isMyListing= this.state.isMyListing;
@@ -67,7 +70,16 @@ export class Listing extends React.Component {
               <button id="deleteTag" onClick={this.handleDeleteTagClick()}>
                 Delete Tag(s)
               </button>
+
             : console.log("invalid delete tag")}
+          </div>
+          <div>
+              {isMyListing ?
+                <button id="deleteListing" onclick={this.handleDeleteListingClick()}>
+                  Delete Listing
+                </button>
+
+              : console.log("invalid delete listing")}
           </div>
           <div>
             {isInterested ?
