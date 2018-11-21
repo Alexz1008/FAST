@@ -34,6 +34,7 @@ const getSavedListings = listingid.map((id) =>
 const getMyListings = listingid.map((id) =>
   <div className="listing">
     <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isMyListing={true}/>
+    {console.log(this)}
           </div>
 );
 
@@ -56,7 +57,6 @@ const MyListings = () => (
         </div>
       </div>
       <div className="content-listings">
-        
         {getMyListings}
       </div>
     </div>

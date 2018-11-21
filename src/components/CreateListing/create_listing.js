@@ -6,19 +6,21 @@ import Tag from '../Listing/tag'
 //by default, also using styles from ./login.css
 
 class Create_Listing extends Component{
+
+
 render () {
   return(
-  <div class="center">
-  <form className="listing-form" autocomplete="off">
+  <div className="center">
+  <form className="listing-form" autoComplete="off">
   <Header />
-    <div class="content-box">
-      <h3 id="create-listing-title" class="basic-title">Create listing</h3>
+    <div className="content-box">
+      <h3 id="create-listing-title" className="basic-title">Create listing</h3>
 
-      <label for="listing-title"><strong>Title:</strong></label> <br /> 
-      <input type="text" class="basic-input" name="listing-title" id="listing-title" required/> <br />
+      <label htmlFor="listing-title"><strong>Title:</strong></label> <br /> 
+      <input type="text" className="basic-input" name="listing-title" id="listing-title" required/> <br />
 
-      <label for="listing-price"><strong>Price:</strong></label> <br />
-      <input type="text" class="basic-input" name="listing-price" id="listing-price" />
+      <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
+      <input type="text" className="basic-input" name="listing-price" id="listing-price" />
 
       <ImageUploader
         withIcon={false}
@@ -28,15 +30,15 @@ render () {
         maxFileSize={5242880}
       />
 
-      <label for="listing-content"><strong>Describe your listing:</strong></label> <br /> 
+      <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br /> 
       <textarea id="listing-content" /> <br />
 
-      <label for="listing-tag"><strong>Add Tags:</strong></label> <br />
+      <label htmlFor="listing-tag"><strong>Add Tags:</strong></label> <br />
 		  <Tag /> <br />
 
       <br />
 
-      <button type="submit" class="basic-button" id="create-listing-button">Create listing</button> <br />
+      <button type="submit" className="basic-button" id="create-listing-button">Create listing</button> <br />
 
     </div>
     </form>
