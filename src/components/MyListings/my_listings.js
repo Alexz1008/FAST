@@ -3,9 +3,6 @@ import Header from '../Header/header'
 import './my_listings.css'
 import { Listing } from '../Listing/listing'
 const listingid = [5];
-const listingInterestedBool = [true, false, true, true, true, false, true, false, false, true];
-const listingSavedBool = [true, false, true, false, false, false, true, false, false];
-const listingMyBool = [true, true, true, true, true, true, true, true, true, true, true];
 const listingtitles = ["Singular Banana", "Single in La Jolla Palms", "iClicker", "AP CS Textbook", "Physics Textbook", "Couch"];
 const images = ['https://i5.walmartimages.ca/images/Large/580/6_r/875806_R.jpg',
                 'https://cdn.discordapp.com/attachments/431923743028412427/513601584748560384/image0.jpg',
@@ -23,24 +20,29 @@ const listingdescriptions = ["Cheap singular banana, I wanted to eat it but now 
 
 const getInterestedListings = listingid.map((id) =>
   <div className="listing">
-      <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isInterested={true}/>
-  </div>
-);
-const getSavedListings = listingid.map((id) =>
-  <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} saved={true} />
-  </div>
-);
-const getMyListings = listingid.map((id) =>
-  <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isMyListing={true}/>
-    {console.log(this)}
+    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isInterested={true}/>
           </div>
 );
-
 export class MyListings extends React.Component {
+
   constructor(props) {
     super(props);
+    
+    this.state = {page: 'Interested'}
+    this.handleInterestedClick = this.handleInterestedClick.bind(this);
+    this.handleSavedClick = this.handleSavedClick.bind(this);
+    this.handlePostedClick = this.handlePostedClick.bind(this);
+  }
+  
+
+  handleInterestedClick() {
+    this.setState({page: 'Interested'});
+  }
+  handleSavedClick() {
+    this.setState({page: 'Saved'});
+  }
+  handlePostedClick() {
+    this.setState({page: 'Posted'});
   }
   
   render () {
@@ -50,20 +52,19 @@ export class MyListings extends React.Component {
         <div className="content">
           <div className="content-sidebar">
             <div className="sidebar">
-              <button onclick= "changeDisplay(2)" className="sidebar-button">
+              <button onClick={this.handleInterestedClick} className={this.state.page === 'Interested' ? 'sidebar-button-active' : 'sidebar-button'}>
                 <div className="sidebar-text">Interested Listings</div>
-                
               </button> 
-              <button onclick="changeDisplay(getSavedListings)" className="sidebar-button">
+              <button onClick={this.handleSavedClick} className={this.state.page === 'Saved' ? 'sidebar-button-active' : 'sidebar-button'}>
                 <div className="sidebar-text">Saved Listings</div>
               </button>
-              <button onclick="changeDisplay(getMyListings)" className="sidebar-button">
+              <button onClick={this.handlePostedClick} className={this.state.page === 'Posted' ? 'sidebar-button-active' : 'sidebar-button'}>
                 <div className="sidebar-text">My Posted Listings</div>
               </button>
             </div>
           </div>
           <div className="content-listings">
-            {getMyListings}
+            {getInterestedListings}
           </div>
         </div>
       </div>

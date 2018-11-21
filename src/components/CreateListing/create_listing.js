@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import Header from '../Header/header'
 import './create_listing.css'
 import ImageUploader from 'react-images-upload';

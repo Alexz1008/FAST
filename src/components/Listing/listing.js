@@ -105,14 +105,14 @@ export class Listing extends React.Component {
               </div>
               <div>
                   {isMyListing ?
-                    <button className='listing-button-unselected' id="deleteListing" onclick={this.handleDeleteListingClick()}>
+                    <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
                       Delete
                     </button>
                   : console.log("invalid delete listing")}
               </div>
               <div>
                 {isMyListing ?
-                    <button className='listing-button-unselected' id="editListing" onclick={this.handleEditListingClick()}>
+                    <button className='listing-button-unselected' id="editListing" onClick={this.handleEditListingClick()}>
                       Edit
                     </button>
                     : console.log("invalid edit listing")}

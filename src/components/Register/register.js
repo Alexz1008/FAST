@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 //by default, using styles from ./login.css
 
 export class Register extends React.Component {

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import Header from '../Header/header'
 import './review.css'
 //by default, using styles from ./login.css
