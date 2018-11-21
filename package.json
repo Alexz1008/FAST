@@ -5,9 +5,10 @@
   "dependencies": {
     "express": "^4.16.4",
     "expressjs": "^1.0.1",
-    "firebase": "^5.5.8",
+    "firebase": "^5.5.9",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-image-upload": "0.0.1",
     "react-images-upload": "^1.2.3",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",

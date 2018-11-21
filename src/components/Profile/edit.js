@@ -1,6 +1,5 @@
-import ReactDOM from 'react-dom';
 import React, {Component} from 'react';
-import { Link , Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './profile.css'
 import ImageUploader from 'react-images-upload';
 class Edit extends Component {

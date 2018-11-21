@@ -51,7 +51,6 @@ export class Listing extends React.Component {
   render() {
     const isInterested = this.state.isInterested;
     const isMyListing= this.state.isMyListing;
-    const isConfirmed = this.state.confirmed;
     const isLog = this.state.isLog;
     const reviewed = this.state.reviewed;
     return (

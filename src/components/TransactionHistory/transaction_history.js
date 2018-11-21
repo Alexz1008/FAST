@@ -20,7 +20,6 @@ const descs = ["Cheap singular banana, I wanted to eat it but now I don't so it'
 "Comfy couch that I don't need anymore. Barely any wear and tear, looks just like new."];
 const reviews = [true, false];
 
-var review = false;
 const getLogs = listingid.map((id) =>
   <div className="listing">
     <Listing title={titles[id]} image={images[id]} price={prices[id]} desc={descs[id]} isLog={true} reviewed={reviews[id]}/>
