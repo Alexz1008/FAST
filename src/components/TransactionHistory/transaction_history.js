@@ -26,12 +26,15 @@ const getLogs = listingid.map((id) =>
   </div>
 );
 
-const Profile = () => (
-  <div>
-    <Header />
-    <div className="content">
-      {getLogs}
-    </div>
-  </div>
-);
-export default Profile
+export class TransactionHistory extends React.Component {
+  render () {
+    return (
+      <div>
+        <Header />
+        <div className="content">
+          {getLogs}
+        </div>
+      </div>
+    )
+  }
+}

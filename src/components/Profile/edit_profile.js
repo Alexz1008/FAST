@@ -4,11 +4,13 @@ import '../App.css'
 import './profile.css'
 import Edit from './edit'
 
-const EditProfile = () => (
-  <div>
-    <Header />
-    <div><Edit /></div>
-  </div>
-)
-
-export default EditProfile
+export class EditProfile extends React.Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        <div><Edit /></div>
+      </div>
+    );
+  }
+}

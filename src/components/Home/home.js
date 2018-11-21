@@ -27,18 +27,20 @@ const getListings = listingid.map((id) =>
   </div>
 );
 
-const Home = () => (
-  <div>
-    <Header />
-    <div className="content">
-      <div className="content-sidebar">
-        <Sidebar />
+export class Home extends React.Component {
+  render() {
+    return (
+      <div>
+        <Header />
+        <div className="content">
+          <div className="content-sidebar">
+            <Sidebar />
+          </div>
+          <div className="content-listings">
+            {getListings}
+          </div>
+        </div>
       </div>
-      <div className="content-listings">
-        {getListings}
-      </div>
-    </div>
-  </div>
-)
-
-export default Home
+    );
+  }
+}

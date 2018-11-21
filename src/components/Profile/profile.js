@@ -4,11 +4,13 @@ import '../App.css'
 import './profile.css'
 import ViewProfile from './view_profile'
 
-const Profile = () => (
-  <div>
-    <Header />
-      <div><ViewProfile /></div>
-  </div>
-)
-
-export default Profile
+export class Profile extends React.Component {
+  render () {
+    return (
+      <div>
+        <Header />
+          <div><ViewProfile /></div>
+      </div>
+    );
+  }
+}

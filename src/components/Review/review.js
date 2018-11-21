@@ -3,9 +3,7 @@ import Header from '../Header/header'
 import './review.css'
 //by default, using styles from ./login.css
 
-class Review extends Component {
-
-
+export class Review extends React.Component {
   render() {
     return(
       <div class="center">
@@ -34,5 +32,3 @@ class Review extends Component {
     );
   }
 }
-
-export default Review;

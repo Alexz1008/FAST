@@ -19,22 +19,24 @@ const getMessages = messageid.map((id) =>
   </div>
 );
 
-const Messages = () => (
-  <div className="messages">
-    <Header />
-    <div className="messages-content">
-    <MessageSidebar />
-      <div className="messages-messenger">
-        <div className="messages-messages">
-          {getMessages}
-        </div>
-        <div className="messages-messenger-container">
-          <input className="messages-messenger-input"></input>
-          <button className="messages-messenger-sender">Send</button>
+export class Messages extends React.Component {
+  render() {
+    return (
+      <div className="messages">
+        <Header />
+        <div className="messages-content">
+        <MessageSidebar />
+          <div className="messages-messenger">
+            <div className="messages-messages">
+              {getMessages}
+            </div>
+            <div className="messages-messenger-container">
+              <input className="messages-messenger-input"></input>
+              <button className="messages-messenger-sender">Send</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-)
-
-export default Messages
+    );
+  }
+}

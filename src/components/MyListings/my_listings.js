@@ -38,29 +38,37 @@ const getMyListings = listingid.map((id) =>
           </div>
 );
 
-const MyListings = () => (
-  <div>
-    <Header />
-    <div className="content">
-      <div className="content-sidebar">
-        <div className="sidebar">
-          <button onclick= "changeDisplay(2)" className="sidebar-button">
-            <div className="sidebar-text">Interested Listings</div>
-            
-          </button> 
-          <button onclick="changeDisplay(getSavedListings)" className="sidebar-button">
-            <div className="sidebar-text">Saved Listings</div>
-          </button>
-          <button onclick="changeDisplay(getMyListings)" className="sidebar-button">
-            <div className="sidebar-text">My Posted Listings</div>
-          </button>
+export class MyListings extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  render () {
+    return (
+      <div>
+        <Header />
+        <div className="content">
+          <div className="content-sidebar">
+            <div className="sidebar">
+              <button onclick= "changeDisplay(2)" className="sidebar-button">
+                <div className="sidebar-text">Interested Listings</div>
+                
+              </button> 
+              <button onclick="changeDisplay(getSavedListings)" className="sidebar-button">
+                <div className="sidebar-text">Saved Listings</div>
+              </button>
+              <button onclick="changeDisplay(getMyListings)" className="sidebar-button">
+                <div className="sidebar-text">My Posted Listings</div>
+              </button>
+            </div>
+          </div>
+          <div className="content-listings">
+            {getMyListings}
+          </div>
         </div>
       </div>
-      <div className="content-listings">
-        {getMyListings}
-      </div>
-    </div>
-  </div>
-)
+    );
+  }
+}
 
 export default MyListings

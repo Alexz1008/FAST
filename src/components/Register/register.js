@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 //by default, using styles from ./login.css
 
-class Register extends Component {
+export class Register extends React.Component {
 
   constructor(props) {
     super(props);
@@ -75,5 +75,3 @@ class Register extends Component {
   </div>
 )
 */
-
-export default Register;
