@@ -1,29 +1,29 @@
 import React from 'react'
 //by default, using styles from ./login.css
+import fire from '../Fire/fire'
 
 export class Register extends React.Component {
-
   constructor(props) {
     super(props);
-
+    this.register = this.register.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
       password: ''
     };
 
-    this.firebaseRef = this.props.db.database().ref("users");
+    //this.firebaseRef = this.props.db.database().ref("users");
   }
 
-  componentWillUnmount() {
-    this.firebaseRef.off();
+  register(e) {
+    e.preventDefault();
+    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error)=> {
+      console.log(error);
+    });
   }
 
-  pushToFirebase(event) {
-    const {email, password} = this.state;
-    event.preventDefault();
-    this.firebaseRef.child(email).set({email, password});
-    this.setState({email: '', password: ''});
-    this.firebaseRef.child(email).set({email: this.state.email, password: this.state.password});
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value});
   }
 
   render() {
@@ -36,15 +36,15 @@ export class Register extends React.Component {
             <h3 className="basic-title">Register account</h3>
 
             <label htmlFor="email"><strong>UCSD Email:</strong></label><br />
-            <input type="email" className="basic-input" name="email" id="email" onChange= {e => this.setState({email: e.target.value})} required/> <br />
+            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" required/> <br />
 
             <label htmlFor="password"><strong>Password:</strong></label><br />
-            <input type="password" className="basic-input" name="password" id="password" onChange= {e => this.setState({password: e.target.value})} required/> <br />
+            <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" required/> <br />
 
             <label htmlFor="repassword"><strong>Re-enter password:</strong></label><br />
             <input type="password" className="basic-input" name="password" id="repassword" required/><br />
             <br /><br />
-            <button className="basic-button" type="submit" id="register-button" onClick={this.pushToFirebase.bind(this)}>Register</button>
+            <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
           </div>
           </form>
         </div>

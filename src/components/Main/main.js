@@ -12,6 +12,7 @@ import { EditListing } from '../EditListing/edit_listing'
 import { Review } from '../Review/review'
 import { Register } from '../Register/register'
 import { TransactionHistory } from '../TransactionHistory/transaction_history'
+import fire from '../Fire/fire'
 import firebase from 'firebase';
 
 const RegisterFB = () => (
@@ -22,17 +23,30 @@ const RegisterFB = () => (
 export class Main extends React.Component {
   constructor(props) {
     super(props);
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyAMVKcugugokMLjDfp4N8KVqsEpvnzcqwU",
-      authDomain: "fast-8cfa5.firebaseapp.com",
-      databaseURL: "https://fast-8cfa5.firebaseio.com",
-      projectId: "fast-8cfa5",
-      storageBucket: "fast-8cfa5.appspot.com",
-      messagingSenderId: "413458791050"
-    };
-    firebase.initializeApp(config);
+    this.setState = {
+      user:{},
+    }
   }
+
+  componentDidMount(){
+    this.authListener();
+  }
+
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      //console.log(user);
+      if(user) {
+        this.setState({user});
+        //localStorage.setItem('user',user.uid);
+      }
+      else {
+        this.setState({user: null});
+        //localStorage.removeItem('user');
+      }
+    });
+  }
+
+
   render() {
     return (
       <Switch>
