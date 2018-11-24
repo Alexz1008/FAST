@@ -44,7 +44,7 @@ export class Register extends React.Component {
             <label htmlFor="repassword"><strong>Re-enter password:</strong></label><br />
             <input type="password" className="basic-input" name="password" id="repassword" required/><br />
             <br /><br />
-            <button className="register-form" className="basic-button" type="submit" id="register-button" onClick={this.pushToFirebase.bind(this)}>Register</button>
+            <button className="basic-button" type="submit" id="register-button" onClick={this.pushToFirebase.bind(this)}>Register</button>
           </div>
           </form>
         </div>

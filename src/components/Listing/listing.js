@@ -58,9 +58,18 @@ export class Listing extends React.Component {
       <div className="listing-upper">
         <div className="listing-title"><b>{this.state.title}</b></div>
         <img className="listing-picture" src={this.state.image} alt="did not load" />
-        <center>${this.state.price}</center><br />
-        <div className="listing-desc">{this.state.desc}</div>
-        <div className="listing-desc">{this.props.location}</div>
+        <div className="listing-header">
+          <div className="listing-header-item">
+            Rating: 3.4
+          </div>
+          <div className="listing-header-item">
+            ${this.state.price}
+          </div>
+          <div className="listing-header-item">
+            Posted: 11-6-17
+          </div>
+        </div>
+        <div className="listing-desc">{this.state.desc}<br />{this.props.location}</div>
         <br />
         <center>
         </center>
@@ -104,18 +113,18 @@ export class Listing extends React.Component {
                   </button>}
               </div>
               <div>
-                  {isMyListing ?
-                    <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
-                      Delete
-                    </button>
-                  : console.log("invalid delete listing")}
-              </div>
-              <div>
                 {isMyListing ?
                     <button className='listing-button-unselected' id="editListing" onClick={this.handleEditListingClick()}>
                       Edit
                     </button>
                     : console.log("invalid edit listing")}
+              </div>
+              <div>
+                  {isMyListing ?
+                    <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
+                      Delete
+                    </button>
+                  : console.log("invalid delete listing")}
               </div>
               <div>
                 {isInterested ?

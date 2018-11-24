@@ -14,13 +14,26 @@
   flex-direction: column;
 }
 .listing-container-self {
-  box-shadow:	0 4px 8px 0 #FAF8D4;
-  border: solid 2px #FAF8D4;
+  box-shadow:	0 4px 8px 0 #00A6FB;
+  border: solid 2px #00A6FB;
   width: 300px;
   height: 460px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+}
+
+.listing-header {
+  margin: 5px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.listing-header-item {
+  padding: 5px;
+  background-color: #00487C;
+  border-radius: 5px;
+  color: white;
 }
 
 .listing-lower {
@@ -47,6 +60,7 @@
 
 .listing-desc {
   margin: 5px;
+  height: 80px;
 }
 
 .listing-picture {
