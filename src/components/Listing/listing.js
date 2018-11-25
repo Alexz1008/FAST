@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './listing.css'
 
 export class Listing extends React.Component {
@@ -12,7 +13,7 @@ export class Listing extends React.Component {
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
-                  isLog: this.props.isLog, reviewed: this.props.reviewed}
+                  isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate}
   }
 
   handleAddClickSaved() {
@@ -60,13 +61,13 @@ export class Listing extends React.Component {
         <img className="listing-picture" src={this.state.image} alt="did not load" />
         <div className="listing-header">
           <div className="listing-header-item">
-            Rating: 3.4
+            Rating: {this.state.rating}
           </div>
           <div className="listing-header-item">
             ${this.state.price}
           </div>
           <div className="listing-header-item">
-            Posted: 11-6-17
+            Posted: {this.state.postdate}
           </div>
         </div>
         <div className="listing-desc">{this.state.desc}<br />{this.props.location}</div>
@@ -114,9 +115,9 @@ export class Listing extends React.Component {
               </div>
               <div>
                 {isMyListing ?
-                    <button className='listing-button-unselected' id="editListing" onClick={this.handleEditListingClick()}>
+                    <Link to="/edit_listing"><button className='listing-button-unselected' id="editListing">
                       Edit
-                    </button>
+                    </button></Link>
                     : console.log("invalid edit listing")}
               </div>
               <div>
