@@ -8,6 +8,7 @@ export class Reviews extends React.Component {
     return(
       <div className="reviews-container">
         <Review />
+        <Review />
       </div>
     );
   }

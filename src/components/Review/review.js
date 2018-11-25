@@ -7,7 +7,7 @@ export class Review extends React.Component {
     return(
       <div className="reviews-review-container">
         <div className="reviews-review-title">
-          <center><b>Excellent Purchase</b></center>
+          <center><b>Singular Banana</b></center>
         </div>
         <div className="reviews-review-attributes">
           <div className="reviews-review-attribute">
@@ -19,6 +19,9 @@ export class Review extends React.Component {
           <div className="reviews-review-attribute">
             Score: 4
           </div>
+        </div>
+        <div className="reviews-review-header">
+          <b>Excellent purchase</b>
         </div>
         <div className="reviews-review-text">
           This was an excellent purchase for an excellent item and I think the service was gillexcellent.
