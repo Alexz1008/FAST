@@ -14,3 +14,14 @@
   box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
   margin-bottom: 5px;
 }
+
+.sidebar-button-createlisting {
+  height: 40px;
+  background-color: #F5B700;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
+  margin-bottom: 5px;
+}
