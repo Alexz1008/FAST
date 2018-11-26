@@ -6,6 +6,30 @@ import Tag from '../Listing/tag'
 //by default, also using styles from ./login.css
 
 export class CreateListing extends React.Component{
+  constructor(props) {
+    super(props);
+    this.createListing = this.createListing.bind(this);
+    this.state = {
+      title: 'test',
+      image: 'test2',
+      price: '1',
+      desc: 'test3',
+      tag: 'test4'
+    };
+
+    this.firebaseRef = this.props.db.database().ref("Listing");
+  }
+    
+  createListing(e) {
+    const Listing_Title = this.state.title;
+    const Listing_Pics = this.state.image; 
+    const Listing_Price = this.state.price;
+    const Listing_Description = this.state.desc;
+    const Listing_Tag = this.state.tag;
+    e.preventDefault();
+    this.firebaseRef.child(Listing_Title).set({Listing_Title, Listing_Pics, Listing_Price, Listing_Description, Listing_Tag});
+  }
+
   render () {
 
     return(
@@ -37,7 +61,7 @@ export class CreateListing extends React.Component{
 
           <br />
 
-          <button type="submit" className="basic-button" id="create-listing-button">Create listing</button> <br />
+          <button type="submit" className="basic-button" id="create-listing-button" onClick={this.createListing.bind(this)}>Create listing</button> <br />
 
         </div>
         </form>
