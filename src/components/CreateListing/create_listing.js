@@ -3,41 +3,54 @@ import Header from '../Header/header'
 import './create_listing.css'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
-import fire from '../Fire/fire'
 //by default, also using styles from ./login.css
 
 export class CreateListing extends React.Component{
   constructor(props) {
     super(props);
     this.createListing = this.createListing.bind(this);
-    //this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
-      email: '',
-      password: ''
+      title: 'test',
+      image: 'test2',
+      price: '1',
+      desc: 'test3',
+      tag: 'test4'
     };
 
-    this.firebaseRef = fire.database().ref("users");
+    this.firebaseRef = this.props.db.database().ref("Listing");
+  }
+    
+  createListing(e) {
+    const Listing_Title = this.state.title;
+    const Listing_Pics = this.state.image; 
+    const Listing_Price = this.state.price;
+    const Listing_Description = this.state.desc;
+    const Listing_Tag = this.state.tag;
+    e.preventDefault();
+    this.firebaseRef.child(Listing_Title).set({Listing_Title, Listing_Pics, Listing_Price, Listing_Description, Listing_Tag});
   }
 
-  createListing(e) {
-    e.preventDefault();
-    fire.database().ref("users").child('Test1').set({name: 'Test1', title: 'TestTitle1'});
-    console.log("Did something");
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value});
   }
-  
+
   render () {
+
     return(
       <div className="center">
-      <Header />
       <form className="listing-form" autoComplete="off">
+      <Header />
         <div className="content-box">
           <h3 id="create-listing-title" className="basic-title">Create listing</h3>
 
           <label htmlFor="listing-title"><strong>Title:</strong></label> <br /> 
-          <input type="text" className="basic-input" name="listing-title" id="listing-title" required/> <br />
+          <input type="text" className="basic-input" name="title" id="listing-title" 
+	    onChange={this.handleChange} required/> <br />
 
           <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
-          <input type="text" className="basic-input" name="listing-price" id="listing-price" />
+          <input type="text" className="basic-input" name="price" id="listing-price" 
+	    onChange={this.handleChange} />
 
           <ImageUploader
             withIcon={false}
@@ -48,14 +61,14 @@ export class CreateListing extends React.Component{
           />
 
           <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br /> 
-          <textarea id="listing-content" /> <br />
+          <textarea name="desc" id="listing-content" onChange={this.handleChange} /> <br />
 
-          <label htmlFor="listing-tag"><strong>Add Tags:</strong></label> <br />
+          <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
           <Tag /> <br />
 
           <br />
 
-          <button type="submit" className="basic-button" id="create-listing-button" onClick={this.createListing}>Create listing</button> <br />
+          <button type="submit" className="basic-button" id="create-listing-button" onClick={this.createListing.bind(this)}>Create listing</button> <br />
 
         </div>
         </form>

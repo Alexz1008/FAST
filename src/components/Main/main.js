@@ -19,6 +19,9 @@ const RegisterFB = () => (
   <Register db={firebase} />
 )
 
+const CreateListingFB = () => (
+  <CreateListing db={firebase} />
+)
 
 export class Main extends React.Component {
   constructor(props) {
@@ -51,7 +54,7 @@ export class Main extends React.Component {
     return (
       <Switch>
         <Route exact path='/' component={Login}/>
-        <Route path='/create_listing' component={CreateListing}/>
+        <Route path='/create_listing' component={CreateListingFB}/>
         <Route path='/forgot_password' component={ForgotPassword}/>
         <Route path='/home' component={Home}/>
         <Route path='/login' component={Login}/>
