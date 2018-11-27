@@ -7,8 +7,8 @@ class Tag extends Component {
 		const categories = ["iclicker", "furniture", "textbooks"];
 		const tagList = categories.map(item => {
 			return (
-				<div>
-					<input type="checkbox" id="item" />
+				<div key={item}>
+					<input type="checkbox" id={item} />
 					{item}
 				</div>
 			)

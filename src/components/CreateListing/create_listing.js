@@ -3,15 +3,33 @@ import Header from '../Header/header'
 import './create_listing.css'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
+import fire from '../Fire/fire'
 //by default, also using styles from ./login.css
 
 export class CreateListing extends React.Component{
-  render () {
+  constructor(props) {
+    super(props);
+    this.createListing = this.createListing.bind(this);
+    //this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      email: '',
+      password: ''
+    };
 
+    this.firebaseRef = fire.database().ref("users");
+  }
+
+  createListing(e) {
+    e.preventDefault();
+    fire.database().ref("users").child('Test1').set({name: 'Test1', title: 'TestTitle1'});
+    console.log("Did something");
+  }
+  
+  render () {
     return(
       <div className="center">
-      <form className="listing-form" autoComplete="off">
       <Header />
+      <form className="listing-form" autoComplete="off">
         <div className="content-box">
           <h3 id="create-listing-title" className="basic-title">Create listing</h3>
 
@@ -37,7 +55,7 @@ export class CreateListing extends React.Component{
 
           <br />
 
-          <button type="submit" className="basic-button" id="create-listing-button">Create listing</button> <br />
+          <button type="submit" className="basic-button" id="create-listing-button" onClick={this.createListing}>Create listing</button> <br />
 
         </div>
         </form>
