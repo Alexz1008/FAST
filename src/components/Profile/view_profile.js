@@ -13,11 +13,7 @@ class ViewProfile extends Component {
     handleChange(event) {
       this.setState({value: event.target.value});
     }
-
-    // did a bit of code but did not push most of it because it would make it easier
-    // if users were pushed to the database, no user database exists which makes
-    // testing difficult
-
+    
     render(){
         return(
             <div>
