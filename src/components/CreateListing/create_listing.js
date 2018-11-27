@@ -9,6 +9,7 @@ export class CreateListing extends React.Component{
   constructor(props) {
     super(props);
     this.createListing = this.createListing.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       title: 'test',
       image: 'test2',
@@ -30,6 +31,10 @@ export class CreateListing extends React.Component{
     this.firebaseRef.child(Listing_Title).set({Listing_Title, Listing_Pics, Listing_Price, Listing_Description, Listing_Tag});
   }
 
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value});
+  }
+
   render () {
 
     return(
@@ -40,10 +45,12 @@ export class CreateListing extends React.Component{
           <h3 id="create-listing-title" className="basic-title">Create listing</h3>
 
           <label htmlFor="listing-title"><strong>Title:</strong></label> <br /> 
-          <input type="text" className="basic-input" name="listing-title" id="listing-title" required/> <br />
+          <input type="text" className="basic-input" name="title" id="listing-title" 
+	    onChange={this.handleChange} required/> <br />
 
           <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
-          <input type="text" className="basic-input" name="listing-price" id="listing-price" />
+          <input type="text" className="basic-input" name="price" id="listing-price" 
+	    onChange={this.handleChange} />
 
           <ImageUploader
             withIcon={false}
@@ -54,9 +61,9 @@ export class CreateListing extends React.Component{
           />
 
           <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br /> 
-          <textarea id="listing-content" /> <br />
+          <textarea name="desc" id="listing-content" onChange={this.handleChange} /> <br />
 
-          <label htmlFor="listing-tag"><strong>Add Tags:</strong></label> <br />
+          <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
           <Tag /> <br />
 
           <br />
