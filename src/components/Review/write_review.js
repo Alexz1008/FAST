@@ -3,14 +3,14 @@ import Header from '../Header/header'
 import './review.css'
 //by default, using styles from ./login.css
 
-export class CreateReview extends React.Component {
+export class WriteReview extends React.Component {
   render() {
     return(
       <div class="center">
       <form className="listing-form" autocomplete="off">
       <Header />
         <div class="content-box">
-          <h3 id="create-listing-title" class="basic-title">Write review for Gary Gillespie</h3>
+          <h3 id="create-review-title" class="basic-title">Write review for Gary Gillespie</h3>
     
           <label for="review-title"><strong>Title:</strong></label> <br /> 
           <input id="review-title" type="text" class="review-input" name="review-title" required/> <br />
@@ -24,7 +24,7 @@ export class CreateReview extends React.Component {
     
           <br />
     
-          <button type="submit" class="basic-button" id="create-listing-button">Post review</button> <br />
+          <button type="submit" class="basic-button" id="create-review-button">Post review</button> <br />
     
         </div>
         </form>
