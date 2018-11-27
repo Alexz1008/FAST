@@ -10,13 +10,12 @@ export class CreateListing extends React.Component{
     super(props);
     this.createListing = this.createListing.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.tagCallback = this.tagCallback.bind(this);
     this.state = {
-      title: '',
-      image: '',
-      price: '',
-      desc: '',
-      tag: []
+      title: 'test',
+      image: 'test2',
+      price: '1',
+      desc: 'test3',
+      tag: 'test4'
     };
 
     this.firebaseRef = this.props.db.database().ref("Listing");
@@ -34,10 +33,6 @@ export class CreateListing extends React.Component{
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
-  }
-
-  tagCallback = (tagList) => {
-	  	this.setState({tag: tagList});
   }
 
   render () {
@@ -69,7 +64,7 @@ export class CreateListing extends React.Component{
           <textarea name="desc" id="listing-content" onChange={this.handleChange} /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
-          <Tag callbackFunction={this.tagCallback} /> <br />
+          <Tag /> <br />
 
           <br />
 
