@@ -7,13 +7,16 @@ class ViewProfile extends Component {
       constructor(props) {
       super(props);
       this.state = {name: 'Gary', rating: '3.5',image: 'https://jacobsschool.ucsd.edu/faculty/faculty_bios/photos/300.jpg', tel: '858-534-4725', email: 'gillespie@ucsd.edu', zipcode: '92000', city: 'San Diego'};
+      this.firebaseRef = this.props.db.database.ref("User");
     }
 
     handleChange(event) {
       this.setState({value: event.target.value});
     }
 
-
+    // did a bit of code but did not push most of it because it would make it easier
+    // if users were pushed to the database, no user database exists which makes
+    // testing difficult
 
     render(){
         return(
