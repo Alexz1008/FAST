@@ -5,15 +5,11 @@
   display: flex;
 }
 
-.profile-box{
-  height: 500px;
-  width: 400px;
-  padding: 5px 10px 10px 10px;
-  display: inline-block;
-}
 
 .profile-form{
  margin: 5% auto;
+ width: 100%;
+ text-align: center;
  line-height: 1.5rem;
 }
 .profile-form hr {
@@ -30,37 +26,27 @@
 
 .profile-form input,
 textarea {
- display: flex 2;
+ /*display: block;*/
  margin-right: 5%;
- height: 28px;
+ padding: .5rem .75rem;
  font-size: 1rem;
  line-height: 1.25;
  color: #55595c;
  background-color: #fff;
  background-image: none;
  background-clip: padding-box;
- border: 2px solid #EEF8FE;
- /*
  border-top: 0;
  border-right: 0;
- border-left: 0;
  border-bottom: 1px solid $color-grey;
+ border-left: 0;
  border-radius: $radius;
-  @include transition;
+ @include transition;
 
  &:focus {
   outline: 0;
   border-bottom-color: $color-primary;
  }
- */
 }
-
-.profile-form input:focus{
-  transition: .5s;
-  border: 2px solid #00A6FB;
-  outline: none;
-}
-
 .profile-name{
  color: black;
  font-size: 2.5rem;
@@ -68,7 +54,7 @@ textarea {
 .profile-img{
   width: 250px;
   height: 250px;
-  display: block;
+  display: flex;
   border-radius: 50%;
   margin: auto;
   justify-content: center;
@@ -89,7 +75,7 @@ textarea {
  color: black;
  vertical-align: middle;
  white-space: nowrap;
- /*background-color: $color-primary;*/
+ background-color: $color-primary;
  border: 1px solid transparent;
  box-shadow: 0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07);
  cursor: pointer;

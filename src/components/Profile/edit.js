@@ -25,7 +25,7 @@ class Edit extends Component {
 
     render(){
         return(
-            <div className="center">
+            <div>
                 <form className="profile-form"  >
                 <img className="profile-img" src={this.state.picture} alt="did not load" />
 
@@ -36,9 +36,6 @@ class Edit extends Component {
                   imgExtension={['.jpg', '.gif', '.png', '.gif']}
                   maxFileSize={5242880}
                 />
-
-                <div className="profile-box">
-
                   <label>Name:</label>
                   <input onChange= {e => this.setState({name: e.target.value})} value={this.state.name}/>
                   <br />
@@ -56,8 +53,6 @@ class Edit extends Component {
                   <input onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
                   <br />
                   <button className="profile-button" onClick={this.handleSubmit}><Link to='/profile'>Save Changes</Link></button>
-                </div>
-
                 </form>
             </div>
         );

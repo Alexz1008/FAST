@@ -17,8 +17,7 @@ class ViewProfile extends Component {
 
     render(){
         return(
-          <div className="center">
-            <div className="profile-box">
+            <div>
               <form className="profile-form">
                
                 <div className="profile-name">{this.state.name}</div>
@@ -39,7 +38,6 @@ class ViewProfile extends Component {
                 <button className="profile-button" ><Link to='/edit_profile'>edit profile</Link></button>
               </form>
             </div>
-          </div>
         );
     }
 }
