@@ -31,9 +31,7 @@
 
 .listing-header-item {
   padding: 5px;
-  background-color: #00487C;
-  border-radius: 5px;
-  color: white;
+  color: #00487C;
 }
 
 .listing-lower {
@@ -54,6 +52,7 @@
   height: 40px;
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

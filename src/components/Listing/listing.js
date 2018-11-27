@@ -7,8 +7,6 @@ export class Listing extends React.Component {
     super(props);
     this.handleAddClickSaved = this.handleAddClickSaved.bind(this);
     this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
-    this.handleAddClickConfirm = this.handleAddClickConfirm.bind(this);
-    this.handleRemoveClickConfirm = this.handleRemoveClickConfirm.bind(this);
     this.handleAddInterestClick = this.handleAddInterestClick.bind(this);
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
@@ -22,13 +20,6 @@ export class Listing extends React.Component {
 
   handleRemoveClickSaved() {
     this.setState({saved: false});
-  }
-  handleAddClickConfirm() {
-    console.log(this.props);
-    this.setState({confirmed: true});
-  }
-  handleRemoveClickConfirm() {
-    this.setState({confirmed: false});
   }
   handleAddInterestClick() {
     this.setState({isInterested: true});
@@ -57,7 +48,7 @@ export class Listing extends React.Component {
     return (
 	  <div className={isMyListing ? 'listing-container-self' : 'listing-container'}>
       <div className="listing-upper">
-        <div className="listing-title"><b>{this.state.title}</b></div>
+        <div className="listing-title"><b>{this.state.title}</b>Posted by: Alexander Zhou</div>
         <img className="listing-picture" src={this.state.image} alt="did not load" />
         <div className="listing-header">
           <div className="listing-header-item">
@@ -70,7 +61,8 @@ export class Listing extends React.Component {
             Posted: {this.state.postdate}
           </div>
         </div>
-        <div className="listing-desc">{this.state.desc}<br />{this.props.location}</div>
+        <hr width="80%"/>
+        <div className="listing-desc">{this.state.desc}</div>
         <br />
         <center>
         </center>
@@ -121,18 +113,11 @@ export class Listing extends React.Component {
                     : console.log("invalid edit listing")}
               </div>
               <div>
-                  {isMyListing ?
-                    <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
-                      Delete
-                    </button>
-                  : console.log("invalid delete listing")}
-              </div>
-              <div>
-                {isInterested ?
-                  <button className={this.state.confirmed ? 'listing-button-selected' : 'listing-button-unselected'} id="confirmTransaction" onClick={this.state.confirmed ? this.handleRemoveClickConfirm : this.handleAddClickConfirm}>
-                    {this.state.confirmed ? 'Cancel Transaction' : 'Confirm Transaction'}
+                {isMyListing ?
+                  <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
+                    Delete
                   </button>
-                  : console.log("invalid interested listing")}
+                : console.log("invalid delete listing")}
               </div>
             </div>
           }

@@ -22,7 +22,7 @@ const myListings = [true, false, false, false, false, true]
 const saveStates = [false, true, false];
 
 const getListings = listingid.map((id) =>
-  <div className="listing">
+  <div className="listing" key={id}>
     <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} id={id} saved={saveStates[id]} isMyListing={myListings[id]} />
   </div>
 );

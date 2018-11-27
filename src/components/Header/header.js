@@ -22,6 +22,9 @@ const Header = () => (
       <Link to='/messages'><div className="navbar-button">
         <div className="navbar-text">My Messages</div>
       </div></Link>
+      <Link to='/create_listing'><div className="navbar-button">
+        <div className="navbar-text">Create Listing</div>
+      </div></Link>
     </div>
     <div className="navbar-right">
       <div className="navbar-search">
