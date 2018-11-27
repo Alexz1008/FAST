@@ -43,9 +43,15 @@ a {
 
 .navbar-search-input{
 	width: 300px;
-	border: none;
+	border: 2px solid #EEF8FE;
 	font-size: 14px;
-  height: 38px;
+  height: 34px;
+}
+
+.navbar-search-input:focus{
+  transition: .5s;
+  border: 2px solid #00A6FB;
+  outline: none;
 }
 
 .navbar-search-button {

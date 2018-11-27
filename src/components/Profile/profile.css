@@ -35,7 +35,8 @@ textarea {
  background-color: #fff;
  background-image: none;
  background-clip: padding-box;
- border-top: 0;
+ border: 2px solid #EEF8FE;
+ /*border-top: 0;
  border-right: 0;
  border-bottom: 1px solid $color-grey;
  border-left: 0;
@@ -45,8 +46,15 @@ textarea {
  &:focus {
   outline: 0;
   border-bottom-color: $color-primary;
- }
+ }*/
 }
+
+.profile-form input:focus{
+  transition: .5s;
+  border: 2px solid #00A6FB;
+  outline: none;
+}
+
 .profile-name{
  color: black;
  font-size: 2.5rem;
@@ -75,7 +83,7 @@ textarea {
  color: black;
  vertical-align: middle;
  white-space: nowrap;
- background-color: $color-primary;
+/* background-color: $color-primary;*/
  border: 1px solid transparent;
  box-shadow: 0 15px 35px rgba(50,50,93,.1),0 5px 15px rgba(0,0,0,.07);
  cursor: pointer;
