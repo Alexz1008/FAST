@@ -13,9 +13,9 @@ class Tag extends Component {
 			var newArray = this.state.tags.concat([e.target.name]);
 			this.setState({tags: newArray}, () => this.props.callbackFunction(this.state.tags));
 		} else {
-			var newArray = this.state.tags;
+			newArray = this.state.tags;
 			var index = newArray.indexOf([e.target.name]);
-			if (index != -1) {
+			if (index !== -1) {
 				newArray.splice(index, 1);
 			}
 			this.setState({tags: newArray}, () => this.props.callbackFunction(this.state.tags));

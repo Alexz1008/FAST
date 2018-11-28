@@ -11,21 +11,52 @@ export class CreateListing extends React.Component{
     this.createListing = this.createListing.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.tagCallback = this.tagCallback.bind(this);
+    
+    // Setup the firebase ref for the constants DB and listings DB
+    this.constantsDB = this.props.db.database().ref("Constants");
+    this.listingsDB = this.props.db.database().ref("Listing");
+    
+    // Load in the next unique listing DB number, or create one if it doesn't exist yet
+    this.constantsDB.on('value', dataSnapshot => {
+      if(dataSnapshot.child("Next_Listing_ID").exists()) {
+        let nextID = dataSnapshot.child("Next_Listing_ID").val();
+        this.setState({id: nextID});
+      }
+      else {
+        this.constantsDB.child("Next_Listing_ID").set(1);
+        this.setState({id: 1});
+      }
+    });
     this.state = {
-      id: 1,
-      image: 'na'
+      image: 'N/A'
     };
-
-    this.firebaseRef = this.props.db.database().ref("Listing");
+    console.log("Constructed, " + this.state.id);
   }
     
   createListing(e) {
+    var listID = this.state.id;
+    var idExists = true;
     const title = this.state.title;
     const image = this.state.image; 
     const price = this.state.price;
     const desc = this.state.desc;
+    let listDB = this.listingsDB;
+    let constDB = this.constantsDB;
     e.preventDefault();
-    this.firebaseRef.child(this.state.id).set({title, image, price, desc});
+    
+    // Save the new listing to the database after making sure the id doesn't exist yet
+    this.listingsDB.once("value").then(function(snapshot) {
+      idExists = snapshot.child(listID).exists();
+      while(idExists) {
+        listID += 1;
+        idExists = snapshot.child(listID).exists();
+      }
+      listDB.child(listID).set({title, image, price, desc, listID});
+    
+      // Increment the unique listing ID and move on
+      constDB.child("Next_Listing_ID").set(listID + 1);
+    });
+    this.setState({id: listID});
   }
 
   handleChange(e) {
@@ -34,6 +65,10 @@ export class CreateListing extends React.Component{
 
   tagCallback = (tagList) => {
 	  	this.setState({tag: tagList});
+  }
+ 
+  onDrop(picture) {
+    console.log(picture);
   }
 
   render () {
@@ -55,10 +90,12 @@ export class CreateListing extends React.Component{
 
           <ImageUploader
             withIcon={false}
+            withPreview ={true}
             buttonText='Upload Picture'
-            // onChange={e => this.setState({picture: e.target.picture})}
+            onChange={this.onDrop}
             imgExtension={['.jpg', '.gif', '.png', '.gif']}
             maxFileSize={5242880}
+            singleImage={true}
           />
 
           <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br /> 
