@@ -1,6 +1,7 @@
 import React from 'react'
 import './login.css'
 import fire from '../Fire/fire'
+import {withRouter} from 'react-router-dom'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -19,7 +20,10 @@ export class Login extends React.Component {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {}).catch((error)=> {
       console.log(error);
+      this.props.history.push("/login");
+      window.alert(error);
     });
+    this.props.history.push("/home");
   }
 
   handleChange(e) {
@@ -30,7 +34,7 @@ export class Login extends React.Component {
     return (
       <div className="container">
         <div className="center">
-          <form className="login-form" action="../Home/home">
+          <form className="login-form">
           <h1><a href="/login" >Triton Market</a></h1>
           <div className="content-box">
             <h3 className="basic-title">Log in</h3>
@@ -55,3 +59,5 @@ export class Login extends React.Component {
     );
   }
 }
+
+export default withRouter(Login);
