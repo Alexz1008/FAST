@@ -22,12 +22,6 @@ const listingdescriptions = ["Cheap singular banana, I wanted to eat it but now 
 const myListings = [true, false, false, false, false, true]
 const saveStates = [false, true, false];
 
-const getListings = listingid.map((id) =>
-  <div className="listing" key={id}>
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} id={id} saved={saveStates[id]} isMyListing={myListings[id]} />
-  </div>
-);
-
 export class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +36,7 @@ export class Home extends React.Component {
       dataSnapshot.forEach(childSnapshot => {
         let item = childSnapshot.val();
         item['.key'] = childSnapshot.key;
+        console.log(item);
         items.push(item);
       });
       this.setState({items});
@@ -52,6 +47,11 @@ export class Home extends React.Component {
   }
   
   render() {
+    const listings = this.state.items.map(item =>
+      <div className="listing" key={item['.key']}>
+        <Listing title={item['title']} image={item['image']} price={item['price']} desc={item['desc']} id={item['.key']} saved={item['saved']} isMyListing={item['isMyListing']} />
+      </div>
+    );
     return (
       <div>
         <Header />
@@ -60,7 +60,7 @@ export class Home extends React.Component {
             <Sidebar />
           </div>
           <div className="content-listings">
-            {getListings}
+            {listings}
           </div>
         </div>
       </div>
