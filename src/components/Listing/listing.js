@@ -48,7 +48,7 @@ export class Listing extends React.Component {
     return (
 	  <div className={isMyListing ? 'listing-container-self' : 'listing-container'}>
       <div className="listing-upper">
-        <div className="listing-title"><b>{this.state.title}</b>Posted by: Alexander Zhou</div>
+        <div className="listing-title"><b>{this.state.title}</b>Poster: Alexander Zhou</div>
         <img className="listing-picture" src={this.state.image} alt="did not load" />
         <div className="listing-header">
           <div className="listing-header-item">

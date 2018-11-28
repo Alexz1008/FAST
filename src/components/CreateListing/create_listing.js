@@ -10,37 +10,38 @@ export class CreateListing extends React.Component{
     super(props);
     this.createListing = this.createListing.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.tagCallback = this.tagCallback.bind(this);
     this.state = {
-      title: 'test',
-      image: 'test2',
-      price: '1',
-      desc: 'test3',
-      tag: 'test4'
+      id: 1,
+      image: 'na'
     };
 
     this.firebaseRef = this.props.db.database().ref("Listing");
   }
     
   createListing(e) {
-    const Listing_Title = this.state.title;
-    const Listing_Pics = this.state.image; 
-    const Listing_Price = this.state.price;
-    const Listing_Description = this.state.desc;
-    const Listing_Tag = this.state.tag;
+    const title = this.state.title;
+    const image = this.state.image; 
+    const price = this.state.price;
+    const desc = this.state.desc;
     e.preventDefault();
-    this.firebaseRef.child(Listing_Title).set({Listing_Title, Listing_Pics, Listing_Price, Listing_Description, Listing_Tag});
+    this.firebaseRef.child(this.state.id).set({title, image, price, desc});
   }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
   }
 
+  tagCallback = (tagList) => {
+	  	this.setState({tag: tagList});
+  }
+
   render () {
 
     return(
       <div className="center">
-      <form className="listing-form" autoComplete="off">
       <Header />
+      <form className="listing-form" autoComplete="off">
         <div className="content-box">
           <h3 id="create-listing-title" className="basic-title">Create listing</h3>
 
@@ -64,7 +65,7 @@ export class CreateListing extends React.Component{
           <textarea name="desc" id="listing-content" onChange={this.handleChange} /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
-          <Tag /> <br />
+          <Tag callbackFunction={this.tagCallback} /> <br />
 
           <br />
 
