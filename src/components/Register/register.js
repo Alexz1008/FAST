@@ -9,7 +9,8 @@ export class Register extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      repeat: ''
     };
 
     //this.firebaseRef = this.props.db.database().ref("users");
@@ -42,7 +43,7 @@ export class Register extends React.Component {
             <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" required/> <br />
 
             <label htmlFor="repassword"><strong>Re-enter password:</strong></label><br />
-            <input type="password" className="basic-input" name="password" id="repassword" required/><br />
+            <input value={this.state.repeat} onChange={this.handleChange} type="password" className="basic-input" name="password" id="repassword" required/><br />
             <br /><br />
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
           </div>
