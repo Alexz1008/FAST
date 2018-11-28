@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../Header/header'
 import Sidebar from '../Sidebar/sidebar'
+import fire from '../Fire/fire'
 import './home.css'
 import { Listing } from '../Listing/listing'
 const listingid = [0, 1, 2, 3, 4, 5];
@@ -28,6 +29,28 @@ const getListings = listingid.map((id) =>
 );
 
 export class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      items: []
+    };
+    
+    this.firebaseRef = fire.database().ref("Listing");
+    this.firebaseRef.on('value', dataSnapshot => {
+      let items = [];
+      dataSnapshot.forEach(childSnapshot => {
+        let item = childSnapshot.val();
+        item['.key'] = childSnapshot.key;
+        items.push(item);
+      });
+      this.setState({items});
+    });
+  }
+  componentWillUnmount() {
+    this.firebaseRef.off();
+  }
+  
   render() {
     return (
       <div>
