@@ -27,7 +27,7 @@ const CreateListingFB = () => (
 export class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.setState = {
+    this.State = {
       user:{},
     }
   }
