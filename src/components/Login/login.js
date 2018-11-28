@@ -17,13 +17,17 @@ export class Login extends React.Component {
   }
 
   login(e) {
+    var success = true;
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {}).catch((error)=> {
+      success = false;
+      window.alert(error);
       console.log(error);
       this.props.history.push("/login");
-      window.alert(error);
     });
-    this.props.history.push("/home");
+    if(success) {
+      this.props.history.push("/home");
+    }
   }
 
   handleChange(e) {

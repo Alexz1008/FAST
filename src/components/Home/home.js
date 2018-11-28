@@ -31,11 +31,11 @@ const getListings = listingid.map((id) =>
 export class Home extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       items: []
     };
-    
+
     this.firebaseRef = fire.database().ref("Listing");
     this.firebaseRef.on('value', dataSnapshot => {
       let items = [];
@@ -50,7 +50,7 @@ export class Home extends React.Component {
   componentWillUnmount() {
     this.firebaseRef.off();
   }
-  
+
   render() {
     return (
       <div>
