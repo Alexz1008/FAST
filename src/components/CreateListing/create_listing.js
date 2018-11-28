@@ -10,6 +10,7 @@ export class CreateListing extends React.Component{
     super(props);
     this.createListing = this.createListing.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.tagCallback = this.tagCallback.bind(this);
     this.state = {
       id: 1,
       image: 'na'
@@ -29,6 +30,10 @@ export class CreateListing extends React.Component{
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
+  }
+
+  tagCallback = (tagList) => {
+	  	this.setState({tag: tagList});
   }
 
   render () {
@@ -60,7 +65,7 @@ export class CreateListing extends React.Component{
           <textarea name="desc" id="listing-content" onChange={this.handleChange} /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
-          <Tag /> <br />
+          <Tag callbackFunction={this.tagCallback} /> <br />
 
           <br />
 
