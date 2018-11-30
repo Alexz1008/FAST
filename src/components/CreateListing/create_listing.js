@@ -11,6 +11,7 @@ export class CreateListing extends React.Component{
     this.createListing = this.createListing.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.tagCallback = this.tagCallback.bind(this);
+    this.onDrop = this.onDrop.bind(this);
     
     // Setup the firebase ref for the constants DB and listings DB
     this.constantsDB = this.props.db.database().ref("Constants");
@@ -28,7 +29,7 @@ export class CreateListing extends React.Component{
       }
     });
     this.state = {
-      image: 'N/A'
+      image: []
     };
     console.log("Constructed, " + this.state.id);
   }
@@ -67,7 +68,8 @@ export class CreateListing extends React.Component{
 	  	this.setState({tag: tagList});
   }
  
-  onDrop(picture) {
+  onDrop(file, picture) {
+    this.setState({image: this.state.image.concat(picture)});
     console.log(picture);
   }
 
