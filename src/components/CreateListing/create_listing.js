@@ -41,6 +41,7 @@ export class CreateListing extends React.Component{
     const image = this.state.image; 
     const price = this.state.price;
     const desc = this.state.desc;
+    const postdate = this.getPostDate();
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;
     e.preventDefault();
@@ -52,7 +53,7 @@ export class CreateListing extends React.Component{
         listID += 1;
         idExists = snapshot.child(listID).exists();
       }
-      listDB.child(listID).set({title, image, price, desc, listID});
+      listDB.child(listID).set({title, image, price, desc, postdate, listID});
     
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(listID + 1);
@@ -71,6 +72,12 @@ export class CreateListing extends React.Component{
   onDrop(file, picture) {
     this.setState({image: this.state.image.concat(picture)});
     console.log(picture);
+  }
+
+  getPostDate() {
+    var d = new Date();
+    var currentDate = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+    return currentDate;
   }
 
   render () {

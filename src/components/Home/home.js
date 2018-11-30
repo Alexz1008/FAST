@@ -49,7 +49,7 @@ export class Home extends React.Component {
   render() {
     const listings = this.state.items.map(item =>
       <div className="listing" key={item['.key']}>
-        <Listing title={item['title']} image={item['image']} price={item['price']} desc={item['desc']} id={item['.key']} saved={item['saved']} isMyListing={item['isMyListing']} />
+        <Listing title={item['title']} image={item['image']} price={item['price']} desc={item['desc']} id={item['.key']} saved={item['saved']} isMyListing={item['isMyListing']} postdate={item['postdate']} />
       </div>
     );
     return (
