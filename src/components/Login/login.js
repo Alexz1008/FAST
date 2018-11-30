@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom'
 export class Login extends React.Component {
   constructor(props) {
     super(props);
+    // Bind the proper login and handle methods to the one in the current state
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
@@ -16,20 +17,25 @@ export class Login extends React.Component {
     //this.firebaseRef = this.props.db.database().ref("users");
   }
 
+  // Setup a login method to sign into our firebase users database
   login(e) {
     var success = true;
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {}).catch((error)=> {
+      // If there is any error, report it to the user and prevent going to home
       success = false;
       window.alert(error);
       console.log(error);
+      // Reload the login page to force them to enter proper credentials again
       this.props.history.push("/login");
     });
     if(success) {
+      // Push them on to the homepage if the login is successful
       this.props.history.push("/home");
     }
   }
 
+  // Setup a handleChange method to map the form to the proper values
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
   }
@@ -64,4 +70,5 @@ export class Login extends React.Component {
   }
 }
 
+// Export the login page to redirect the user
 export default withRouter(Login);

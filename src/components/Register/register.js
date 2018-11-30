@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom'
 export class Register extends React.Component {
   constructor(props) {
     super(props);
+    // Bind the proper register and handle methods to the one in the current state
     this.register = this.register.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
@@ -17,20 +18,24 @@ export class Register extends React.Component {
     //this.firebaseRef = this.props.db.database().ref("users");
   }
 
+  // Setup a register method to add a user into our firebase users database
   register(e) {
     var success = true;
     e.preventDefault();
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error)=> {
+      // If there is any error, report it to the user and prevent going to login
       success = false;
       window.alert(error);
       console.log(error);
       this.props.history.push("/register");
     });
     if(success){
+      // Push them on to the login page if the registration is successful
       this.props.history.push("/login");
     }
   }
 
+  // Setup a handleChange method to map the form to the proper values
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
   }
@@ -64,4 +69,5 @@ export class Register extends React.Component {
   }
 }
 
+// Export the register page to redirect the user
 export default withRouter(Register);

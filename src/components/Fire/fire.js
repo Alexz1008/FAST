@@ -1,3 +1,7 @@
+/* This file is used to setup the connection to our firebase and be able
+   to use and reference it anywhere in our program.
+*/
+
 import firebase from 'firebase';
 
 var config = {
@@ -9,4 +13,5 @@ var config = {
   messagingSenderId: "413458791050"
 };
 const fire = firebase.initializeApp(config);
+// Export the database as "fire"
 export default fire;

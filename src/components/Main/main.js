@@ -16,10 +16,12 @@ import { TransactionHistory } from '../TransactionHistory/transaction_history'
 import fire from '../Fire/fire'
 import firebase from 'firebase';
 
+// Register the database for reference in other files
 const RegisterFB = () => (
   <Register db={firebase} />
 )
 
+// Register database for listings for reference in other files
 const CreateListingFB = () => (
   <CreateListing db={firebase} />
 )
@@ -27,22 +29,29 @@ const CreateListingFB = () => (
 export class Main extends React.Component {
   constructor(props) {
     super(props);
+    /* Save the state of the current user that way we can pull user data
+      and reference it in other files later on down the road
+    */
     this.State = {
       user:{},
     }
   }
 
+  // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
     this.authListener();
   }
 
+  // Create a method to autehnticate the user with our existing database
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user);
+      // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
         //localStorage.setItem('user',user.uid);
       }
+      // Otherwise set the current user to null
       else {
         this.setState({user: null});
         //localStorage.removeItem('user');
