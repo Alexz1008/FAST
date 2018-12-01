@@ -12,3 +12,10 @@
   flex-wrap: wrap;
   width: 85%;
 }
+.content-text{
+   display: flex;
+   justify-content: center;
+   position: absolute;
+   top: 50%;
+   left: 30%;
+}
