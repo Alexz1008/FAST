@@ -16,11 +16,6 @@ import { TransactionHistory } from '../TransactionHistory/transaction_history'
 import fire from '../Fire/fire'
 import firebase from 'firebase';
 
-// Register the database for reference in other files
-const RegisterFB = () => (
-  <Register db={firebase} />
-)
-
 // Register database for listings for reference in other files
 const CreateListingFB = () => (
   <CreateListing db={firebase} />
@@ -42,7 +37,7 @@ export class Main extends React.Component {
     this.authListener();
   }
 
-  // Create a method to autehnticate the user with our existing database
+  // Create a method to authenticate the user with our existing database
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user);
@@ -67,12 +62,11 @@ export class Main extends React.Component {
         <Route path='/create_listing' component={CreateListingFB}/>
         <Route path='/forgot_password' component={ForgotPassword}/>
         <Route path='/home' component={Home}/>
-        <Route path='/login' component={Login}/>
         <Route path='/messages' component={Messages}/>
         <Route path='/my_listings' component={MyListings}/>
         <Route path='/profile' component={Profile}/>
         <Route path='/edit_profile' component={EditProfile}/>
-        <Route path='/register' component={RegisterFB}/>
+        <Route path='/register' component={Register}/>
         <Route path='/transaction_history' component={TransactionHistory}/>
         <Route path='/edit_listing' component={EditListing}/>
         <Route path='/review' component={Review}/>

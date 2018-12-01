@@ -19,20 +19,18 @@ export class Login extends React.Component {
 
   // Setup a login method to sign into our firebase users database
   login(e) {
-    var success = true;
     e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {}).catch((error)=> {
+    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
+      // Push them on to the homepage if the login is successful
+      this.props.history.push("/home");
+    }).catch((error)=> {
       // If there is any error, report it to the user and prevent going to home
-      success = false;
       window.alert(error);
       console.log(error);
+      console.log(this.props);
       // Reload the login page to force them to enter proper credentials again
       this.props.history.push("/login");
     });
-    if(success) {
-      // Push them on to the homepage if the login is successful
-      this.props.history.push("/home");
-    }
   }
 
   // Setup a handleChange method to map the form to the proper values

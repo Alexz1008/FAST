@@ -14,25 +14,22 @@ export class Register extends React.Component {
       password: '',
       repass: ''
     };
-
-    //this.firebaseRef = this.props.db.database().ref("users");
   }
 
   // Setup a register method to add a user into our firebase users database
   register(e) {
-    var success = true;
     e.preventDefault();
-    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {}).catch((error)=> {
+    const { history } = this.props;
+    console.log("HERE", this.props);
+    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
+      // If the call ends in success
+      history.push("/");
+    })
+    .catch((error)=> {
       // If there is any error, report it to the user and prevent going to login
-      success = false;
       window.alert(error);
-      console.log(error);
-      this.props.history.push("/register");
+      history.push("/register");
     });
-    if(success){
-      // Push them on to the login page if the registration is successful
-      this.props.history.push("/login");
-    }
   }
 
   // Setup a handleChange method to map the form to the proper values

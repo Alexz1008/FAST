@@ -3,6 +3,7 @@ import Header from '../Header/header'
 import './create_listing.css'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
+import fire from '../Fire/fire'
 //by default, also using styles from ./login.css
 
 export class CreateListing extends React.Component{
@@ -33,15 +34,39 @@ export class CreateListing extends React.Component{
     };
     console.log("Constructed, " + this.state.id);
   }
+
+  // If the component gets mounted successfully, authenticate the user
+  componentDidMount(){
+    this.authListener();
+  }
+
+  // Create a method to authenticate the user with our existing database
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      // If the user is detected, save it to the current state
+      if(user) {
+        this.setState({user});
+        //localStorage.setItem('user',user.uid);
+      }
+      // Otherwise set the current user to null
+      else {
+        this.setState({user: null});
+        //localStorage.removeItem('user');
+      }
+    });
+  }
     
   createListing(e) {
-    var listID = this.state.id;
-    var idExists = true;
     const title = this.state.title;
     const image = this.state.image; 
     const price = this.state.price;
     const desc = this.state.desc;
     const postdate = this.getPostDate();
+    const userID = this.state.user.uid;
+    
+    var listID = this.state.id;
+    var idExists = true;
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;
     e.preventDefault();
@@ -59,6 +84,7 @@ export class CreateListing extends React.Component{
       constDB.child("Next_Listing_ID").set(listID + 1);
     });
     this.setState({id: listID});
+    console.log(this.state.user);
   }
 
   handleChange(e) {
@@ -76,7 +102,7 @@ export class CreateListing extends React.Component{
 
   getPostDate() {
     var d = new Date();
-    var currentDate = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+    var currentDate = (d.getMonth() + 1) + "/" + d.getDate();
     return currentDate;
   }
 

@@ -25,6 +25,7 @@ const saveStates = [false, true, false];
 export class Home extends React.Component {
   constructor(props) {
     super(props);
+    console.log("Right here:", props);
 
     this.state = {
       items: []
