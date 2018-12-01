@@ -33,7 +33,7 @@ const Header = () => (
           <button type="submit" className ="navbar-search-button"><img className="navbar-search-image" src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" alt="Search"/></button>
         </form>
       </div>
-      <Link to='/login'><div className='navbar-button'>
+      <Link to='/'><div className='navbar-button'>
           <div className="navbar-text">Logout</div>
       </div></Link>
     </div>
