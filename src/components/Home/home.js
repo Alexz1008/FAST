@@ -61,7 +61,7 @@ export class Home extends React.Component {
             <Sidebar />
           </div>
           <div className="content-listings">
-            {listings}
+            {listings.length ? listings : <p> The Marketplace currently has no listings. Come back later or add one yourself? </p>}
           </div>
         </div>
       </div>
