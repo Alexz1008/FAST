@@ -11,15 +11,65 @@ export class Register extends React.Component {
     // Bind the proper register and handle methods to the one in the current state
     this.register = this.register.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onDrop = this.onDrop.bind(this);
+
+    // Setup the firebase ref for the users database
+    this.usersDB = this.props.db.database().ref("Users");
+
+    // Load in the next unique listing DB number, or create one if it doesn't exist yet
+    this.usersDB.on('value', dataSnapshot => {
+      if(dataSnapshot.child("Next_User_ID").exists()) {
+        let nextID = dataSnapshot.child("Next_User_ID").val();
+        this.setState({id: nextID});
+      }
+      else {
+        this.constantsDB.child("Next_User_ID").set(1);
+        this.setState({id: 1});
+      }
+    });
+    console.log("Constructed, " + this.state.id);
+
     this.state = {
       email: '',
       password: '',
       repass: '',
+      image: [],
       name: '',
       tel: '',
       zipcode: '',
       city: ''
     };
+  }
+
+  createUser(e) {
+    const email = this.state.email;
+    const password = this.state.password;
+    const repass = this.state.repass;
+    const image = this.state.image;
+    const name = this.state.name;
+    const tel = this.state.tel;
+    const zipcode = this.state.zipcode;
+    const city = this.state.city;
+
+    var userID = this.state.id;
+    var idExists = true;
+    let usersDB = this.usersDB;
+    e.preventDefault();
+
+    // Save the new listing to the database after making sure the id doesn't exist yet
+    this.usersDB.once("value").then(function(snapshot) {
+      idExists = snapshot.child(userID).exists();
+      while(idExists) {
+        userID += 1;
+        idExists = snapshot.child(userID).exists();
+      }
+      usersDB.child(userID).set({email, password, image, name, tel, zipcode, city, userID});
+
+      // Increment the unique listing ID and move on
+      usersDB.child("Next_User_ID").set(userID + 1);
+    });
+    this.setState({id: userID});
+    console.log(this.state.user);
   }
 
   // Setup a register method to add a user into our firebase users database
@@ -41,6 +91,11 @@ export class Register extends React.Component {
   // Setup a handleChange method to map the form to the proper values
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
+  }
+
+  onDrop(file, picture) {
+    this.setState({image: this.state.image.concat(picture)});
+    console.log(picture);
   }
 
   render() {
