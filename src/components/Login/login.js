@@ -43,7 +43,7 @@ export class Login extends React.Component {
       <div className="container">
         <div className="center">
           <form className="login-form">
-          <h1><a href="/login" >Triton Market</a></h1>
+          <h1><a href="/" >Triton Market</a></h1>
           <div className="content-box">
             <h3 className="basic-title">Log in</h3>
 

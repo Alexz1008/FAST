@@ -14,7 +14,11 @@ export class Register extends React.Component {
     this.state = {
       email: '',
       password: '',
-      repass: ''
+      repass: '',
+      name: '',
+      tel: '',
+      zipcode: '',
+      city: ''
     };
   }
 
@@ -63,7 +67,7 @@ export class Register extends React.Component {
 
             <ImageUploader
               withIcon={false}
-              buttonText='Upload Picture'
+              buttonText='Upload Profile Picture'
               // onChange={e => this.setState({picture: e.target.picture})}
               imgExtension={['.jpg', '.gif', '.png', '.gif']}
               maxFileSize={5242880}

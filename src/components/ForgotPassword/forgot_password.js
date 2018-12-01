@@ -8,7 +8,7 @@ export class ForgotPassword extends React.Component {
       <div className="container">
         <div className="center">
           <form className="forgot-password-form">
-          <h1><a href="/login" >Triton Market</a></h1>
+          <h1><a href="/" >Triton Market</a></h1>
           <div className="content-box">
             <h3 className="basic-title">Forgot password</h3>
 
