@@ -22,7 +22,7 @@ export class Register extends React.Component {
   register(e) {
     var success = true;
     e.preventDefault();
-    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error)=> {
+    fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {}).catch((error)=> {
       // If there is any error, report it to the user and prevent going to login
       success = false;
       window.alert(error);
