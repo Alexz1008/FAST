@@ -2,6 +2,8 @@ import React from 'react'
 //by default, using styles from ./login.css
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
+import ImageUploader from 'react-images-upload'
+import { Link } from 'react-router-dom'
 
 export class Register extends React.Component {
   constructor(props) {
@@ -57,6 +59,27 @@ export class Register extends React.Component {
 
             <br /><br />
 
+            <img className="profile-img" src={this.state.picture} alt="." />
+
+            <ImageUploader
+              withIcon={false}
+              buttonText='Upload Picture'
+              // onChange={e => this.setState({picture: e.target.picture})}
+              imgExtension={['.jpg', '.gif', '.png', '.gif']}
+              maxFileSize={5242880}
+            />
+            <label><strong>Name:</strong></label>
+            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} value={this.state.name}/>
+            <br />
+
+            <label><strong>Phone Number:</strong></label>
+            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} value={this.state.tel}/>
+            <br />
+            <label><strong>Zipcode:</strong></label>
+            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} value={this.state.zipcode}/>
+            <br />
+            <label><strong>City:</strong></label>
+            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
           </div>
           </form>

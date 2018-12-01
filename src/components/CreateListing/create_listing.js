@@ -78,7 +78,7 @@ export class CreateListing extends React.Component{
         listID += 1;
         idExists = snapshot.child(listID).exists();
       }
-      listDB.child(listID).set({title, image, price, desc, postdate, listID});
+      listDB.child(listID).set({title, image, price, desc, postdate, listID, userID});
     
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(listID + 1);
