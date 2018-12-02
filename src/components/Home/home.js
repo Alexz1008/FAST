@@ -43,6 +43,7 @@ export class Home extends React.Component {
       this.setState({items});
     });
   }
+
   componentWillUnmount() {
     this.firebaseRef.off();
   }
