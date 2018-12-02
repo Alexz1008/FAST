@@ -47,7 +47,6 @@ export function addToUserList(userID, itemID, listName) {
       list = list.join(separator);
       
       // if the list is size 0, set it to -1.
-      if(list.length == 0) list = "-1";
     }
     db.child(listName).set(list);
   });
