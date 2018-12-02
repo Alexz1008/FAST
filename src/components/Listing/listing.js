@@ -9,9 +9,40 @@ export class Listing extends React.Component {
     this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
     this.handleAddInterestClick = this.handleAddInterestClick.bind(this);
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
+    this.updateList = this.updateList.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
-                  isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate, sellername: this.props.sellername}
+                  isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate, sellername: this.props.sellername, sellerid: this.props.sellerid, buyerid: this.props.buyerid}
+
+    this.constantsDB = this.props.db.database().ref("Constants");
+    this.listsDB = this.props.db.database().ref("Lists");
+    this.conversationDB = this.props.db.database().ref("Conversation");
+
+    // Load in the next unique listing DB number, or create one if it doesn't exist yet
+    this.constantsDB.on('value', dataSnapshot => {
+      if(dataSnapshot.child("Next_Conversation_ID").exists()) {
+        let nextID = dataSnapshot.child("Next_Conversation_ID").val();
+	this.setState({conversationID: nextID});
+      }
+      else {
+        this.constantsDB.child("Next_Conversation_ID").set(1);
+        this.setState({conversationID: 1});
+      }
+    });
+  }
+
+  // adds conversation to conversation list of user
+  updateList(userID, itemID, listName) {
+    var items = [itemID];
+    let userDB = this.listsDB.child(userID);
+
+    // if user has other conversations
+    userDB.once("value").then(function(snapshot) {
+    if (snapshot.child(listName).exists()){
+      items = items.concat(snapshot.child(listName).val());
+    }
+      userDB.set({[listName]: items});
+    });
   }
 
   handleAddClickSaved() {
@@ -23,7 +54,38 @@ export class Listing extends React.Component {
   }
   handleAddInterestClick() {
     this.setState({isInterested: true});
+    
+    const sellerID = this.state.sellerid;
+    const buyerID = this.state.buyerid;
+    const listID = this.state.id;
+    const title = this.state.title;
+
+    var convID = this.state.conversationID;
+    var idExists = true;	      
+    let constDB = this.constantsDB;
+    let convDB = this.conversationDB;
+
+    // create the new conversation in the database after making sure the id doesn't exist yet
+    this.conversationDB.once("value").then(function(snapshot) {
+      idExists = snapshot.child(convID).exists();
+      while(idExists) {
+        convID += 1;
+        idExists = snapshot.child(convID).exists();
+      }
+
+      convDB.child(convID).set({title, buyerID, sellerID, listID, convID});
+
+      // Increment the unique conversation ID and move on
+      constDB.child("Next_Conversation_ID").set(convID + 1);
+    });
+    // add conversation id to both users' conversation list
+    this.updateList(buyerID, convID, "Conversations");
+    this.updateList(sellerID, convID, "Conversations");
+
+    // add listing to buyers interested list
+    this.updateList(buyerID, listID, "Interested");
   }
+
   handleRemoveInterestClick() {
     this.setState({isInterested: false});
     this.setState({confirmed: false});
