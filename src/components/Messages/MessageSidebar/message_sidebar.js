@@ -2,7 +2,6 @@ import React from 'react'
 import { MessageSidebarButton } from './MessageSidebarButton/message_sidebar_button'
 import './message_sidebar.css'
 
-
 const images = ['https://i5.walmartimages.ca/images/Large/580/6_r/875806_R.jpg',
                 'https://cdn.discordapp.com/attachments/431923743028412427/513601584748560384/image0.jpg',
 'https://uwaterloo.ca/centre-for-teaching-excellence/sites/ca.centre-for-teaching-excellence/files/styles/sidebar-220px-wide/public/iclicker.png?itok=J1P1LRte',
@@ -13,14 +12,39 @@ const ids = [0, 1, 2, 3, 4, 5];
 const titles = ["Singular Banana", "Single in La Jolla Palms", "iClicker", "AP CS Textbook", "Physics Textbook", "Couch"];
 const active = [true];
 
-const getConversations = ids.map((id) =>
-  <MessageSidebarButton image={images[id]} title={titles[id]} active={active[id]}/>
-);
+export class MessageSidebar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setState({listings: this.props.listings}, () =>{
+      console.log(this.state.listings);
+    });
+    this.getSidebarButtons = this.getSidebarButtons.bind(this);
+  }
 
-const MessageSidebar = () => (
-  <div className="message-sidebar">
-    {getConversations}
-  </div>
-)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.listings !== this.props.listings) {
+      this.setState({listings: nextProps.listings});
+    }
+  }
 
+  getSidebarButtons() { 
+    if (this.state && this.state.listings) {
+      return this.state.listings.map((item) =>
+          <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} active={true}/>
+      );
+    } else {
+      return (<div></div>)
+    }
+  }
+
+  render() {
+    var getConversations = this.getSidebarButtons();
+
+    return(
+      <div className="message-sidebar">
+        {getConversations}
+      </div>
+    )
+  }
+}
 export default MessageSidebar
