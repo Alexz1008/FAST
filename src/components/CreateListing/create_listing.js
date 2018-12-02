@@ -20,31 +20,25 @@ export class CreateListing extends React.Component{
     this.usersDB = fire.database().ref("Users");
 
     // Load in the next unique listing DB number, or create one if it doesn't exist yet
-    this.constantsDB.on('value', dataSnapshot => {
-      if(dataSnapshot.child("Next_Listing_ID").exists()) {
-        let nextID = dataSnapshot.child("Next_Listing_ID").val();
-        this.setState({id: nextID});
-      }
-      else {
-        this.constantsDB.child("Next_Listing_ID").set(1);
-        this.setState({id: 1});
-      }
-    });
+    // this.constantsDB.on('value', dataSnapshot => {
+      // if(dataSnapshot.child("Next_Listing_ID").exists()) {
+        // let nextID = dataSnapshot.child("Next_Listing_ID").val();
+        // this.setState({id: nextID});
+      // }
+      // else {
+        // this.constantsDB.child("Next_Listing_ID").set(1);
+        // this.setState({id: 1});
+      // }
+      // console.log("Success");
+    // });
     this.state = {
       image: []
     };
-    console.log("Constructed, " + this.state.id);
   }
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
-    this.authListener();
-  }
-
-  // Create a method to authenticate the user with our existing database
-  authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
       // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
@@ -68,34 +62,30 @@ export class CreateListing extends React.Component{
 
     var Seller_Name;
     var Seller_Average_Review;
-    var Listing_ID = this.state.id;
+    var Listing_ID;
     var idExists = true;
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;
     e.preventDefault();
-    
-    // Get the username and average rating of said user
-    this.usersDB.once("value").then(function(snapshot) {
-      Seller_Name = snapshot.child(Seller_ID + "/Name").val();
-      Seller_Average_Review = snapshot.child(Seller_ID + "/Average_Review").val();
-    });
 
     // Save the new listing to the database after making sure the id doesn't exist yet
-    this.listingsDB.once("value").then(function(snapshot) {
-      idExists = snapshot.child(Listing_ID).exists();
+    const { history } = this.props;
+    fire.database().ref().once("value").then(function(snapshot) {
+      Seller_Name = snapshot.child("Users/" + Seller_ID + "/Name").val();
+      Seller_Average_Review = snapshot.child("Users/" + Seller_ID + "/Average_Review").val();
+      Listing_ID = snapshot.child("Constants/Next_Conversation_ID").val();
+      idExists = snapshot.child("Listing/" + Listing_ID).exists();
       while(idExists) {
         Listing_ID += 1;
         idExists = snapshot.child(Listing_ID).exists();
       }
-      console.log("Test here:", {Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
-                                    Seller_Name, Seller_Average_Review});
       listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
                                     Seller_Name, Seller_Average_Review});
 
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(Listing_ID + 1);
+      history.push("/home");
     });
-    this.setState({id: Listing_ID});
   }
 
   handleChange(e) {

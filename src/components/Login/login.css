@@ -33,6 +33,7 @@
 .center h1 a, .center h1 a:active {
   font-family: 'Spectral', serif;
   color:#00487C;
+  text-shadow: -1px 0 white, 0 1px white, 0 -1px white;
   font-size: 40px;
 }
 
