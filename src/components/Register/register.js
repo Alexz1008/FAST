@@ -14,20 +14,7 @@ export class Register extends React.Component {
     this.onDrop = this.onDrop.bind(this);
 
     // Setup the firebase ref for the users database
-    this.usersDB = this.props.db.database().ref("Users");
-
-    // Load in the next unique listing DB number, or create one if it doesn't exist yet
-    this.usersDB.on('value', dataSnapshot => {
-      if(dataSnapshot.child("Next_User_ID").exists()) {
-        let nextID = dataSnapshot.child("Next_User_ID").val();
-        this.setState({id: nextID});
-      }
-      else {
-        this.constantsDB.child("Next_User_ID").set(1);
-        this.setState({id: 1});
-      }
-    });
-    console.log("Constructed, " + this.state.id);
+    this.usersDB = fire.database().ref("Users");
 
     this.state = {
       email: '',
@@ -41,49 +28,31 @@ export class Register extends React.Component {
     };
   }
 
-  createUser(e) {
-    const email = this.state.email;
-    const password = this.state.password;
-    const repass = this.state.repass;
-    const image = this.state.image;
-    const name = this.state.name;
-    const tel = this.state.tel;
-    const zipcode = this.state.zipcode;
-    const city = this.state.city;
-
-    var userID = this.state.id;
-    var idExists = true;
-    let usersDB = this.usersDB;
-    e.preventDefault();
-
-    // Save the new listing to the database after making sure the id doesn't exist yet
-    this.usersDB.once("value").then(function(snapshot) {
-      idExists = snapshot.child(userID).exists();
-      while(idExists) {
-        userID += 1;
-        idExists = snapshot.child(userID).exists();
-      }
-      usersDB.child(userID).set({email, password, image, name, tel, zipcode, city, userID});
-
-      // Increment the unique listing ID and move on
-      usersDB.child("Next_User_ID").set(userID + 1);
-    });
-    this.setState({id: userID});
-    console.log(this.state.user);
+  createUser(u) {
+    const UCSD_Email = this.state.email;
+    const Password = this.state.password;
+    const User_Pic = this.state.image;
+    const Name = this.state.name;
+    const Phone = this.state.tel;
+    const Zip = this.state.zipcode;
+    const City = this.state.city;
+    const Average_Review = "N/A";
+    var userID = u.user.uid;
+    
+    this.usersDB.child(userID).set({UCSD_Email, Password, Name, User_Pic, Phone, Zip, City, Average_Review});
   }
 
   // Setup a register method to add a user into our firebase users database
   register(e) {
     e.preventDefault();
     const { history } = this.props;
-    console.log("HERE", this.props);
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
-      // If the call ends in success
-      history.push("/edit");
+      this.createUser(u);
+      history.push("/");
     })
     .catch((error)=> {
       // If there is any error, report it to the user and prevent going to login
-      window.alert(error);
+      console.log(error);
       history.push("/register");
     });
   }
@@ -95,7 +64,6 @@ export class Register extends React.Component {
 
   onDrop(file, picture) {
     this.setState({image: this.state.image.concat(picture)});
-    console.log(picture);
   }
 
   render() {

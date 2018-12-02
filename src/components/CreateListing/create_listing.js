@@ -15,8 +15,9 @@ export class CreateListing extends React.Component{
     this.onDrop = this.onDrop.bind(this);
 
     // Setup the firebase ref for the constants DB and listings DB
-    this.constantsDB = this.props.db.database().ref("Constants");
-    this.listingsDB = this.props.db.database().ref("Listing");
+    this.constantsDB = fire.database().ref("Constants");
+    this.listingsDB = fire.database().ref("Listing");
+    this.usersDB = fire.database().ref("Users");
 
     // Load in the next unique listing DB number, or create one if it doesn't exist yet
     this.constantsDB.on('value', dataSnapshot => {
@@ -64,12 +65,19 @@ export class CreateListing extends React.Component{
     const desc = this.state.desc;
     const postdate = this.getPostDate();
     const userID = this.state.user.uid;
+    const postername = this.
 
     var listID = this.state.id;
     var idExists = true;
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;
     e.preventDefault();
+    
+    // Get the username and average rating of said user
+    this.usersDB.once("value").then(function(snapshot) {
+      console.log(userID + "/Name");
+      console.log("Test here", snapshot.child(userID + "/Name").val());
+    });
 
     // Save the new listing to the database after making sure the id doesn't exist yet
     this.listingsDB.once("value").then(function(snapshot) {
@@ -84,7 +92,6 @@ export class CreateListing extends React.Component{
       constDB.child("Next_Listing_ID").set(listID + 1);
     });
     this.setState({id: listID});
-    console.log(this.state.user);
   }
 
   handleChange(e) {
