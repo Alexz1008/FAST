@@ -14,11 +14,15 @@ export class Home extends React.Component {
       items: []
     };
 
-    this.firebaseRef = fire.database().ref("Listing");
+    this.firebaseRef = fire.database().ref();
     this.firebaseRef.on('value', dataSnapshot => {
       let items = [];
-      dataSnapshot.forEach(childSnapshot => {
+      var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
+      dataSnapshot.child("Listing").forEach(childSnapshot => {
         let item = childSnapshot.val();
+        item['Next_Conversation_ID'] = nextconversationid;
+        console.log("conv id:", nextconversationid);
+        nextconversationid += 1;
         items.push(item);
       });
       this.setState({items});
@@ -56,7 +60,7 @@ export class Home extends React.Component {
       <div className="listing" key={item['Listing_ID']}>
         <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={checkInterest(this.state.user.uid, item['Listing_ID'])} />
+                  rating={item['Seller_Average_Review']} isInterested={checkInterest(this.state.user.uid, item['Listing_ID'])} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
       </div>
     );
     return (

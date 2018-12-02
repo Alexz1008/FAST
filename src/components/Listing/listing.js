@@ -14,36 +14,11 @@ export class Listing extends React.Component {
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
                   isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate, sellername: this.props.sellername,
-                  sellerid: this.props.sellerid}
+                  sellerid: this.props.sellerid, user: this.props.viewer, conversationID: this.props.conversationID}
 
-    this.constantsDB = fire.database().ref("Constants");
     this.userDB = fire.database().ref("Users");
     this.conversationDB = fire.database().ref("Conversation");
-
-    // Load in the next unique listing DB number, or create one if it doesn't exist yet
-    this.constantsDB.on('value', dataSnapshot => {
-      if(dataSnapshot.child("Next_Conversation_ID").exists()) {
-        let nextID = dataSnapshot.child("Next_Conversation_ID").val();
-        this.setState({conversationID: nextID});
-      }
-      else {
-        this.constantsDB.child("Next_Conversation_ID").set(1);
-        this.setState({conversationID: 1});
-      }
-    });
-  }
-
-  // If the component gets mounted successfully, authenticate the user
-  componentDidMount(){
-    fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      if(user) {
-        this.setState({user});
-      }
-      else {
-        this.setState({user: null});
-      }
-    });
+    this.constantsDB = fire.database().ref("Constants");
   }
 
   handleAddClickSaved() {

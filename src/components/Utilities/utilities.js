@@ -13,12 +13,10 @@ export function removeFromUserList(userID, itemID, listName) {
     if (snapshot.child(listName).exists()){
       list = snapshot.child(listName).val().split(separator);
       
-      console.log("Test here", list);
       // Find and remove the ID
       let removeIndex = list.indexOf("" + itemID);
       if(removeIndex != -1) {
         list.splice(removeIndex, 1);
-        console.log("Remove", list);
       }
       list = list.join(separator);
     }
@@ -44,11 +42,9 @@ export function removeFromUserInterested(userID, itemID, sellerID) {
       let removeIndex = listInterest.indexOf("" + itemID);
       if(removeIndex != -1) {
         listInterest.splice(removeIndex, 1);
-        console.log("Remove", listInterest);
       }
       listInterest = listInterest.join(separator);
     }
-    console.log(userInterestDB.val());
     fire.database().ref("Users").child(userID).child("Interest_Listings").set(listInterest);
     
     // Get a list of all conversations the user is in
