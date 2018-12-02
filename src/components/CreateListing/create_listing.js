@@ -65,7 +65,6 @@ export class CreateListing extends React.Component{
     const desc = this.state.desc;
     const postdate = this.getPostDate();
     const userID = this.state.user.uid;
-    const postername = this.
 
     var listID = this.state.id;
     var idExists = true;
