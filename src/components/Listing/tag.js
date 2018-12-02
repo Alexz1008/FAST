@@ -28,7 +28,7 @@ class Tag extends Component {
 			return (
 				<div key={item}>
 					<input type="checkbox" name={item} id={item} value={item} onChange={this.handleChange} />
-					<label for={item}>{item}</label>
+					<label htmlFor={item}>{item}</label>
 				</div>
 			)
 		});

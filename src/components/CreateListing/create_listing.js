@@ -59,14 +59,16 @@ export class CreateListing extends React.Component{
   }
 
   createListing(e) {
-    const title = this.state.title;
-    const image = this.state.image;
-    const price = this.state.price;
-    const desc = this.state.desc;
-    const postdate = this.getPostDate();
-    const userID = this.state.user.uid;
+    const Listing_Title = this.state.title;
+    const Listing_Pic = this.state.image;
+    const Listing_Price = this.state.price;
+    const Listing_Description = this.state.desc;
+    const Listing_Post_Date = this.getPostDate();
+    const Seller_ID = this.state.user.uid;
 
-    var listID = this.state.id;
+    var Seller_Name;
+    var Seller_Average_Review;
+    var Listing_ID = this.state.id;
     var idExists = true;
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;
@@ -74,23 +76,26 @@ export class CreateListing extends React.Component{
     
     // Get the username and average rating of said user
     this.usersDB.once("value").then(function(snapshot) {
-      console.log(userID + "/Name");
-      console.log("Test here", snapshot.child(userID + "/Name").val());
+      Seller_Name = snapshot.child(Seller_ID + "/Name").val();
+      Seller_Average_Review = snapshot.child(Seller_ID + "/Average_Review").val();
     });
 
     // Save the new listing to the database after making sure the id doesn't exist yet
     this.listingsDB.once("value").then(function(snapshot) {
-      idExists = snapshot.child(listID).exists();
+      idExists = snapshot.child(Listing_ID).exists();
       while(idExists) {
-        listID += 1;
-        idExists = snapshot.child(listID).exists();
+        Listing_ID += 1;
+        idExists = snapshot.child(Listing_ID).exists();
       }
-      listDB.child(listID).set({title, image, price, desc, postdate, listID, userID});
+      console.log("Test here:", {Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
+                                    Seller_Name, Seller_Average_Review});
+      listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
+                                    Seller_Name, Seller_Average_Review});
 
       // Increment the unique listing ID and move on
-      constDB.child("Next_Listing_ID").set(listID + 1);
+      constDB.child("Next_Listing_ID").set(Listing_ID + 1);
     });
-    this.setState({id: listID});
+    this.setState({id: Listing_ID});
   }
 
   handleChange(e) {

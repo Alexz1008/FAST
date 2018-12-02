@@ -16,11 +16,6 @@ import { TransactionHistory } from '../TransactionHistory/transaction_history'
 import fire from '../Fire/fire'
 import firebase from 'firebase';
 
-// Register database for listings for reference in other files
-const CreateListingFB = () => (
-  <CreateListing db={firebase} />
-)
-
 export class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -60,7 +55,7 @@ export class Main extends React.Component {
       <Switch>
         <Route exact path='/' component={Login}/>
         <Route exact path='/login' component={Login}/>
-        <Route path='/create_listing' component={CreateListingFB}/>
+        <Route path='/create_listing' component={CreateListing}/>
         <Route path='/forgot_password' component={ForgotPassword}/>
         <Route path='/home' component={Home}/>
         <Route path='/messages' component={Messages}/>

@@ -36,7 +36,6 @@ export class Home extends React.Component {
       let items = [];
       dataSnapshot.forEach(childSnapshot => {
         let item = childSnapshot.val();
-        item['.key'] = childSnapshot.key;
         console.log(item);
         items.push(item);
       });
@@ -47,10 +46,33 @@ export class Home extends React.Component {
     this.firebaseRef.off();
   }
 
+  // If the component gets mounted successfully, authenticate the user
+  componentDidMount(){
+    this.authListener();
+  }
+
+  // Create a method to authenticate the user with our existing database
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      // If the user is detected, save it to the current state
+      if(user) {
+        this.setState({user});
+        //localStorage.setItem('user',user.uid);
+      }
+      // Otherwise set the current user to null
+      else {
+        this.setState({user: null});
+        //localStorage.removeItem('user');
+      }
+    });
+  }
+
   render() {
     const listings = this.state.items.map(item =>
-      <div className="listing" key={item['.key']}>
-        <Listing title={item['title']} image={item['image']} price={item['price']} desc={item['desc']} id={item['.key']} saved={item['saved']} isMyListing={item['isMyListing']} postdate={item['postdate']} />
+      <div className="listing" key={item['Listing_ID']}>
+        <Listing title={item['Listing_Title']} image={item['Listimg_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
+                  isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} />
       </div>
     );
     return (
