@@ -54,46 +54,30 @@
 .messages-sent {
   color: red;
   text-align:right;
-  
+  display: flex;
+  flex-direction: row-reverse;
   padding-bottom: 5px;
 }
 .messages-sent .hover{
     visibility: hidden;
     width: 120px;
-    background-color: black;
-    color: #fff;
+    color: gray;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    
-
 }
 .messages-sent:hover .hover {
     visibility: visible;
 }
 .messages-received {
   color: blue;
+  display: flex;
   padding-bottom: 5px;
 }
-.messages-received .hover2{
+.messages-received .hover{
     visibility: hidden;
     width: 120px;
-    background-color: black;
-    color: #fff;
+    color: gray;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    
-
 }
-.messages-receieved:hover .hover2{
+.messages-received:hover .hover{
     visibility: visible;
 }
