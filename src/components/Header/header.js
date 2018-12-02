@@ -1,10 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './header.css';
+import fire from '../Fire/fire'
 
 // The Header creates links that can be used to navigate
 // between routes.
 export class Header extends React.Component {
+
+    handleLogout() {
+       fire.auth().signOut().then(function() {
+            console.log("Sign out successful");
+        }, function(error) {
+            // An error happened.
+            console.log("ERROR: sign out unsuccessful");
+        });
+    }
 
     render() {
         return (
@@ -50,7 +60,7 @@ export class Header extends React.Component {
                                                                                         alt="Search"/></button>
                         </form>
                     </div>
-                    <Link to=''>
+                    <Link to='' onClick={ () => this.handleLogout()}>
                         <div className='navbar-button'>
                             <div className="navbar-text">Logout</div>
                         </div>
