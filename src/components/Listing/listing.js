@@ -24,7 +24,7 @@ export class Listing extends React.Component {
     this.constantsDB.on('value', dataSnapshot => {
       if(dataSnapshot.child("Next_Conversation_ID").exists()) {
         let nextID = dataSnapshot.child("Next_Conversation_ID").val();
-	this.setState({conversationID: nextID});
+        this.setState({conversationID: nextID});
       }
       else {
         this.constantsDB.child("Next_Conversation_ID").set(1);
@@ -43,34 +43,6 @@ export class Listing extends React.Component {
       else {
         this.setState({user: null});
       }
-    });
-  }
-
-  // removes from the appropriate list of the user
-  removeFromList(userID, itemID, listName) {
-    let items = [];
-    var user = this.userDB.child(userID);
-
-    // if other items in the list exist, concatenate to the list
-    user.once("value").then(function(snapshot) {
-      if (snapshot.child(listName).exists() && snapshot.child(listName).val().indexOf(itemID) != -1) {
-        items = snapshot.child(listName().val().splice(snapshot.child(listName().val().indexOf(itemID), 1 )));
-      }
-      user.update({[listName]: items});
-    });
-  }
-
-  // adds to the appropriate list of the user
-  addToList(userID, itemID, listName) {
-    var items = [itemID];
-    var user = this.userDB.child(userID);
-    
-    // if other items in the list exist, concatenate to the list
-    user.once("value").then(function(snapshot) {
-      if (snapshot.child(listName).exists()){
-        items = items.concat(snapshot.child(listName).val());
-      }
-      user.update({[listName]: items});
     });
   }
 
@@ -102,6 +74,7 @@ export class Listing extends React.Component {
         idExists = snapshot.child(Conversation_ID).exists();
       }
 
+      console.log("Mega test", {Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
       convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
 
       // Increment the unique conversation ID and move on
@@ -120,12 +93,13 @@ export class Listing extends React.Component {
     this.setState({confirmed: false});
     removeFromUserList(this.state.user.uid, this.state.id, "Interest_Listings");
     var sellerId = this.state.sellerid;
+    var userId = this.state.user.uid;
     
     // Delete the conversation that was started
     fire.database().ref().once("value").then(function(snapshot) {
       
       // Get a list of all conversations the user is in
-      let convs = snapshot.child("Users/" + this.user.uid + "/Conversations").val().split(",");
+      let convs = snapshot.child("Users/" + userId + "/Conversations").val().split(",");
       
       // Iterate through every conversation until the one with matching seller id is found
       var i;

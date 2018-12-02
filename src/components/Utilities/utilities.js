@@ -13,10 +13,12 @@ export function removeFromUserList(userID, itemID, listName) {
     if (snapshot.child(listName).exists()){
       list = snapshot.child(listName).val().split(separator);
       
+      console.log("Test here", list);
       // Find and remove the ID
-      let removeIndex = list.indexOf(itemID);
+      let removeIndex = list.indexOf("" + itemID);
       if(removeIndex != -1) {
-        list = list.splice(removeIndex, 1);
+        list.splice(removeIndex, 1);
+        console.log("Remove", list);
       }
       list = list.join(separator);
     }
@@ -30,7 +32,7 @@ export function removeFromUserList(userID, itemID, listName) {
 // listName - Which user list to add to
 export function addToUserList(userID, itemID, listName) {
   var separator = ",";
-  var list = itemID;
+  var list = "" + itemID;
   var db = fire.database().ref("Users").child(userID);
   
   db.once("value").then(function(snapshot) {
@@ -39,10 +41,13 @@ export function addToUserList(userID, itemID, listName) {
       list = snapshot.child(listName).val().split(separator);
       
       // if this id is a duplicate, don't concatenate
-      if(list.indexOf(itemID) == -1) {
+      if(list.indexOf("" + itemID) == -1) {
         list = list.concat(itemID);
       }
       list = list.join(separator);
+      
+      // if the list is size 0, set it to -1.
+      if(list.length == 0) list = "-1";
     }
     db.child(listName).set(list);
   });
@@ -54,14 +59,16 @@ export function addToUserList(userID, itemID, listName) {
 export function checkInterest(userID, listingID) {
   var db = fire.database().ref();
   db.once("value").then(function(snapshot) {
-    let interested = snapshot.child("Users/" + userID + "/Interest_Listings").val().split(",");
-    
-    var i;
-    for (i = 0; i < interested.length; i++) {
-      if (interested[i] == listingID) {
-        return true;
+    if(snapshot.child("Users/" + userID + "/Interest_Listings").exists()) {
+      let interested = snapshot.child("Users/" + userID + "/Interest_Listings").val().split(",");
+      
+      var i;
+      for (i = 0; i < interested.length; i++) {
+        if (interested[i] == listingID) {
+          return true;
+        }
       }
+      return false;
     }
-    return false;
   });
 }
