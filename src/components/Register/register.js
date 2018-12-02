@@ -96,17 +96,17 @@ export class Register extends React.Component {
               maxFileSize={5242880}
             />
             <label><strong>Name:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} value={this.state.name}/>
+            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" value={this.state.name}/>
             <br />
 
             <label><strong>Phone Number:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} value={this.state.tel}/>
+            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" value={this.state.tel}/>
             <br />
             <label><strong>Zipcode:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} value={this.state.zipcode}/>
+            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" value={this.state.zipcode}/>
             <br />
             <label><strong>City:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
+            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" value={this.state.city}/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
           </div>
           </form>
