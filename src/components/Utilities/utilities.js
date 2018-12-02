@@ -53,15 +53,23 @@ export function removeFromUserInterested(userID, itemID, sellerID) {
     
     // Get a list of all conversations the user is in
     let convs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
-    console.log("Part 1", convs);
+    let sellerconvs = snapshot.child("Users/" + sellerID + "/Conversations").val().split(",");
     
     // Iterate through every conversation until the one with matching seller id is found
     var i;
     for(i = 0; i < convs.length; i++) {
-      console.log("Part 2", snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val(), sellerID);
       if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() == sellerID) {
-        db.child("/Conversation/" + convs[i] + "/Seller_ID").remove();
-        console.log("Success");
+        db.child("/Conversation/" + convs[i]).remove();
+        
+        // Remove the appropriate number from the user's conversation list
+        convs.splice(i, 1);
+        convs = convs.join(separator);
+        db.child("Users/" + userID + "/Conversations").set(convs);
+        
+        // Remove the appropriate number from the seller's conversation list
+        sellerconvs.splice(sellerconvs.indexOf(i), 1);
+        sellerconvs = sellerconvs.join(separator);
+        db.child("Users/" + sellerID + "/Conversations").set(sellerconvs);
         break;
       }
     }
