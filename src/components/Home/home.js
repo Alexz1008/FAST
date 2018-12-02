@@ -21,8 +21,6 @@ export class Home extends React.Component {
       dataSnapshot.child("Listing").forEach(childSnapshot => {
         let item = childSnapshot.val();
         item['Next_Conversation_ID'] = nextconversationid;
-        console.log("conv id:", nextconversationid);
-        nextconversationid += 1;
         items.push(item);
       });
       this.setState({items});

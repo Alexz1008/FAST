@@ -90,9 +90,11 @@ export function addToUserList(userID, itemID, listName) {
       if(list.indexOf("" + itemID) == -1) {
         list = list.concat(itemID);
       }
+      // Filter the list to remove any empty items in the list
+      list = list.filter(function (el) {
+        return el != "";
+      });
       list = list.join(separator);
-      
-      // if the list is size 0, set it to -1.
     }
     db.child(listName).set(list);
   });
