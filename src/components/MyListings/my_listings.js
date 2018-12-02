@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../Header/header'
 import './my_listings.css'
 import { Listing } from '../Listing/listing'
+import firebase from 'firebase';
 const listingid = [5];
 const listingtitles = ["Singular Banana", "Single in La Jolla Palms", "iClicker", "AP CS Textbook", "Physics Textbook", "Couch"];
 const images = ['https://i5.walmartimages.ca/images/Large/580/6_r/875806_R.jpg',
@@ -20,7 +21,7 @@ const listingdescriptions = ["Cheap singular banana, I wanted to eat it but now 
 
 const getInterestedListings = listingid.map((id) =>
   <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isInterested={true}/>
+    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isInterested={true} db={firebase}/>
           </div>
 );
 export class MyListings extends React.Component {
