@@ -15,7 +15,7 @@ const recipient = "John";
 const user = "You";
 const getMessages = messageid.map((id) =>
   <div>
-    {(fromSender[id]) ? (<div className="messages-sent">{messages[id]}<span className="hover">[{timestamps[id]}]</span></div>) : (<div className="messages-received">{messages[id]}<span className="hover2">[{timestamps[id]}]</span></div>)}
+    {(fromSender[id]) ? (<div className="messages-sent"><span className="hover">[{timestamps[id]}]</span>{messages[id]}</div>) : (<div className="messages-received">{messages[id]}<span className="hover2">[{timestamps[id]}]</span></div>)}
   </div>
 );
 
