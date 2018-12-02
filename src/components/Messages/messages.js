@@ -1,4 +1,4 @@
-import React from 'react'
+  import React from 'react'
 import Header from '../Header/header'
 import MessageSidebar from './MessageSidebar/message_sidebar'
 import './messages.css'
@@ -15,7 +15,7 @@ const recipient = "John";
 const user = "You";
 const getMessages = messageid.map((id) =>
   <div>
-    {(fromSender[id]) ? (<div className="messages-sent">{user} [{timestamps[id]}]: {messages[id]}</div>) : (<div className="messages-received">{recipient} [{timestamps[id]}]: {messages[id]}</div>)}
+    {(fromSender[id]) ? (<div className="messages-sent">{messages[id]}<span className="hover">[{timestamps[id]}]</span></div>) : (<div className="messages-received">{messages[id]}<span className="hover2">[{timestamps[id]}]</span></div>)}
   </div>
 );
 
