@@ -59,6 +59,7 @@ export class Main extends React.Component {
     return (
       <Switch>
         <Route exact path='/' component={Login}/>
+        <Route exact path='/login' component={Login}/>
         <Route path='/create_listing' component={CreateListingFB}/>
         <Route path='/forgot_password' component={ForgotPassword}/>
         <Route path='/home' component={Home}/>
