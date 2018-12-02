@@ -30,7 +30,6 @@ export class Register extends React.Component {
 
   createUser(u) {
     const UCSD_Email = this.state.email;
-    const Password = this.state.password;
     const User_Pic = this.state.image;
     const Name = this.state.name;
     const Phone = this.state.tel;
@@ -39,7 +38,7 @@ export class Register extends React.Component {
     const Average_Review = "N/A";
     var userID = u.user.uid;
     
-    this.usersDB.child(userID).set({UCSD_Email, Password, Name, User_Pic, Phone, Zip, City, Average_Review});
+    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review});
   }
 
   // Setup a register method to add a user into our firebase users database
