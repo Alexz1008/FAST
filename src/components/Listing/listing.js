@@ -11,7 +11,7 @@ export class Listing extends React.Component {
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
-                  isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate}
+                  isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate, sellername: this.props.sellername}
   }
 
   handleAddClickSaved() {
@@ -48,7 +48,7 @@ export class Listing extends React.Component {
     return (
 	  <div className={isMyListing ? 'listing-container-self' : 'listing-container'}>
       <div className="listing-upper">
-        <div className="listing-title"><b>{this.state.title}</b>Poster: Alexander Zhou</div>
+        <div className="listing-title"><b>{this.state.title}</b>Poster: {this.state.sellername}</div>
         <img className="listing-picture" src={this.state.image} alt="did not load" />
         <div className="listing-header">
           <div className="listing-header-item">
