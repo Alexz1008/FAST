@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../Header/header'
 import Sidebar from '../Sidebar/sidebar'
 import fire from '../Fire/fire'
+import firebase from 'firebase'
 import './home.css'
 import { Listing } from '../Listing/listing'
 const listingid = [0, 1, 2, 3, 4, 5];
@@ -71,8 +72,8 @@ export class Home extends React.Component {
   render() {
     const listings = this.state.items.map(item =>
       <div className="listing" key={item['Listing_ID']}>
-        <Listing title={item['Listing_Title']} image={item['Listimg_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
-                  isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} />
+        <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
+                  isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid} rating={item['Seller_Average_Review']} db={firebase}/>
       </div>
     );
     return (
