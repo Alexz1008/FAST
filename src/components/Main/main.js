@@ -35,7 +35,6 @@ export class Main extends React.Component {
   // Create a method to authenticate the user with our existing database
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
       // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});

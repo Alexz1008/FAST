@@ -26,6 +26,48 @@ export function removeFromUserList(userID, itemID, listName) {
   });
 }
 
+// removes from the interested list of the user, which also removes the user's conversation in the same snapshot
+// userID - The user of the list you are removing from
+// itemID - The ID of whatever you're removing
+// listName - Which user list to remove from
+export function removeFromUserInterested(userID, itemID, sellerID) {
+  var separator = ",";
+  var listInterest = "-1";
+  var db = fire.database().ref();
+  
+  db.once("value").then(function(snapshot) {
+    let userInterestDB = snapshot.child("Users/" + userID + "/Interest_Listings");
+    if (userInterestDB.exists()){
+      listInterest = userInterestDB.val().split(separator);
+      
+      // Find and remove the ID
+      let removeIndex = listInterest.indexOf("" + itemID);
+      if(removeIndex != -1) {
+        listInterest.splice(removeIndex, 1);
+        console.log("Remove", listInterest);
+      }
+      listInterest = listInterest.join(separator);
+    }
+    console.log(userInterestDB.val());
+    fire.database().ref("Users").child(userID).child("Interest_Listings").set(listInterest);
+    
+    // Get a list of all conversations the user is in
+    let convs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
+    console.log("Part 1", convs);
+    
+    // Iterate through every conversation until the one with matching seller id is found
+    var i;
+    for(i = 0; i < convs.length; i++) {
+      console.log("Part 2", snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val(), sellerID);
+      if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() == sellerID) {
+        db.child("/Conversation/" + convs[i] + "/Seller_ID").remove();
+        console.log("Success");
+        break;
+      }
+    }
+  });
+}
+
 // adds to the appropriate list of the user
 // userID - The user of the list you are adding to
 // itemID - The ID of whatever you're adding

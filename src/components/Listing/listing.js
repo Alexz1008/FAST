@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './listing.css'
 import fire from '../Fire/fire'
-import { addToUserList, removeFromUserList } from '../Utilities/utilities'
+import { addToUserList, removeFromUserList, removeFromUserInterested } from '../Utilities/utilities'
 
 export class Listing extends React.Component {
   constructor(props) {
@@ -74,7 +74,6 @@ export class Listing extends React.Component {
         idExists = snapshot.child(Conversation_ID).exists();
       }
 
-      console.log("Mega test", {Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
       convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
 
       // Increment the unique conversation ID and move on
@@ -91,25 +90,7 @@ export class Listing extends React.Component {
   handleRemoveInterestClick() {
     this.setState({isInterested: false});
     this.setState({confirmed: false});
-    removeFromUserList(this.state.user.uid, this.state.id, "Interest_Listings");
-    var sellerId = this.state.sellerid;
-    var userId = this.state.user.uid;
-    
-    // Delete the conversation that was started
-    fire.database().ref().once("value").then(function(snapshot) {
-      
-      // Get a list of all conversations the user is in
-      let convs = snapshot.child("Users/" + userId + "/Conversations").val().split(",");
-      
-      // Iterate through every conversation until the one with matching seller id is found
-      var i;
-      for(i = 0; i < convs.length; i++) {
-        if (snapshot.child("Conversations/" + convs[i] + "/Seller_ID").val() == sellerId) {
-          snapshot.child("Conversations/" + convs[i] + "/Seller_ID").remove();
-          break;
-        }
-      }
-    });
+    removeFromUserInterested(this.state.user.uid, this.state.id, this.state.sellerid);
   }
   handleDeleteListingClick() {
     console.log("delete listing");
