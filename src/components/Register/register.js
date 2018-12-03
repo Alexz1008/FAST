@@ -60,7 +60,7 @@ export class Register extends React.Component {
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
       // If successful then create the user and push it to the firebase
       this.createUser(u);
-      history.push("/");
+      history.push("/home");
     })
     .catch((error)=> {
       // If there is any error, report it to the user and take them back to register
