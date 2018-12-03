@@ -55,6 +55,7 @@ export class Register extends React.Component {
   // Setup a register method to add a user into our firebase users database
   register(e) {
     e.preventDefault();
+    if(! this.emailValidation()) return;
     const { history } = this.props;
     // Try registration of the user with the provided email and passwords
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
@@ -67,6 +68,16 @@ export class Register extends React.Component {
       console.log(error);
       history.push("/register");
     });
+  }
+
+  //Check if the entered email is a valid ucsd email
+  emailValidation(){
+    let current_email = this.state.email;
+    let at_index = current_email.lastIndexOf('@');
+    if(at_index > -1 && current_email.slice(at_index + 1) === 'ucsd.edu'){
+      return true;
+    }
+    else return false;
   }
 
   // Setup a handleChange method to map the form to the proper values
