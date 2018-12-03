@@ -20,6 +20,7 @@ class Edit extends Component {
           email: '',
           zipcode: '',
           city: '',
+          loaded: false
         };
       }
 
@@ -44,13 +45,13 @@ class Edit extends Component {
           };
           this.firebaseRef = fire.database().ref();
           this.firebaseRef.on('value', dataSnapshot => {
-            let name = dataSnapshot.child("Users/" + this.state.user.uid + "/Name").val();
-            let rating = dataSnapshot.child("Users/" + this.state.user.uid + "/Average_review").val();
-            let image = dataSnapshot.child("Users/" + this.state.user.uid + "/User_Pic").val();
-            let tel = dataSnapshot.child("Users/" + this.state.user.uid + "/Phone").val();
-            let email = dataSnapshot.child("Users/" + this.state.user.uid + "/UCSD_Email").val();
-            let zipcode = dataSnapshot.child("Users/" + this.state.user.uid + "/Zip").val();
-            let city = dataSnapshot.child("Users/" + this.state.user.uid + "/City").val();
+            let name = dataSnapshot.child("Users/" + user.uid + "/Name").val();
+            let rating = dataSnapshot.child("Users/" + user.uid + "/Average_review").val();
+            let image = dataSnapshot.child("Users/" + user.uid + "/User_Pic").val();
+            let tel = dataSnapshot.child("Users/" + user.uid + "/Phone").val();
+            let email = dataSnapshot.child("Users/" + user.uid + "/UCSD_Email").val();
+            let zipcode = dataSnapshot.child("Users/" + user.uid + "/Zip").val();
+            let city = dataSnapshot.child("Users/" + user.uid + "/City").val();
 
 
             this.setState({name});
@@ -60,6 +61,7 @@ class Edit extends Component {
             this.setState({email});
             this.setState({zipcode});
             this.setState({city});
+            this.setState({loaded: true});
           });
         }
         // Otherwise set the current user to null
@@ -67,7 +69,6 @@ class Edit extends Component {
           this.setState({user: null});
           //localStorage.removeItem('user');
         }
-        this.setState({loaded: true});
       });
     }
 
@@ -76,35 +77,31 @@ class Edit extends Component {
     }
 
     handleSubmit(event) {
-      event.preventDefault();
-      fire.auth().onAuthStateChanged(function(user) {
-      // fire.auth().onAuthStateChanged((user) => {
-        // If the user is detected, save it to the current state
-        if(user) {
-          let userID = user.uid;
-          console.log('user')
-          console.log(userID);
-          const UCSD_Email = this.state.email;
-          const User_Pic = this.state.image;
-          const Name = this.state.name;
-          const Phone = this.state.tel;
-          const Zip = this.state.zipcode;
-          const City = this.state.city;
-          let userDB = this.usersDB;
+      if(this.state.user.uid) {
+        let userID = this.state.user.uid;
+        console.log('user')
+        console.log(userID);
+        const UCSD_Email = this.state.email;
+        const User_Pic = this.state.image;
+        const Name = this.state.name;
+        const Phone = this.state.tel;
+        const Zip = this.state.zipcode;
+        const City = this.state.city;
+        let userDB = this.usersDB;
 
-          this.userDB.child(user.uid).update({"UCSD_Email": UCSD_Email,"Name":Name, "User_Pic" : User_Pic, "Phone": Phone, "Zip" : Zip, "City":City})
-        }});
+        this.userDB.child(userID).update({"UCSD_Email": UCSD_Email,"Name":Name, "User_Pic" : User_Pic, "Phone": Phone, "Zip" : Zip, "City":City})
       }
-      
-
+    }
+    
     onDrop(file, picture) {
-    this.setState({image: this.state.image.concat(picture)});
-    console.log(picture);
-  }
+      this.setState({image: this.state.image.concat(picture)});
+      console.log(picture);
+    }
 
     render(){
         return(
             <div>
+            {this.state.loaded ?
                 <form className="profile-form"  >
                 <img className="profile-img" src={this.state.image} alt="did not load" />
 
@@ -135,6 +132,8 @@ class Edit extends Component {
                   <br />
                   <button className="profile-button" onClick={this.handleSubmit}><Link to='/profile'>Save Changes</Link></button>
                 </form>
+                :
+            console.log("error")}
             </div>
         );
     }
