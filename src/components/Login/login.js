@@ -33,7 +33,13 @@ export class Login extends React.Component {
         this.props.history.push("/home");
       }
       else if(!verified) {
-        alert("Your email has not been verified yet. Please verify to have access to Triton Market!")
+        user.sendEmailVerification().then((u) => {
+          // Email Sent
+          alert("Your email has not been verified yet. We just resent you a verification email in case yours got lost in the mail. Please verify to have access to Triton Market!");
+        })
+        .catch((error)=> {
+          console.log(error);
+        });
         this.props.history.push("/login");
       }
 
