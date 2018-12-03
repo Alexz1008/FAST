@@ -68,7 +68,7 @@ export class Messages extends React.Component {
     // access conversations in list database
     this.userDB.child(this.state.user.uid).child("Conversations").once('value', listSnapshot => {
 
-      if(listSnapshot.exists()) {
+      if (listSnapshot.exists()) {
         // access conversation database
         this.conversationDB.once('value', convSnapshot => {
 
