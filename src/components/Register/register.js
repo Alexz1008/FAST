@@ -42,10 +42,14 @@ export class Register extends React.Component {
     const Zip = this.state.zipcode;
     const City = this.state.city;
     const Average_Review = "N/A";
+    const Conversations = "";
+    const Interest_Listings = "";
+    const Saved_Listings = "";
+    const My_Listings = "";
+    const Completed_Transactions = "";
     var userID = u.user.uid;
 
-    // Set the next user in the database to this newly created user
-    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review});
+    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, My_Listings, Completed_Transactions});
   }
 
   // Setup a register method to add a user into our firebase users database

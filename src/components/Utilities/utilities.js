@@ -99,23 +99,3 @@ export function addToUserList(userID, itemID, listName) {
     db.child(listName).set(list);
   });
 }
-
-// Returns true or false depending on if a user has marked an item as interested
-// userID - The user whom is or is not interested
-// listingID - The listing of which the user is or is not interested in
-export function checkInterest(userID, listingID) {
-  var db = fire.database().ref();
-  db.once("value").then(function(snapshot) {
-    if(snapshot.child("Users/" + userID + "/Interest_Listings").exists()) {
-      let interested = snapshot.child("Users/" + userID + "/Interest_Listings").val().split(",");
-      
-      var i;
-      for (i = 0; i < interested.length; i++) {
-        if (interested[i] == listingID) {
-          return true;
-        }
-      }
-      return false;
-    }
-  });
-}
