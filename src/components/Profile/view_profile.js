@@ -31,13 +31,13 @@ class ViewProfile extends Component {
           };
           this.firebaseRef = fire.database().ref();
           this.firebaseRef.on('value', dataSnapshot => {
-            let name = dataSnapshot.child("Users/" + this.state.user.uid + "/Name").val();
-            let rating = dataSnapshot.child("Users/" + this.state.user.uid + "/Average_review").val();
-            let image = dataSnapshot.child("Users/" + this.state.user.uid + "/User_Pic").val();
-            let tel = dataSnapshot.child("Users/" + this.state.user.uid + "/Phone").val();
-            let email = dataSnapshot.child("Users/" + this.state.user.uid + "/UCSD_Email").val();
-            let zipcode = dataSnapshot.child("Users/" + this.state.user.uid + "/Zip").val();
-            let city = dataSnapshot.child("Users/" + this.state.user.uid + "/City").val();
+            let name = dataSnapshot.child("Users/" + user + "/Name").val();
+            let rating = dataSnapshot.child("Users/" + user + "/Average_review").val();
+            let image = dataSnapshot.child("Users/" + user + "/User_Pic").val();
+            let tel = dataSnapshot.child("Users/" + user + "/Phone").val();
+            let email = dataSnapshot.child("Users/" + user + "/UCSD_Email").val();
+            let zipcode = dataSnapshot.child("Users/" + user + "/Zip").val();
+            let city = dataSnapshot.child("Users/" + user + "/City").val();
 
             this.setState({name});
             this.setState({rating});
