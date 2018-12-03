@@ -21,7 +21,7 @@ class ViewProfile extends Component {
       this.firebaseRef.on('value', dataSnapshot => {
         let name = dataSnapshot.child("Users/" + this.state.user.uid + "/Name").val();
         let rating = dataSnapshot.child("Users/" + this.state.user.uid + "/Average_review").val();
-        // TBD this.state.image =
+        let image = dataSnapshot.child("Users/" + this.state.user.uid + "/User_Pic").val();
         let tel = dataSnapshot.child("Users/" + this.state.user.uid + "/Phone").val();
         let email = dataSnapshot.child("Users/" + this.state.user.uid + "/UCSD_Email").val();
         let zipcode = dataSnapshot.child("Users/" + this.state.user.uid + "/Zip").val();
@@ -29,6 +29,7 @@ class ViewProfile extends Component {
 
         this.setState({name});
         this.setState({rating});
+        this.setState({image});
         this.setState({tel});
         this.setState({email});
         this.setState({zipcode});
