@@ -33,13 +33,16 @@ export class Home extends React.Component {
           let savedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Saved_Listings").val().split(",");
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
           dataSnapshot.child("Listing").forEach(childSnapshot => {
+            // Make sure to only push items that are not transaction logs
             let item = childSnapshot.val();
-            item['Next_Conversation_ID'] = nextconversationid;
+            if(item['Is_Transaction_Log'] === false) {
+              item['Next_Conversation_ID'] = nextconversationid;
 
-            // Check if this listing was marked as interested or not
-            item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
-            item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
-            items.push(item);
+              // Check if this listing was marked as interested or not
+              item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
+              item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
+              items.push(item);
+            }
           });
           this.setState({items});
           this.setState({loaded:true});
