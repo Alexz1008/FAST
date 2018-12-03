@@ -29,7 +29,7 @@ export class Home extends React.Component {
         this.firebaseRef = fire.database().ref();
         this.firebaseRef.on('value', dataSnapshot => {
           // If the constants database does not exist, initialize it
-          if(!this.firebaseRef.child("Constants").exists()) {
+          if(!dataSnapshot.child("Constants").exists()) {
             const Next_Conversation_ID = 1;
             const Next_Listing_ID = 1;
             const Next_Message_ID = 1;
