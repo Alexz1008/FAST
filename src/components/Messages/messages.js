@@ -3,6 +3,7 @@ import Header from '../Header/header'
 import MessageSidebar from './MessageSidebar/message_sidebar'
 import './messages.css'
 import fire from '../Fire/fire'
+import { addToUserList } from '../Utilities/utilities'
 
 
 const messageid = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -55,16 +56,18 @@ export class Messages extends React.Component {
     this.usersDB = fire.database().ref("Users");
     this.listingsDB = fire.database().ref("Listing");
 
-    this.state={
-      confirmedListing: true
+    this.state = {
+      confirmText: "Confirm Transaction",
+      listingConfirmed: false,
+      confirmStyle: "messages-confirmtransaction"
     };
   }
-  _handleKeyPress = (e) => {
+_handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.postMessage()
     }
   }
-  getConversations(callbackFunction) {
+  getConversations() {
     this.userDB = this.usersDB;
     this.conversationDB = this.conversationsDB;
     this.listingDB = this.listingsDB;
@@ -82,38 +85,37 @@ export class Messages extends React.Component {
             let conversations = [];
             let listings = [];
 
-	    // go through each conversation
+            // go through each conversation
             let conv = listSnapshot.val();
-	    console.log(conv);  
             conversations = this.getArrayFromList(conv);
-	    if(conversations && conversations.length > 0) {    
+            if(conversations && conversations.length > 0) {    
               conversations.forEach((conv) => {
-	      // get listing id from conversation database and get listing from listing database
-	      let id = convSnapshot.child(conv).child("Listing_ID").val();
-	      let listing = listingSnapshot.child(id).val();
-	      listing['Conversation_ID'] = conv;
-              console.log(listing);
-	      listings.push(listing);
+                // get listing id from conversation database and get listing from listing database
+                let id = convSnapshot.child(conv).child("Listing_ID").val();
+                let listing = listingSnapshot.child(id).val();
+                if(listing != null) {
+                  listing['Conversation_ID'] = conv;
+                  listings.push(listing);
+                }
 
-	      // set the current active conversation
-	      if (!this.state.currID) {
-	        this.setState({currID: conv}, () => {
-                  this.getMessages();
-	        });
-	      }
+                // set the current active conversation
+                if (!this.state.currID) {
+                  this.setState({currID: conv}, () => {
+                          this.getMessages();
+                  });
+                }
               });
             }
             this.setState({conversations: conversations}, () => {
-	      console.log(this.state.conversations);
+              console.log(this.state.conversations);
             });
             this.setState({listings: listings}, () => {
-	      console.log(this.state.listings);
+              console.log(this.state.listings);
             });
           });
         });
       }
     });
-    callbackFunction();
   }
 
   getActiveConversation(id){
@@ -126,27 +128,19 @@ export class Messages extends React.Component {
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
     this.authListener(() => {
-      this.getConversations(() => {
-	console.log("get Conversation finished" + this.state.currID);
-        this.getMessages();
-      });
+      this.getConversations();
     });
   }
 
   // Create a method to authenticate the user with our existing database
   authListener(callback) {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
-        //localStorage.setItem('user',user.uid);
-	callback();
+        callback();
       }
-      // Otherwise set the current user to null
       else {
         this.setState({user: null});
-        //localStorage.removeItem('user');
       }
     });
   } 
@@ -239,22 +233,22 @@ export class Messages extends React.Component {
 	this.setState({username: username});
       });
 
-    convDB.on('value', dataSnapshot => {
-      var messageList = dataSnapshot.child(convID).child("Message_List").val();
-      var messageArray = this.getArrayFromList(messageList);
+      convDB.on('value', dataSnapshot => {
+        var messageList = dataSnapshot.child(convID).child("Message_List").val();
+        var messageArray = this.getArrayFromList(messageList);
       
-      messageDB.on('value', snapshot => {
-	messageArray.forEach((item) => {
-            messages.push(snapshot.child(item).val());
-	    console.log("get Message" + item);
+        messageDB.on('value', snapshot => {
+  	  messageArray.forEach((item) => {
+              messages.push(snapshot.child(item).val());
+	      console.log("get Message" + item);
+          });
+          this.setState({messages: messages}, () => {
+            this.forceUpdate();
+            console.log(messages);
+          });
         });
       });
-    });
-    this.setState({messages: messages}, () => {
-      this.forceUpdate();
-      console.log(messages);
-    });
-   }
+    }
   }
 
   getArrayFromList(list) {
@@ -284,7 +278,34 @@ export class Messages extends React.Component {
   }
   
   confirmTransaction() {
+    // TODO make sure this checks that the seller only has 1 confirmation per listing!
     
+    // Check if the user is the buyer or seller
+    fire.database().ref().once('value').then(function(snapshot) {
+      var listingID = fire.database().ref().child("Conversation/" + this.state.currID + "/Listing_ID").val();
+      if(snapshot.child("Conversation/" + this.state.currID + "/Buyer_ID").val() === this.state.user.uid) {
+        fire.database().ref().child("Conversation/" + this.state.currID + "/Buyer_Confirm").set(true);
+        
+        // If seller has already confirmed, complete the transaction and log it
+        if(snapshot.child("Conversation/" + this.state.currID + "/Seller_Confirm").val() === true) {
+          fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
+          
+          // Add the log to both user's transaction histories
+          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
+          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
+          
+        }
+      }
+      else {
+        fire.database().ref().child("Conversation/" + this.state.currID + "/Seller_Confirm").set(true);
+        if(snapshot.child("Conversation/" + this.state.currID + "/Buyer_Confirm").val() === true) {
+          fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
+          
+          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
+          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
+        }
+      }
+    });
   }
 
   render() {
@@ -296,7 +317,7 @@ export class Messages extends React.Component {
           {this.getMessageSidebar()}
           <div className="messages-messenger">
             <div className="messages-messages">
-              {this.state && this.state.username && this.state.messages.map((item) => 
+              {this.state && this.state.username && this.state.messages && this.state.messages.map((item) => 
                 <div>
                   {(this.state.username === item['Sender_Name']) ? 
                   (<div className="messages-sent">
@@ -320,9 +341,9 @@ export class Messages extends React.Component {
               )}
             </div>
             <div className="messages-messenger-container">
-              <input type="text" className="messages-messenger-input" id="messages-input" onKeyPress={this._handleKeyPress} onChange={this.handleChange}></input>
-              <button type = "submit" id = "submitbutton" className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
-              <button className="messages-confirmtransaction" onClick={this.confirmTransaction}>Confirm Transaction</button>
+              <input className="messages-messenger-input" id="messages-input" onKeyPress={this._handleKeyPress} onChange={this.handleChange}></input>
+              <button className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
+              <button className={this.state.confirmStyle} disabled={this.state.listingConfirmed} onClick={this.state.listingConfirmed ? null : this.confirmTransaction}>{this.state.confirmText}</button>
             </div>
           </div>
         </div>
