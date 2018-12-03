@@ -10,3 +10,8 @@
   justify-content: center;
   width: 300px;
 }
+
+.history-loading {
+  margin-top: 15%;
+  margin-left: 40%;
+}

@@ -1,5 +1,8 @@
+// Register.js handles the user registration and profile creation for the website
+
+// Import the required functionality for registration
 import React from 'react'
-//by default, using styles from ./login.css
+//By default, register.js uses styles from ./login.css
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
 import ImageUploader from 'react-images-upload'
@@ -16,6 +19,7 @@ export class Register extends React.Component {
     // Setup the firebase ref for the users database
     this.usersDB = fire.database().ref("Users");
 
+    // Populate the state with fields requried for registration and profile creation
     this.state = {
       email: '',
       password: '',
@@ -28,6 +32,8 @@ export class Register extends React.Component {
     };
   }
 
+  /* Setup a method to create users with their corresponding fields and values
+     which will then be pushed out to firebase */
   createUser(u) {
     const UCSD_Email = this.state.email;
     const User_Pic = this.state.image;
@@ -36,21 +42,28 @@ export class Register extends React.Component {
     const Zip = this.state.zipcode;
     const City = this.state.city;
     const Average_Review = "N/A";
+    const Conversations = "";
+    const Interest_Listings = "";
+    const Saved_Listings = "";
+    const My_Listings = "";
+    const Completed_Transactions = "";
     var userID = u.user.uid;
-    
-    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review});
+
+    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, My_Listings, Completed_Transactions});
   }
 
   // Setup a register method to add a user into our firebase users database
   register(e) {
     e.preventDefault();
     const { history } = this.props;
+    // Try registration of the user with the provided email and passwords
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
+      // If successful then create the user and push it to the firebase
       this.createUser(u);
-      history.push("/");
+      history.push("/home");
     })
     .catch((error)=> {
-      // If there is any error, report it to the user and prevent going to login
+      // If there is any error, report it to the user and take them back to register
       console.log(error);
       history.push("/register");
     });
@@ -61,12 +74,14 @@ export class Register extends React.Component {
     this.setState({ [e.target.name]: e.target.value});
   }
 
+  // Setup an onDrop method to handle when users drag and drop a file in as their profile picture
   onDrop(file, picture) {
     this.setState({image: this.state.image.concat(picture)});
   }
 
   render() {
     return(
+      // Render a form on the front-end to allow users to register and create their own profiles
       <div className="container">
         <div className="center">
         <form className="register-form">
