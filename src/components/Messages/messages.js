@@ -49,6 +49,7 @@ export class Messages extends React.Component {
     this.addToConversationList = this.addToConversationList.bind(this);
     this.getMessages = this.getMessages.bind(this);
     this.getArrayFromList = this.getArrayFromList.bind(this);
+    this.confirmTransaction = this.confirmTransaction.bind(this);
 
     this.messagesDB = fire.database().ref("Message");
     this.conversationsDB = fire.database().ref("Conversation");
@@ -281,28 +282,31 @@ _handleKeyPress = (e) => {
     // TODO make sure this checks that the seller only has 1 confirmation per listing!
     
     // Check if the user is the buyer or seller
+    console.log("Test here", this.state);
+    var convID = this.state.currID;
+    var userID = this.state.user.uid;
     fire.database().ref().once('value').then(function(snapshot) {
-      var listingID = fire.database().ref().child("Conversation/" + this.state.currID + "/Listing_ID").val();
-      if(snapshot.child("Conversation/" + this.state.currID + "/Buyer_ID").val() === this.state.user.uid) {
-        fire.database().ref().child("Conversation/" + this.state.currID + "/Buyer_Confirm").set(true);
+      var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
+      if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
+        fire.database().ref().child("Conversation/" + convID + "/Buyer_Confirm").set(true);
         
         // If seller has already confirmed, complete the transaction and log it
-        if(snapshot.child("Conversation/" + this.state.currID + "/Seller_Confirm").val() === true) {
+        if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           
           // Add the log to both user's transaction histories
-          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
-          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
+          addToUserList(userID, listingID, "Completed_Transactions");
+          addToUserList(userID, listingID, "Completed_Transactions");
           
         }
       }
       else {
-        fire.database().ref().child("Conversation/" + this.state.currID + "/Seller_Confirm").set(true);
-        if(snapshot.child("Conversation/" + this.state.currID + "/Buyer_Confirm").val() === true) {
+        fire.database().ref().child("Conversation/" + convID + "/Seller_Confirm").set(true);
+        if(snapshot.child("Conversation/" + convID + "/Buyer_Confirm").val() === true) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           
-          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
-          addToUserList(this.state.user.uid, listingID, "Completed_Transactions");
+          addToUserList(userID, listingID, "Completed_Transactions");
+          addToUserList(userID, listingID, "Completed_Transactions");
         }
       }
     });
