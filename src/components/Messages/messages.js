@@ -288,6 +288,8 @@ _handleKeyPress = (e) => {
     var userID = this.state.user.uid;
     fire.database().ref().once('value').then(function(snapshot) {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
+      var sellerID = snapshot.child("Conversation/" + convID + "/Seller_ID").val();
+      var buyerID = snapshot.child("Conversation/" + convID + "/Buyer_ID").val();
       if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
         fire.database().ref().child("Conversation/" + convID + "/Buyer_Confirm").set(true);
         
@@ -297,8 +299,7 @@ _handleKeyPress = (e) => {
           
           // Add the log to both user's transaction histories
           addToUserList(userID, listingID, "Completed_Transactions");
-          addToUserList(userID, listingID, "Completed_Transactions");
-          
+          addToUserList(sellerID, listingID, "Completed_Transactions");
         }
       }
       else {
@@ -307,7 +308,7 @@ _handleKeyPress = (e) => {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           
           addToUserList(userID, listingID, "Completed_Transactions");
-          addToUserList(userID, listingID, "Completed_Transactions");
+          addToUserList(buyerID, listingID, "Completed_Transactions");
         }
       }
     });

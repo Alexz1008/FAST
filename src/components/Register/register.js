@@ -61,7 +61,18 @@ export class Register extends React.Component {
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
       // If successful then create the user and push it to the firebase
       this.createUser(u);
-      history.push("/home");
+
+      // Now send the user a verification email
+      var user = fire.auth().currentUser;
+      user.sendEmailVerification().then((u) => {
+        // Email Sent
+        alert("Registration successful! Please check your inbox for a verification email to enable access Triton Market!");
+      })
+      .catch((error)=> {
+        console.log(error);
+      });
+
+      history.push("/login");
     })
     .catch((error)=> {
       // If there is any error, report it to the user and take them back to register

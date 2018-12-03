@@ -24,8 +24,25 @@ export class Login extends React.Component {
     e.preventDefault();
     // Try authenticating the email and password combo with firebase
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
-      // Push them on to the homepage if the login is successful
-      this.props.history.push("/home");
+      // Check to see if their email is verified
+      var user = fire.auth().currentUser;
+      var verified = user.emailVerified;
+      if(verified)
+      {
+        // Push them on to the homepage if the login is successful
+        this.props.history.push("/home");
+      }
+      else if(!verified) {
+        user.sendEmailVerification().then((u) => {
+          // Email Sent
+          alert("Your email has not been verified yet. We just resent you a verification email in case yours got lost in the mail. Please verify to have access to Triton Market!");
+        })
+        .catch((error)=> {
+          console.log(error);
+        });
+        this.props.history.push("/login");
+      }
+
     }).catch((error)=> {
       // If there is any error, report it to the user and prevent going to home
       window.alert(error);
