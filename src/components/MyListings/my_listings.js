@@ -13,6 +13,9 @@ export class MyListings extends React.Component {
       loaded: false,
       page: 'Interested'
     };
+    this.handleInterestedClick = this.handleInterestedClick.bind(this);
+    this.handleSavedClick = this.handleSavedClick.bind(this);
+    this.handlePostedClick = this.handlePostedClick.bind(this);
   }
 
   // If the component gets mounted successfully, authenticate the user
@@ -23,9 +26,6 @@ export class MyListings extends React.Component {
         this.setState({user});
         //localStorage.setItem('user',user.uid);
         this.state = {page: 'Interested', saved: [], interested: [], posted: []};
-        this.handleInterestedClick = this.handleInterestedClick.bind(this);
-        this.handleSavedClick = this.handleSavedClick.bind(this);
-        this.handlePostedClick = this.handlePostedClick.bind(this);
 
         this.firebaseRef = fire.database().ref();
         this.firebaseRef.on('value', dataSnapshot => {
@@ -84,7 +84,7 @@ export class MyListings extends React.Component {
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} isSaved={item['isSaved']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
                   </div>
                 );
     }
@@ -93,7 +93,7 @@ export class MyListings extends React.Component {
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} isSaved={item['isSaved']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
                   </div>
                 );
     }
@@ -102,7 +102,7 @@ export class MyListings extends React.Component {
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} isSaved={item['isSaved']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
                   </div>
                 );
     }
