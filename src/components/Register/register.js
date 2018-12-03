@@ -88,6 +88,7 @@ export class Register extends React.Component {
   // Setup an onDrop method to handle when users drag and drop a file in as their profile picture
   onDrop(file, picture) {
     this.setState({image: this.state.image.concat(picture)});
+    document.body.style.backgroundImage = "url('https://anotherangle.eu/wp-content/uploads/2017/03/Geisel-Library-South-2048.jpg')";
   }
 
   render() {
