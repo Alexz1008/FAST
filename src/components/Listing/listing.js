@@ -39,6 +39,8 @@ export class Listing extends React.Component {
       const Buyer_ID = this.state.user.uid;
       const Listing_ID = this.state.id;
       const Conversation_Title = this.state.title;
+      const Buyer_Confirm = false;
+      const Seller_Confirm = false;
 
       var Conversation_ID = this.state.conversationID;
       var idExists = true;
@@ -53,7 +55,7 @@ export class Listing extends React.Component {
           idExists = snapshot.child(Conversation_ID).exists();
         }
 
-        convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
+        convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID, Buyer_Confirm, Seller_Confirm});
 
         // Increment the unique conversation ID and move on
         constDB.child("Next_Conversation_ID").set(Conversation_ID + 1);
