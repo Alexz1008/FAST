@@ -13,18 +13,6 @@ export class TransactionHistory extends React.Component {
       items: [],
       loaded: false
     };
-    this.firebaseRef = fire.database().ref();
-    this.firebaseRef.on('value', dataSnapshot => {
-      let items = [];
-      let completedTransactions = dataSnapshot.child("Users/" + this.state.user.uid + "/Completed_Transactions").val().split(",");
-      
-      var i;
-      for (i = 0; i < completedTransactions.length; i++) {
-        items.push(dataSnapshot.child("Listing/" + completedTransactions[i]).val());
-      }
-      this.setState({items});
-      this.setState({loaded:true});
-    });
   }
   
   componentWillUnmount() {
@@ -37,12 +25,22 @@ export class TransactionHistory extends React.Component {
       // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
-        //localStorage.setItem('user',user.uid);
+        this.firebaseRef = fire.database().ref();
+        this.firebaseRef.on('value', dataSnapshot => {
+          let items = [];
+          let completedTransactions = dataSnapshot.child("Users/" + this.state.user.uid + "/Completed_Transactions").val().split(",");
+          
+          var i;
+          for (i = 0; i < completedTransactions.length; i++) {
+            items.push(dataSnapshot.child("Listing/" + completedTransactions[i]).val());
+          }
+          this.setState({items});
+          this.setState({loaded:true});
+        });
       }
       // Otherwise set the current user to null
       else {
         this.setState({user: null});
-        //localStorage.removeItem('user');
       }
     });
   }

@@ -55,7 +55,9 @@ export class Messages extends React.Component {
     this.usersDB = fire.database().ref("Users");
     this.listingsDB = fire.database().ref("Listing");
 
-    this.state={};
+    this.state={
+      confirmedListing: true
+    };
   }
 
   getConversations(callbackFunction) {
@@ -272,6 +274,10 @@ export class Messages extends React.Component {
     }
 
     return arr;
+  }
+  
+  confirmTransaction() {
+    
   }
 
   render() {
