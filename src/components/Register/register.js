@@ -109,16 +109,14 @@ export class Register extends React.Component {
             <label htmlFor="repass"><strong>Re-enter password:</strong></label><br />
             <input value={this.state.repeat} onChange={this.handleChange} type="password" className="basic-input" name="repass" id="repass" required/><br />
 
-            <br /><br />
-
-            <img className="profile-img" src={this.state.picture} alt="." />
-
             <ImageUploader
               withIcon={false}
+              withPreview ={true}
               buttonText='Upload Profile Picture'
-              // onChange={e => this.setState({picture: e.target.picture})}
+              onChange={this.onDrop}
               imgExtension={['.jpg', '.gif', '.png', '.gif']}
               maxFileSize={5242880}
+              singleImage={true}
             />
             <label><strong>Name:</strong></label>
             <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" value={this.state.name}/>
