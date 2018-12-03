@@ -63,15 +63,47 @@ export class Messages extends React.Component {
       confirmStyle: "messages-confirmtransaction"
     };
   }
-_handleKeyPress = (e) => {
+  
+  _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.postMessage()
     }
   }
+  
   getConversations() {
     this.userDB = this.usersDB;
     this.conversationDB = this.conversationsDB;
     this.listingDB = this.listingsDB;
+    
+    // Evan code fix
+    /*
+    var userID = this.state.user.uid;
+    let listings = [];
+    fire.database().ref().once('value').then(function(snapshot) {
+      // Check if the user has any conversations
+      let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
+      
+      var i;
+      boolean hasActive = false;
+      for(i = 0; i < userConvs.length; i++) {
+        if(userConvs[i] != "") {
+          let id = snapshot.child("Conversation/" + userConvs[i] + "/Listing_ID").val();
+          let listing = snapshot.child("Listing/" + id).val();
+          if(listing != null) {
+            listing['Conversation_ID'] = userConvs[i];
+            listings.push(listing);
+          }
+          
+          // If we don't have an active conversation, push the first one
+          if(!hasActive) {
+            this.setState({currID: conv}, () => {
+              this.getMessages();
+            });
+          }
+        }
+      }
+    }
+    */
 
     // access conversations in list database
     this.userDB.child(this.state.user.uid).child("Conversations").once('value', listSnapshot => {
@@ -232,7 +264,7 @@ _handleKeyPress = (e) => {
       // get user's name
       userDB.once('value', dataSnapshot => {
         let username = dataSnapshot.child(user).child("Name").val();
-	this.setState({username: username});
+        this.setState({username: username});
       });
 
       convDB.on('value', dataSnapshot => {
@@ -240,14 +272,12 @@ _handleKeyPress = (e) => {
         var messageArray = this.getArrayFromList(messageList);
       
         messageDB.on('value', snapshot => {
-  	  messageArray.forEach((item) => {
-              messages.push(snapshot.child(item).val());
-	      console.log("get Message" + item);
+          messageArray.forEach((item) => {
+            messages.push(snapshot.child(item).val());
           });
-          this.setState({messages: messages}, () => {
-            this.forceUpdate();
-            console.log(messages);
-          });
+        });
+        this.setState({messages: messages}, () => {
+          this.forceUpdate();
         });
       });
     }
