@@ -59,7 +59,11 @@ export class Messages extends React.Component {
       confirmedListing: true
     };
   }
-
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.postMessage()
+    }
+  }
   getConversations(callbackFunction) {
     this.userDB = this.usersDB;
     this.conversationDB = this.conversationsDB;
@@ -316,8 +320,8 @@ export class Messages extends React.Component {
               )}
             </div>
             <div className="messages-messenger-container">
-              <input className="messages-messenger-input" id="messages-input" onChange={this.handleChange}></input>
-              <button className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
+              <input type="text" className="messages-messenger-input" id="messages-input" onKeyPress={this._handleKeyPress} onChange={this.handleChange}></input>
+              <button type = "submit" id = "submitbutton" className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
               <button className="messages-confirmtransaction" onClick={this.confirmTransaction}>Confirm Transaction</button>
             </div>
           </div>

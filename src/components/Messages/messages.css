@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: row;
   height: 95%;
+
 }
 
 .messages-sidebar {
@@ -21,7 +22,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+}
+.messages-messages{
+  height: 95%;
+  overflow-y: scroll;
 }
 
 .messages-messenger-container {
@@ -30,6 +34,7 @@
   height: 40px;
   display: flex;
   justify-content: space-between;
+  
 }
 
 .messages-messenger-input {
