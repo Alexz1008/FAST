@@ -42,6 +42,7 @@ export class Messages extends React.Component {
     super(props);
     this.getConversations = this.getConversations.bind(this);
     this.getMessageSidebar = this.getMessageSidebar.bind(this);
+    this.getActiveConversation = this.getActiveConversation.bind(this);
   }
 
   getConversations() {
@@ -86,8 +87,14 @@ export class Messages extends React.Component {
 	    // get listing id from conversation database and get listing from listing database
 	    let id = convSnapshot.child(conv).child("Listing_ID").val();
 	    let listing = listingSnapshot.child(id).val();
+	    listing['Conversation_ID'] = conv;
             console.log(listing);
 	    listings.push(listing);
+
+	    // set the current active conversation
+	    if (!this.state.currID) {
+	      this.setState({currID: conv});
+	    }
           });
           this.setState({conversations: conversations}, () => {
 	    console.log(this.state.conversations);
@@ -97,6 +104,12 @@ export class Messages extends React.Component {
           });
         });
       });
+    });
+  }
+
+  getActiveConversation(id){
+    this.setState({currID: id}, () => {
+      console.log(this.state.currID);
     });
   }
 
@@ -126,8 +139,8 @@ export class Messages extends React.Component {
   } 
 
   getMessageSidebar() {
-    if (this.state && this.state.listings) {
-     return <MessageSidebar listings={this.state.listings}/>
+    if (this.state && this.state.listings && this.state.currID) {
+      return <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
     } else {
      return <MessageSidebar />
     }

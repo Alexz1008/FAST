@@ -20,17 +20,22 @@ export class MessageSidebar extends React.Component {
     });
     this.getSidebarButtons = this.getSidebarButtons.bind(this);
   }
-
+	
   componentWillReceiveProps(nextProps) {
     if (nextProps.listings !== this.props.listings) {
       this.setState({listings: nextProps.listings});
     }
   }
 
+  // retrieves sidebar buttons
   getSidebarButtons() { 
+    var currID = this.props.currID;
+    // make sure this.state is loaded
     if (this.state && this.state.listings) {
       return this.state.listings.map((item) =>
-          <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} active={true}/>
+        <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} 
+	  convID={item['Conversation_ID']} active={item['Conversation_ID'] == currID}
+	  callbackFunction={this.props.callbackFunction}/>
       );
     } else {
       return (<div></div>)
@@ -38,11 +43,9 @@ export class MessageSidebar extends React.Component {
   }
 
   render() {
-    var getConversations = this.getSidebarButtons();
-
     return(
       <div className="message-sidebar">
-        {getConversations}
+        {this.getSidebarButtons()}
       </div>
     )
   }

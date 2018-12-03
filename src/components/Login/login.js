@@ -1,3 +1,6 @@
+// Login.js handles the user login portion of the website
+
+// Import the required functionality for login
 import React from 'react'
 import './login.css'
 import fire from '../Fire/fire'
@@ -9,17 +12,17 @@ export class Login extends React.Component {
     // Bind the proper login and handle methods to the one in the current state
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    // Populate the state with email and password for authentication with firebase
     this.state = {
       email: '',
       password: ''
     };
-
-    //this.firebaseRef = this.props.db.database().ref("users");
   }
 
   // Setup a login method to sign into our firebase users database
   login(e) {
     e.preventDefault();
+    // Try authenticating the email and password combo with firebase
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
       // Push them on to the homepage if the login is successful
       this.props.history.push("/home");
@@ -40,6 +43,7 @@ export class Login extends React.Component {
 
   render () {
     return (
+      // Render a form on the front-end to allow users to login with their credentials
       <div className="container">
         <div className="center">
           <form className="login-form">

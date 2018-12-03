@@ -5,15 +5,16 @@ import fire from '../Fire/fire'
 import './home.css'
 import { Listing } from '../Listing/listing'
 import { checkInterest } from '../Utilities/utilities'
+import LoadingImg from './circle-loading-gif.gif'
 
 export class Home extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      items: []
+      items: [],
+      loaded: false
     };
-
     this.firebaseRef = fire.database().ref();
     this.firebaseRef.on('value', dataSnapshot => {
       let items = [];
@@ -24,7 +25,9 @@ export class Home extends React.Component {
         items.push(item);
       });
       this.setState({items});
+      this.setState({loaded:true});
     });
+
     
   }
 
@@ -69,7 +72,8 @@ export class Home extends React.Component {
             <Sidebar />
           </div>
           <div className="content-listings">
-            {listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div>}
+            
+            {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className = "loading-circle"><img src= {LoadingImg}></img></div>}
           </div>
         </div>
       </div>
