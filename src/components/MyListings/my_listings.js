@@ -4,7 +4,6 @@ import './my_listings.css'
 import { Listing } from '../Listing/listing'
 import firebase from 'firebase';
 import fire from '../Fire/fire';
-import { checkInterest } from '../Utilities/utilities'
 
 const listingid = [4];
 const listingtitles = ["Singular Banana", "Single in La Jolla Palms", "iClicker", "AP CS Textbook", "Physics Textbook", "Couch"];
@@ -27,11 +26,10 @@ export class MyListings extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {page: 'Interested', listing_ids: [], saved: [], interested: [], posted: []};
+    this.state = {page: 'Interested', saved: [], interested: [], posted: []};
     this.handleInterestedClick = this.handleInterestedClick.bind(this);
     this.handleSavedClick = this.handleSavedClick.bind(this);
     this.handlePostedClick = this.handlePostedClick.bind(this);
-    this.getListings = this.getListings.bind(this);
 
     this.firebaseRef = fire.database().ref();
     this.firebaseRef.on('value', dataSnapshot => {
@@ -45,7 +43,7 @@ export class MyListings extends React.Component {
         if(item['Is_Saved']) {
           saved.push(item);
         }
-        else if(checkInterest(this.state.user.uid, item['Listing_ID'])) {
+        else if(item['isInterested']) {
           interested.push(item);
         }
         else if(item['Seller_ID'] === this.state.user.uid) {
@@ -74,26 +72,6 @@ export class MyListings extends React.Component {
     });
   }
 
-  getListings() {
-    const currPage = this.state.page;
-    const userID = this.state.user.uid;
-    var target_ids;
-
-    this.firebaseRef.on("value", dataSnapshot => {
-      if (currPage === 'Interested') {
-        target_ids = dataSnapshot.child("Users/" + userID + "/Interest_Listings").val();
-        console.log(target_ids);
-      }
-      else if (currPage === 'Saved') {
-        target_ids = dataSnapshot.child("Users/" + userID + "/Saved_Listings").val();
-      }
-      else {
-        target_ids = dataSnapshot.child("Users/" + userID + "/Posted_Listings").val();
-      }
-      this.setState({listing_ids: target_ids.split(',')});
-    });
-  }
-
   handleInterestedClick() {
     this.setState({page: 'Interested'});
   }
@@ -113,7 +91,7 @@ export class MyListings extends React.Component {
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={checkInterest(this.state.user.uid, item['Listing_ID'])} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
                   </div>
                 );
     }
@@ -122,7 +100,7 @@ export class MyListings extends React.Component {
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={checkInterest(this.state.user.uid, item['Listing_ID'])} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
                   </div>
                 );
     }
@@ -131,7 +109,7 @@ export class MyListings extends React.Component {
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={checkInterest(this.state.user.uid, item['Listing_ID'])} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
                   </div>
                 );
     }
