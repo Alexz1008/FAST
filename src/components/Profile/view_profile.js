@@ -19,13 +19,13 @@ class ViewProfile extends Component {
       };
       this.firebaseRef = fire.database().ref();
       this.firebaseRef.on('value', dataSnapshot => {
-        this.state.name = dataSnapshot.child("Users/" + this.state.otherUser.uid + "/Name").val();
-        this.state.rating = dataSnapshot.child("Users/" + this.state.otherUser.uid + "/Average_review").val();
+        this.state.name = dataSnapshot.child("Users/" + this.state.user.uid + "/Name").val();
+        this.state.rating = dataSnapshot.child("Users/" + this.state.user.uid + "/Average_review").val();
         // TBD this.state.image =
-        this.state.tel = dataSnapshot.child("Users/" + this.state.otherUser.uid + "/Phone").val();
-        this.state.email = dataSnapshot.child("Users/" + this.state.otherUser.uid + "/UCSD_Email").val();
-        this.state.zipcode = dataSnapshot.child("Users/" + this.state.otherUser.uid + "/Zip").val();
-        this.state.city = dataSnapshot.child("Users/" + this.state.otherUser.uid + "/City").val(); 
+        this.state.tel = dataSnapshot.child("Users/" + this.state.user.uid + "/Phone").val();
+        this.state.email = dataSnapshot.child("Users/" + this.state.user.uid + "/UCSD_Email").val();
+        this.state.zipcode = dataSnapshot.child("Users/" + this.state.user.uid + "/Zip").val();
+        this.state.city = dataSnapshot.child("Users/" + this.state.user.uid + "/City").val();
       })
     }
 
