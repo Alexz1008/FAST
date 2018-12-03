@@ -4,6 +4,8 @@ import './create_listing.css'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
 import fire from '../Fire/fire'
+import { addToUserList, removeFromUserList } from '../Utilities/utilities'
+
 //by default, also using styles from ./login.css
 
 export class CreateListing extends React.Component{
@@ -85,6 +87,8 @@ export class CreateListing extends React.Component{
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(Listing_ID + 1);
       history.push("/home");
+
+      addToUserList(Seller_ID, Listing_ID, "Posted_Listings");
     });
   }
 

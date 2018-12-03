@@ -30,17 +30,18 @@ export class Listing extends React.Component {
     this.setState({isSaved: false});
     removeFromUserList(this.state.user.uid, this.state.id, "Saved_Listings");
   }
+
   handleAddInterestClick() {
     if (this.state.conversationID) {
       this.setState({isInterested: true});
-    
+
       const Seller_ID = this.state.sellerid;
       const Buyer_ID = this.state.user.uid;
       const Listing_ID = this.state.id;
       const Conversation_Title = this.state.title;
 
       var Conversation_ID = this.state.conversationID;
-      var idExists = true;	      
+      var idExists = true;
       let constDB = this.constantsDB;
       let convDB = this.conversationDB;
 
@@ -135,7 +136,7 @@ export class Listing extends React.Component {
               <div>
                   {isMyListing ?
                     console.log("invalid interest listing")
-                  : 
+                  :
                   <button className={this.state.isSaved ? 'listing-button-selected' : 'listing-button-unselected'} id="saveButton" onClick={this.state.isSaved ? this.handleRemoveClickSaved : this.handleAddClickSaved}>
                     {this.state.isSaved ? 'Saved' : 'Save'}
                   </button>}
@@ -143,7 +144,7 @@ export class Listing extends React.Component {
               <div>
                   {isMyListing ?
                     console.log("invalid interest listing")
-                  : 
+                  :
                   <button className={isInterested ? 'listing-button-selected' : 'listing-button-unselected'} id="interestedListing" onClick={this.state.isInterested ? this.handleRemoveInterestClick : this.handleAddInterestClick}>
                     {isInterested ? 'Interested' : 'Show Interest'}
                   </button>}

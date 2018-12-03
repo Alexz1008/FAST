@@ -23,8 +23,7 @@ export class Main extends React.Component {
       and reference it in other files later on down the road
     */
     this.State = {
-      user:{},
-      otherUser:{}
+      user:{}
     }
   }
 
@@ -39,13 +38,11 @@ export class Main extends React.Component {
       // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
-        this.setState({otherUser: null});
         //localStorage.setItem('user',user.uid);
       }
       // Otherwise set the current user to null
       else {
         this.setState({user: null});
-        this.setState({otherUser: null});
         //localStorage.removeItem('user');
       }
     });
