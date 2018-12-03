@@ -55,9 +55,15 @@ export class Messages extends React.Component {
     this.usersDB = fire.database().ref("Users");
     this.listingsDB = fire.database().ref("Listing");
 
-    this.state={
-      confirmedListing: true
+    this.state = {
+      confirmText: "Loading...",
+      listingConfirmed: true,
+      confirmStyle: "messages-confirmtransaction-loading"
     };
+    
+    // // Check if 
+    // fire.database().ref()once("value").then(function(snapshot) {
+      // snapshot.child("Listing
   }
 
   getConversations(callbackFunction) {
@@ -129,17 +135,12 @@ export class Messages extends React.Component {
   // Create a method to authenticate the user with our existing database
   authListener(callback) {
     fire.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
-        //localStorage.setItem('user',user.uid);
-	callback();
+        callback();
       }
-      // Otherwise set the current user to null
       else {
         this.setState({user: null});
-        //localStorage.removeItem('user');
       }
     });
   } 
@@ -315,7 +316,7 @@ export class Messages extends React.Component {
             <div className="messages-messenger-container">
               <input className="messages-messenger-input" id="messages-input" onChange={this.handleChange}></input>
               <button className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
-              <button className="messages-confirmtransaction" onClick={this.confirmTransaction}>Confirm Transaction</button>
+              <button className={this.state.confirmStyle} disabled={this.state.listingConfirmed} onClick={this.state.listingConfirmed ? null : this.confirmTransaction}>{this.state.confirmText}</button>
             </div>
           </div>
         </div>
