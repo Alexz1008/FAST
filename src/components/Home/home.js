@@ -33,6 +33,10 @@ export class Home extends React.Component {
       this.setState({items});
       this.setState({loaded:true});
     });
+
+
+
+
   }
 
   componentWillUnmount() {

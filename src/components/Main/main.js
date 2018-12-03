@@ -23,7 +23,7 @@ export class Main extends React.Component {
       and reference it in other files later on down the road
     */
     this.State = {
-      user:{},
+      user:{}
     }
   }
 
