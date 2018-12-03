@@ -14,29 +14,6 @@ export class Home extends React.Component {
       items: [],
       loaded: false
     };
-    this.firebaseRef = fire.database().ref();
-    this.firebaseRef.on('value', dataSnapshot => {
-      let items = [];
-      let interestedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Interest_Listings").val().split(",");
-      let savedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Saved_Listings").val().split(",");
-      var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
-      dataSnapshot.child("Listing").forEach(childSnapshot => {
-        let item = childSnapshot.val();
-        item['Next_Conversation_ID'] = nextconversationid;
-
-        console.log(savedlistings, "" + item['Listing_ID'], savedlistings.indexOf("" + item['Listing_ID']));
-        // Check if this listing was marked as interested or not
-        item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
-        item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
-        items.push(item);
-      });
-      this.setState({items});
-      this.setState({loaded:true});
-    });
-
-
-
-
   }
 
   componentWillUnmount() {
@@ -49,7 +26,25 @@ export class Home extends React.Component {
       // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
-        //localStorage.setItem('user',user.uid);
+        this.firebaseRef = fire.database().ref();
+        this.firebaseRef.on('value', dataSnapshot => {
+          let items = [];
+          let interestedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Interest_Listings").val().split(",");
+          let savedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Saved_Listings").val().split(",");
+          var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
+          dataSnapshot.child("Listing").forEach(childSnapshot => {
+            let item = childSnapshot.val();
+            item['Next_Conversation_ID'] = nextconversationid;
+
+            console.log(savedlistings, "" + item['Listing_ID'], savedlistings.indexOf("" + item['Listing_ID']));
+            // Check if this listing was marked as interested or not
+            item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
+            item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
+            items.push(item);
+          });
+          this.setState({items});
+          this.setState({loaded:true});
+        });
       }
       // Otherwise set the current user to null
       else {
