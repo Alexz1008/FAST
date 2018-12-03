@@ -29,20 +29,22 @@ export class Login extends React.Component {
       var verified = user.emailVerified;
       if(verified)
       {
-        // Push them on to the homepage if the login is successful
+        // Push them on to the homepage if they are verified is successful
         this.props.history.push("/home");
       }
       else if(!verified) {
+        // If they are not verified, send another verification email in case they lost it or never got one
         user.sendEmailVerification().then((u) => {
           // Email Sent
           alert("Your email has not been verified yet. We just resent you a verification email in case yours got lost in the mail. Please verify to have access to Triton Market!");
         })
         .catch((error)=> {
+          // Log the error if verification sending was unsuccessful
           console.log(error);
         });
+        // Push the user back to login since they are not verified
         this.props.history.push("/login");
       }
-
     }).catch((error)=> {
       // If there is any error, report it to the user and prevent going to home
       window.alert(error);

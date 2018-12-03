@@ -1,5 +1,7 @@
+// Forgot_Password.js handles the user password forget and reset for the website
+
 import React from 'react'
-//by default, using styles from ./login.css
+//By default, forgot_password.js uses styles from ./login.css
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -11,17 +13,20 @@ export class ForgotPassword extends React.Component {
     // Bind the proper forgot and handle methods to the one in the current state
     this.forgot = this.forgot.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // Populate the state with email and password for authentication with firebase
+    // Populate the state with email for password reset with Firebase
     this.state = {
       email: ''
     };
   }
 
+  // Setup a forgot method to reset the user's password using Firebase
   forgot(e) {
     e.preventDefault();
     const { history } = this.props;
+    // Send the user an email with a password reset link
     fire.auth().sendPasswordResetEmail(this.state.email).then((u)=> {
       // Email sent
+      // Give the user an alert to check their inbox and then push them back to the login page
       alert("Password reset initiation successful! Please check your inbox to reset your password and access Triton Market!");
       history.push("/login");
     })
@@ -40,6 +45,7 @@ export class ForgotPassword extends React.Component {
 
   render() {
     return (
+      // Render an email fied on the front-end to allow users to enter their email for the password reset link
       <div className="container">
         <div className="center">
           <form className="forgot-password-form">

@@ -49,19 +49,24 @@ export class Register extends React.Component {
     const Completed_Transactions = "";
     var userID = u.user.uid;
 
+    // Set the next child with the generated userID to this newly created user
     this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, My_Listings, Completed_Transactions});
   }
 
   // Setup a register method to add a user into our firebase users database
   register(e) {
     e.preventDefault();
-    if(! this.emailValidation()) return;
+    // Validate the email address to make sure it is of @ucsd.edu domain
+    if(! this.emailValidation()) {
+        // Send the user an alert and resend them to the registration form to prevent bots
+        alert("Triton Market is for users with emails of the domain @ucsd.edu only! Please register using a valid @ucsd.edu email address and try again.");
+        return;
+    }
     const { history } = this.props;
     // Try registration of the user with the provided email and passwords
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
       // If successful then create the user and push it to the firebase
       this.createUser(u);
-
       // Now send the user a verification email
       var user = fire.auth().currentUser;
       user.sendEmailVerification().then((u) => {
@@ -69,9 +74,10 @@ export class Register extends React.Component {
         alert("Registration successful! Please check your inbox for a verification email to enable access Triton Market!");
       })
       .catch((error)=> {
+        // Log the error if verification sending was unsuccessful
         console.log(error);
       });
-
+      // Push the user back to login after finishing up registration
       history.push("/login");
     })
     .catch((error)=> {
