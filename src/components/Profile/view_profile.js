@@ -19,14 +19,21 @@ class ViewProfile extends Component {
       };
       this.firebaseRef = fire.database().ref();
       this.firebaseRef.on('value', dataSnapshot => {
-        this.state.name = dataSnapshot.child("Users/" + this.state.user.uid + "/Name").val();
-        this.state.rating = dataSnapshot.child("Users/" + this.state.user.uid + "/Average_review").val();
+        let name = dataSnapshot.child("Users/" + this.state.user.uid + "/Name").val();
+        let rating = dataSnapshot.child("Users/" + this.state.user.uid + "/Average_review").val();
         // TBD this.state.image =
-        this.state.tel = dataSnapshot.child("Users/" + this.state.user.uid + "/Phone").val();
-        this.state.email = dataSnapshot.child("Users/" + this.state.user.uid + "/UCSD_Email").val();
-        this.state.zipcode = dataSnapshot.child("Users/" + this.state.user.uid + "/Zip").val();
-        this.state.city = dataSnapshot.child("Users/" + this.state.user.uid + "/City").val();
-      })
+        let tel = dataSnapshot.child("Users/" + this.state.user.uid + "/Phone").val();
+        let email = dataSnapshot.child("Users/" + this.state.user.uid + "/UCSD_Email").val();
+        let zipcode = dataSnapshot.child("Users/" + this.state.user.uid + "/Zip").val();
+        let city = dataSnapshot.child("Users/" + this.state.user.uid + "/City").val();
+
+        this.setState({name});
+        this.setState({rating});
+        this.setState({tel});
+        this.setState({email});
+        this.setState({zipcode});
+        this.setState({city});
+      });
     }
 
     handleChange(event) {
