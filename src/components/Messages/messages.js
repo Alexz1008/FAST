@@ -54,9 +54,11 @@ export class Messages extends React.Component {
     this.constantsDB = fire.database().ref("Constants");
     this.usersDB = fire.database().ref("Users");
     this.listingsDB = fire.database().ref("Listing");
+
+    this.state={};
   }
 
-  getConversations() {
+  getConversations(callbackFunction) {
     this.userDB = this.usersDB;
     this.conversationDB = this.conversationsDB;
     this.listingDB = this.listingsDB;
@@ -77,8 +79,8 @@ export class Messages extends React.Component {
           let conv = listSnapshot.val();
 	  console.log(conv);  
           conversations = this.getArrayFromList(conv);
-	      
-          conversations.forEach((conv) => {
+	  if(conversations && conversations.length > 0) {    
+            conversations.forEach((conv) => {
 	    // get listing id from conversation database and get listing from listing database
 	    let id = convSnapshot.child(conv).child("Listing_ID").val();
 	    let listing = listingSnapshot.child(id).val();
@@ -88,9 +90,12 @@ export class Messages extends React.Component {
 
 	    // set the current active conversation
 	    if (!this.state.currID) {
-	      this.setState({currID: conv});
+	      this.setState({currID: conv}, () => {
+                this.getMessages();
+	      });
 	    }
-          });
+            });
+          }
           this.setState({conversations: conversations}, () => {
 	    console.log(this.state.conversations);
           });
@@ -100,18 +105,22 @@ export class Messages extends React.Component {
         });
       });
     });
+    callbackFunction();
   }
 
   getActiveConversation(id){
     this.setState({currID: id}, () => {
       console.log(this.state.currID);
+      this.getMessages();
     });
   }
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
     this.authListener(() => {
-      this.getConversations(); 
+      this.getConversations(() => {
+        this.getMessages();
+      });
     });
   }
 
@@ -146,6 +155,7 @@ export class Messages extends React.Component {
   }
 
   postMessage(e) {
+    if(this.state.message) {
     const Message = this.state.message;
     const Sender_ID = this.state.user.uid;
     const Conversation_ID = this.state.currID;
@@ -168,12 +178,15 @@ export class Messages extends React.Component {
 	Message_ID += 1;
 	idExists = snapshot.child(Message_ID).exists();
       }
-      messageDB.child(Message_ID).set({Message, Sender_Name, TimeStamp, Message_ID});
+      messageDB.child(Message_ID).set({Message, Sender_Name, TimeStamp, Message_ID}, () => {
+        this.getMessages();
+      });
       this.addToConversationList(Conversation_ID, Message_ID);
 
       constDB.child("Next_Message_ID").set(Message_ID + 1);
     });
     document.getElementById('messages-input').value = '';
+    }
   }
 
   addToConversationList(convID, messageID) {
@@ -205,18 +218,17 @@ export class Messages extends React.Component {
   getMessages() {
     if (this.state && this.state.user && this.state.currID) {
       let convDB = this.conversationsDB;
-      let messageDB = this.messagesDB;
       let userDB = this.usersDB;
+      let messageDB = this.messagesDB;
       let messages = [];
-      let user = this.state.user.uid;
       let convID = this.state.currID;
+      let user = this.state.user.uid;
 
-    var userName;
-
-    // get user's name
-    userDB.once('value', dataSnapshot => {
-      userName = dataSnapshot.child(user).child("Name").val();
-    });
+      // get user's name
+      userDB.once('value', dataSnapshot => {
+        let username = dataSnapshot.child(user).child("Name").val();
+	this.setState({username: username});
+      });
 
     convDB.on('value', dataSnapshot => {
       var messageList = dataSnapshot.child(convID).child("Message_List").val();
@@ -229,30 +241,11 @@ export class Messages extends React.Component {
         });
       });
     });
-
-    return messages.map((item) => 
-      <div>
-      {(userName === item['Sender_Name']) ? (
-      <div className="messages-sent">
-        <div className = "messages-sent-text">
-          {item['Message']}
-        </div>
-        <div className="hover">
-	      {item['TimeStamps']}
-        </div>
-      </div>)
-      :
-      (<div className="messages-received">
-        <div className = "messages-received-text">
-        {item['Message']}
-        </div>
-        <div className="hover">
-	      {item['TimeStamps']}
-        </div>
-      </div>)}
-    </div> 
-    );
-    }
+    this.setState({messages: messages}, () => {
+      this.forceUpdate();
+      console.log(messages);
+    });
+   }
   }
 
   getArrayFromList(list) {
@@ -282,6 +275,7 @@ export class Messages extends React.Component {
   }
 
   render() {
+    console.log(this.state.messages);
     return (
       <div className="messages">
         <Header />
@@ -289,7 +283,28 @@ export class Messages extends React.Component {
 	  {this.getMessageSidebar()}
           <div className="messages-messenger">
             <div className="messages-messages">
-              {this.getMessages()}
+	    {this.state && this.state.username && this.state.messages.map((item) => 
+      <div>
+      {(this.state.username === item['Sender_Name']) ? (
+      <div className="messages-sent">
+        <div className = "messages-sent-text">
+          {item['Message']}
+        </div>
+        <div className="hover">
+	      {item['TimeStamps']}
+        </div>
+      </div>)
+      :
+      (<div className="messages-received">
+        <div className = "messages-received-text">
+        {item['Message']}
+        </div>
+        <div className="hover">
+	      {item['TimeStamps']}
+        </div>
+      </div>)}
+    </div> 
+    )}
             </div>
             <div className="messages-messenger-container">
               <input className="messages-messenger-input" id="messages-input" onChange={this.handleChange}></input>
