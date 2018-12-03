@@ -42,7 +42,7 @@ export class MyListings extends React.Component {
             else if(item['isInterested']) {
               interested.push(item);
             }
-            else if(item['Seller_ID'] === this.state.user.uid) {
+            else if(item['Seller_ID'] === user.uid) {
               posted.push(item);
             }
           });

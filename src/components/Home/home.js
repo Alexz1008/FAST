@@ -36,7 +36,6 @@ export class Home extends React.Component {
             let item = childSnapshot.val();
             item['Next_Conversation_ID'] = nextconversationid;
 
-            console.log(savedlistings, "" + item['Listing_ID'], savedlistings.indexOf("" + item['Listing_ID']));
             // Check if this listing was marked as interested or not
             item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
             item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
