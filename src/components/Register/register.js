@@ -55,6 +55,7 @@ export class Register extends React.Component {
   // Setup a register method to add a user into our firebase users database
   register(e) {
     e.preventDefault();
+    if(! this.emailValidation()) return;
     const { history } = this.props;
     // Try registration of the user with the provided email and passwords
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
@@ -67,6 +68,16 @@ export class Register extends React.Component {
       console.log(error);
       history.push("/register");
     });
+  }
+
+  //Check if the entered email is a valid ucsd email
+  emailValidation(){
+    let current_email = this.state.email;
+    let at_index = current_email.lastIndexOf('@');
+    if(at_index > -1 && current_email.slice(at_index + 1) === 'ucsd.edu'){
+      return true;
+    }
+    else return false;
   }
 
   // Setup a handleChange method to map the form to the proper values
@@ -110,17 +121,17 @@ export class Register extends React.Component {
               maxFileSize={5242880}
             />
             <label><strong>Name:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} value={this.state.name}/>
+            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" value={this.state.name}/>
             <br />
 
             <label><strong>Phone Number:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} value={this.state.tel}/>
+            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" value={this.state.tel}/>
             <br />
             <label><strong>Zipcode:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} value={this.state.zipcode}/>
+            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" value={this.state.zipcode}/>
             <br />
             <label><strong>City:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
+            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" value={this.state.city}/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
           </div>
           </form>
