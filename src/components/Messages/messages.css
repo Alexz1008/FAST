@@ -52,11 +52,19 @@
 }
 
 .messages-sent {
-  color: red;
+  color: white;
   text-align:right;
   display: flex;
   flex-direction: row-reverse;
-  padding-bottom: 5px;
+  padding: 12px;  
+  align-items: center;
+}
+.messages-sent-text{
+  
+  background-color: grey;
+  border-radius: 6px;
+  padding: 12px;  
+  
 }
 .messages-sent .hover{
     visibility: hidden;
@@ -68,9 +76,17 @@
     visibility: visible;
 }
 .messages-received {
-  color: blue;
+  color: white;
   display: flex;
   padding-bottom: 5px;
+  align-items: center;
+}
+.messages-received-text{
+  
+  background-color: blue;
+  border-radius: 6px;
+  padding: 12px;  
+  
 }
 .messages-received .hover{
     visibility: hidden;

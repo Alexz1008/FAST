@@ -12,7 +12,7 @@ export class Listing extends React.Component {
     this.handleAddInterestClick = this.handleAddInterestClick.bind(this);
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
-                  isInterested: this.props.isInterested, saved: this.props.saved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
+                  isInterested: this.props.isInterested, isSaved: this.props.isSaved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
                   isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate, sellername: this.props.sellername,
                   sellerid: this.props.sellerid, user: this.props.viewer, conversationID: this.props.conversationID}
 
@@ -22,51 +22,49 @@ export class Listing extends React.Component {
   }
 
   handleAddClickSaved() {
-    this.setState({saved: true});
-
-    const Buyer_ID = this.state.user.uid;
-    const Listing_ID = this.state.id;
-
-    addToUserList(Buyer_ID, Listing_ID, "Saved_Listings");
+    this.setState({isSaved: true});
+    addToUserList(this.state.user.uid, this.state.id, "Saved_Listings");
   }
 
   handleRemoveClickSaved() {
-    this.setState({saved: false});
+    this.setState({isSaved: false});
     removeFromUserList(this.state.user.uid, this.state.id, "Saved_Listings");
   }
-  
+
   handleAddInterestClick() {
-    this.setState({isInterested: true});
+    if (this.state.conversationID) {
+      this.setState({isInterested: true});
 
-    const Seller_ID = this.state.sellerid;
-    const Buyer_ID = this.state.user.uid;
-    const Listing_ID = this.state.id;
-    const Conversation_Title = this.state.title;
+      const Seller_ID = this.state.sellerid;
+      const Buyer_ID = this.state.user.uid;
+      const Listing_ID = this.state.id;
+      const Conversation_Title = this.state.title;
 
-    var Conversation_ID = this.state.conversationID;
-    var idExists = true;
-    let constDB = this.constantsDB;
-    let convDB = this.conversationDB;
+      var Conversation_ID = this.state.conversationID;
+      var idExists = true;
+      let constDB = this.constantsDB;
+      let convDB = this.conversationDB;
 
-    // create the new conversation in the database after making sure the id doesn't exist yet
-    this.conversationDB.once("value").then(function(snapshot) {
-      idExists = snapshot.child(Conversation_ID).exists();
-      while(idExists) {
-        Conversation_ID += 1;
+      // create the new conversation in the database after making sure the id doesn't exist yet
+      this.conversationDB.once("value").then(function(snapshot) {
         idExists = snapshot.child(Conversation_ID).exists();
-      }
+        while(idExists) {
+          Conversation_ID += 1;
+          idExists = snapshot.child(Conversation_ID).exists();
+        }
 
-      convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
+        convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID});
 
-      // Increment the unique conversation ID and move on
-      constDB.child("Next_Conversation_ID").set(Conversation_ID + 1);
-    });
-    // add conversation id to both users' conversation list
-    addToUserList(Buyer_ID, Conversation_ID, "Conversations");
-    addToUserList(Seller_ID, Conversation_ID, "Conversations");
+        // Increment the unique conversation ID and move on
+        constDB.child("Next_Conversation_ID").set(Conversation_ID + 1);
+      });
+      // add conversation id to both users' conversation list
+      addToUserList(Buyer_ID, Conversation_ID, "Conversations");
+      addToUserList(Seller_ID, Conversation_ID, "Conversations");
 
-    // add listing to buyers interested list
-    addToUserList(Buyer_ID, Listing_ID, "Interest_Listings");
+      // add listing to buyers interested list
+      addToUserList(Buyer_ID, Listing_ID, "Interest_Listings");
+    }
   }
 
   handleRemoveInterestClick() {
@@ -139,8 +137,8 @@ export class Listing extends React.Component {
                   {isMyListing ?
                     console.log("invalid interest listing")
                   :
-                  <button className={this.state.saved ? 'listing-button-selected' : 'listing-button-unselected'} id="saveButton" onClick={this.state.saved ? this.handleRemoveClickSaved : this.handleAddClickSaved}>
-                    {this.state.saved ? 'Saved' : 'Save'}
+                  <button className={this.state.isSaved ? 'listing-button-selected' : 'listing-button-unselected'} id="saveButton" onClick={this.state.isSaved ? this.handleRemoveClickSaved : this.handleAddClickSaved}>
+                    {this.state.isSaved ? 'Saved' : 'Save'}
                   </button>}
               </div>
               <div>

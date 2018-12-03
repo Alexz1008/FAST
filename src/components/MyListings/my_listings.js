@@ -22,11 +22,6 @@ const listingdescriptions = ["Cheap singular banana, I wanted to eat it but now 
 "I regret choosing physics as my major because now I cannot be in Gary's CSE 110 class.",
 "Comfy couch that I don't need anymore. Barely any wear and tear, looks just like new."];
 
-const getInterestedListings = listingid.map((id) =>
-  <div className="listing">
-    <Listing title={listingtitles[id]} image={images[id]} price={listingprice[id]} desc={listingdescriptions[id]} isInterested={true} db={firebase}/>
-          </div>
-);
 export class MyListings extends React.Component {
 
   constructor(props) {
