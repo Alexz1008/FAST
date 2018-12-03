@@ -65,7 +65,7 @@ export class CreateListing extends React.Component{
 
     var Seller_Name;
     var Seller_Average_Review;
-    var Listing_ID;
+    var Listing_ID = 1;
     var idExists = true;
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;

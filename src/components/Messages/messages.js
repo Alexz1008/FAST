@@ -178,8 +178,8 @@ _handleKeyPress = (e) => {
       Message_ID = snapshot.child("Constants/Next_Message_ID").val();
       idExists = snapshot.child("Message/" + Message_ID).exists();
       while(idExists) {
-	Message_ID += 1;
-	idExists = snapshot.child(Message_ID).exists();
+        Message_ID += 1;
+        idExists = snapshot.child(Message_ID).exists();
       }
       messageDB.child(Message_ID).set({Message, Sender_Name, TimeStamp, Message_ID}, () => {
         this.getMessages();

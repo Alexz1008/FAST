@@ -28,6 +28,13 @@ export class Home extends React.Component {
         this.setState({user});
         this.firebaseRef = fire.database().ref();
         this.firebaseRef.on('value', dataSnapshot => {
+          // If the constants database does not exist, initialize it
+          if(!this.firebaseRef.child("Constants").exists()) {
+            const Next_Conversation_ID = 1;
+            const Next_Listing_ID = 1;
+            const Next_Message_ID = 1;
+            this.firebaseRef.child("Constants").set({Next_Conversation_ID, Next_Listing_ID, Next_Message_ID});
+          }
           let items = [];
           let interestedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Interest_Listings").val().split(",");
           let savedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Saved_Listings").val().split(",");
