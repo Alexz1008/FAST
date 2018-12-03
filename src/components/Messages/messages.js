@@ -74,44 +74,46 @@ export class Messages extends React.Component {
     // access conversations in list database
     this.userDB.child(this.state.user.uid).child("Conversations").once('value', listSnapshot => {
 
-      // access conversation database
-      this.conversationDB.once('value', convSnapshot => {
+      if (listSnapshot.exists()) {
+        // access conversation database
+        this.conversationDB.once('value', convSnapshot => {
 
-        // access listing database
-        this.listingDB.once('value', listingSnapshot => {
+          // access listing database
+          this.listingDB.once('value', listingSnapshot => {
 
-          let conversations = [];
-          let listings = [];
+            let conversations = [];
+            let listings = [];
 
-	  // go through each conversation
-          let conv = listSnapshot.val();
-	  console.log(conv);  
-          conversations = this.getArrayFromList(conv);
-	  if(conversations && conversations.length > 0) {    
-            conversations.forEach((conv) => {
-	    // get listing id from conversation database and get listing from listing database
-	    let id = convSnapshot.child(conv).child("Listing_ID").val();
-	    let listing = listingSnapshot.child(id).val();
-	    listing['Conversation_ID'] = conv;
-            console.log(listing);
-	    listings.push(listing);
+	    // go through each conversation
+            let conv = listSnapshot.val();
+	    console.log(conv);  
+            conversations = this.getArrayFromList(conv);
+	    if(conversations && conversations.length > 0) {    
+              conversations.forEach((conv) => {
+	      // get listing id from conversation database and get listing from listing database
+	      let id = convSnapshot.child(conv).child("Listing_ID").val();
+	      let listing = listingSnapshot.child(id).val();
+	      listing['Conversation_ID'] = conv;
+              console.log(listing);
+	      listings.push(listing);
 
-	    // set the current active conversation
-	    if (!this.state.currID) {
-	      this.setState({currID: conv}, () => {
-                this.getMessages();
-	      });
-	    }
+	      // set the current active conversation
+	      if (!this.state.currID) {
+	        this.setState({currID: conv}, () => {
+                  this.getMessages();
+	        });
+	      }
+              });
+            }
+            this.setState({conversations: conversations}, () => {
+	      console.log(this.state.conversations);
             });
-          }
-          this.setState({conversations: conversations}, () => {
-	    console.log(this.state.conversations);
-          });
-          this.setState({listings: listings}, () => {
-	    console.log(this.state.listings);
+            this.setState({listings: listings}, () => {
+	      console.log(this.state.listings);
+            });
           });
         });
-      });
+      }
     });
     callbackFunction();
   }
@@ -127,6 +129,7 @@ export class Messages extends React.Component {
   componentDidMount(){
     this.authListener(() => {
       this.getConversations(() => {
+	console.log("get Conversation finished" + this.state.currID);
         this.getMessages();
       });
     });
