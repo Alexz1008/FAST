@@ -66,7 +66,7 @@ export class Messages extends React.Component {
       // snapshot.child("Listing
   }
 
-  getConversations(callbackFunction) {
+  getConversations() {
     this.userDB = this.usersDB;
     this.conversationDB = this.conversationsDB;
     this.listingDB = this.listingsDB;
@@ -115,7 +115,6 @@ export class Messages extends React.Component {
         });
       }
     });
-    callbackFunction();
   }
 
   getActiveConversation(id){
@@ -128,10 +127,7 @@ export class Messages extends React.Component {
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
     this.authListener(() => {
-      this.getConversations(() => {
-	console.log("get Conversation finished" + this.state.currID);
-        this.getMessages();
-      });
+      this.getConversations();
     });
   }
 
@@ -236,22 +232,22 @@ export class Messages extends React.Component {
 	this.setState({username: username});
       });
 
-    convDB.on('value', dataSnapshot => {
-      var messageList = dataSnapshot.child(convID).child("Message_List").val();
-      var messageArray = this.getArrayFromList(messageList);
+      convDB.on('value', dataSnapshot => {
+        var messageList = dataSnapshot.child(convID).child("Message_List").val();
+        var messageArray = this.getArrayFromList(messageList);
       
-      messageDB.on('value', snapshot => {
-	messageArray.forEach((item) => {
-            messages.push(snapshot.child(item).val());
-	    console.log("get Message" + item);
+        messageDB.on('value', snapshot => {
+  	  messageArray.forEach((item) => {
+              messages.push(snapshot.child(item).val());
+	      console.log("get Message" + item);
+          });
+          this.setState({messages: messages}, () => {
+            this.forceUpdate();
+            console.log(messages);
+          });
         });
       });
-    });
-    this.setState({messages: messages}, () => {
-      this.forceUpdate();
-      console.log(messages);
-    });
-   }
+    }
   }
 
   getArrayFromList(list) {
@@ -293,7 +289,7 @@ export class Messages extends React.Component {
           {this.getMessageSidebar()}
           <div className="messages-messenger">
             <div className="messages-messages">
-              {this.state && this.state.username && this.state.messages.map((item) => 
+              {this.state && this.state.username && this.state.messages && this.state.messages.map((item) => 
                 <div>
                   {(this.state.username === item['Sender_Name']) ? 
                   (<div className="messages-sent">
