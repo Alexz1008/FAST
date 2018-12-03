@@ -16,7 +16,7 @@ export class TransactionHistory extends React.Component {
     this.firebaseRef = fire.database().ref();
     this.firebaseRef.on('value', dataSnapshot => {
       let items = [];
-      let completedTransactions = dataSnapshot.child("Users/" + this.state.user.uid + "/Completed_Transactions").split(",");
+      let completedTransactions = dataSnapshot.child("Users/" + this.state.user.uid + "/Completed_Transactions").val().split(",");
       
       var i;
       for (i = 0; i < completedTransactions.length; i++) {

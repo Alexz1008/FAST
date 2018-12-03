@@ -283,35 +283,36 @@ export class Messages extends React.Component {
       <div className="messages">
         <Header />
         <div className="messages-content">
-	  {this.getMessageSidebar()}
+          {this.getMessageSidebar()}
           <div className="messages-messenger">
             <div className="messages-messages">
-	    {this.state && this.state.username && this.state.messages.map((item) => 
-      <div>
-      {(this.state.username === item['Sender_Name']) ? (
-      <div className="messages-sent">
-        <div className = "messages-sent-text">
-          {item['Message']}
-        </div>
-        <div className="hover">
-	      {item['TimeStamps']}
-        </div>
-      </div>)
-      :
-      (<div className="messages-received">
-        <div className = "messages-received-text">
-        {item['Message']}
-        </div>
-        <div className="hover">
-	      {item['TimeStamps']}
-        </div>
-      </div>)}
-    </div> 
-    )}
+              {this.state && this.state.username && this.state.messages.map((item) => 
+                <div>
+                  {(this.state.username === item['Sender_Name']) ? 
+                  (<div className="messages-sent">
+                    <div className = "messages-sent-text">
+                      {item['Message']}
+                    </div>
+                    <div className="hover">
+                      {item['TimeStamps']}
+                    </div>
+                  </div>)
+                  :
+                  (<div className="messages-received">
+                    <div className = "messages-received-text">
+                      {item['Message']}
+                    </div>
+                    <div className="hover">
+                      {item['TimeStamps']}
+                    </div>
+                  </div>)}
+                </div> 
+              )}
             </div>
             <div className="messages-messenger-container">
               <input className="messages-messenger-input" id="messages-input" onChange={this.handleChange}></input>
               <button className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
+              <button className="messages-confirmtransaction" onClick={this.confirmTransaction}>Confirm Transaction</button>
             </div>
           </div>
         </div>
