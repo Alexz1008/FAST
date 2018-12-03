@@ -94,7 +94,7 @@
 }
 .messages-received-text{
   
-  background-color: blue;
+  background-color: #39ACFC;
   border-radius: 6px;
   padding: 12px;  
   
@@ -108,3 +108,11 @@
 .messages-received:hover .hover{
     visibility: visible;
 }
+
+.messages-messenger-sender:hover{
+    background-color:#FBC500;
+}
+.messages-confirmtransaction:hover{
+  background-color: #00CEFB;
+}
+    
