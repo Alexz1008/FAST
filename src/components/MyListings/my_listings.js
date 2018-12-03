@@ -32,17 +32,21 @@ export class MyListings extends React.Component {
           let interested = [];
           let saved = [];
           let posted = [];
+          let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val().split(",");
+          let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val().split(",");
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val();
           dataSnapshot.child("Listing").forEach(childSnapshot => {
             let item = childSnapshot.val();
             item['Next_Conversation_ID'] = nextconversationid;
-            if(item['Is_Saved']) {
+            item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
+            item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
+            if(item['isSaved']) {
               saved.push(item);
             }
-            else if(item['isInterested']) {
+            if(item['isInterested']) {
               interested.push(item);
             }
-            else if(item['Seller_ID'] === this.state.user.uid) {
+            if(item['Seller_ID'] === user.uid) {
               posted.push(item);
             }
           });
