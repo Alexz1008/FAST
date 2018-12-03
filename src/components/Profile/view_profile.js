@@ -36,6 +36,26 @@ class ViewProfile extends Component {
       });
     }
 
+    componentWillUnmount() {
+      this.firebaseRef.off();
+    }
+
+    // If the component gets mounted successfully, authenticate the user
+    componentDidMount(){
+      fire.auth().onAuthStateChanged((user) => {
+        // If the user is detected, save it to the current state
+        if(user) {
+          this.setState({user});
+          //localStorage.setItem('user',user.uid);
+        }
+        // Otherwise set the current user to null
+        else {
+          this.setState({user: null});
+          //localStorage.removeItem('user');
+        }
+      });
+    }
+
     handleChange(event) {
       this.setState({value: event.target.value});
     }
