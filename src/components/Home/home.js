@@ -43,11 +43,6 @@ export class Home extends React.Component {
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
-    this.authListener();
-  }
-
-  // Create a method to authenticate the user with our existing database
-  authListener() {
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
@@ -78,7 +73,6 @@ export class Home extends React.Component {
             <Sidebar />
           </div>
           <div className="content-listings">
-            
             {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className = "loading-circle"><img src= {LoadingImg}></img></div>}
           </div>
         </div>
