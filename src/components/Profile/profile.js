@@ -11,7 +11,6 @@ export class Profile extends React.Component {
       <div>
         <Header />
           <ViewProfile />
-          <Reviews />
       </div>
     );
   }
