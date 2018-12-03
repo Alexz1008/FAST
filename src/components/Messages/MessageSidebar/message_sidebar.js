@@ -20,7 +20,7 @@ export class MessageSidebar extends React.Component {
     });
     this.getSidebarButtons = this.getSidebarButtons.bind(this);
   }
-
+	
   componentWillReceiveProps(nextProps) {
     if (nextProps.listings !== this.props.listings) {
       this.setState({listings: nextProps.listings});

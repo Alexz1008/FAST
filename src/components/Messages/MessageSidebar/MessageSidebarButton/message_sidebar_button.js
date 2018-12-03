@@ -12,7 +12,7 @@ export class MessageSidebarButton extends React.Component {
       this.setState({active: nextProps.active});
     }
   }
-
+	
   render() {
     return (
       <button className={this.state.active ? 'conversation-button-active' : 'conversation-button'} onClick={(e) => this.props.callbackFunction(this.props.convID)}>

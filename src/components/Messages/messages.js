@@ -140,7 +140,7 @@ export class Messages extends React.Component {
 
   getMessageSidebar() {
     if (this.state && this.state.listings && this.state.currID) {
-     return <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
+      return <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
     } else {
      return <MessageSidebar />
     }
