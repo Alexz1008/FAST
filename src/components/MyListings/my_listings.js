@@ -36,18 +36,22 @@ export class MyListings extends React.Component {
           let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val().split(",");
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val();
           dataSnapshot.child("Listing").forEach(childSnapshot => {
+            
+            // Make sure the listing is not a log before pushing
             let item = childSnapshot.val();
-            item['Next_Conversation_ID'] = nextconversationid;
-            item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
-            item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
-            if(item['isSaved']) {
-              saved.push(item);
-            }
-            if(item['isInterested']) {
-              interested.push(item);
-            }
-            if(item['Seller_ID'] === user.uid) {
-              posted.push(item);
+            if(item['Is_Transaction_Log'] === false) {
+              item['Next_Conversation_ID'] = nextconversationid;
+              item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
+              item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
+              if(item['isSaved']) {
+                saved.push(item);
+              }
+              if(item['isInterested']) {
+                interested.push(item);
+              }
+              if(item['Seller_ID'] === user.uid) {
+                posted.push(item);
+              }
             }
           });
           this.setState({saved});
