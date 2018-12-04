@@ -113,7 +113,7 @@ export class Register extends React.Component {
       <div className="container" id="container">
         <div className="center">
         <form className="register-form">
-          <h1><a href="/login" className="site-title">Triton Market</a></h1>
+        
           <div className="content-box">
             <h3 className="basic-title">Register account</h3>
 
@@ -144,6 +144,7 @@ export class Register extends React.Component {
 
             <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" placeholder="City" value={this.state.city}/> < br/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
+            <a class="button" className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
           </div>
           </form>
         </div>

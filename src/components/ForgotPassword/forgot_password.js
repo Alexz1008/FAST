@@ -49,7 +49,6 @@ export class ForgotPassword extends React.Component {
       <div className="container">
         <div className="center">
           <form className="forgot-password-form">
-          <h1><a href="/" >Triton Market</a></h1>
           <div className="content-box">
             <h3 className="basic-title">Forgot password</h3>
 
@@ -59,7 +58,7 @@ export class ForgotPassword extends React.Component {
             <br />
 
             <button type="submit" onClick={this.forgot} className="basic-button" id="forgot-button">Reset Password</button>
-
+            <a class="button" className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
           </div>
           </form>
         </div>
