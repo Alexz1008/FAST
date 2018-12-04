@@ -15,7 +15,7 @@ export class MessageSidebarButton extends React.Component {
 	
   render() {
     return (
-      <button className={this.state.active ? 'conversation-button-active' : 'conversation-button'} onClick={(e) => this.props.callbackFunction(this.props.convID)}>
+      <button className={this.state.active ? 'conversation-button-active' : 'conversation-button'} onClick={(e) => this.props.callbackFunction(this.props.convID, this.props.listing)}>
         <img className="conversation-picture" src={this.props.image} alt="did not load" />
         <div className="conversation-title">{this.props.title}</div>
       </button>

@@ -56,9 +56,14 @@
   border: none;
 }
 
-.messages-confirmtransaction {
+.messages-confirmtransaction-enabled {
   width: 200px;
-  background-color: #00A6FB;
+  background-color: #00487C;
+  border: none;
+}
+.messages-confirmtransaction-disabled {
+  width: 200px;
+  background-color: light-grey;
   border: none;
 }
 

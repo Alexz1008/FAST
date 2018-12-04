@@ -63,6 +63,7 @@ export class CreateListing extends React.Component{
     const Listing_Post_Date = this.getPostDate();
     const Seller_ID = this.state.user.uid;
     const Is_Transaction_Log = false;
+    const Seller_Confirmed = false;
     const Listing_Tag = this.state.tags;
 
     var Seller_Name;
@@ -85,7 +86,7 @@ export class CreateListing extends React.Component{
         idExists = snapshot.child(Listing_ID).exists();
       }
       listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
-                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Listing_Tag});
+                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Seller_Confirmed, Listing_Tag});
 
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(Listing_ID + 1);

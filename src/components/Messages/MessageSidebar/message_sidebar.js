@@ -32,7 +32,7 @@ export class MessageSidebar extends React.Component {
     if (this.state && this.state.listings) {
       return this.state.listings.map((item) =>
         <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} key={item['Listing_ID']} 
-	  convID={item['Conversation_ID']} active={item['Conversation_ID'] == currID}
+	  convID={item['Conversation_ID']} active={item['Conversation_ID'] == currID} listing={item}
 	  callbackFunction={this.props.callbackFunction}/>
       );
     } else {

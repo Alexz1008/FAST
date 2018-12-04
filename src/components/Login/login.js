@@ -71,12 +71,10 @@ export class Login extends React.Component {
           <div className="content-box">
             <h3 className="basic-title">Log in</h3>
 
-            <label htmlFor="email"><strong>UCSD Email:</strong></label> <br />
-            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" required /> <br />
+            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" placeholder="UCSD email" required /> <br />
 
-            <label htmlFor="password"><strong>Password:</strong></label>
             <a id="login-forgot-pass" href="/forgot_password">Forgot password?</a><br />
-            <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" required /> <br />
+            <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" placeholder="Password" required /> <br />
 
             <br />
 

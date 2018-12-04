@@ -53,8 +53,8 @@ export class ForgotPassword extends React.Component {
           <div className="content-box">
             <h3 className="basic-title">Forgot password</h3>
 
-            <label htmlFor="email"><strong>UCSD Email:</strong></label> <br />
-            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" required /> <br />
+
+            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" placeholder="UCSD email" id="email" required /> <br />
 
             <br />
 

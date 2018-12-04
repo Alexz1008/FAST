@@ -105,7 +105,6 @@ export class Register extends React.Component {
   // Setup an onDrop method to handle when users drag and drop a file in as their profile picture
   onDrop(file, picture) {
     this.setState({image: this.state.image.concat(picture)});
-    document.getElementById('container').style.backgroundImage = "url('https://anotherangle.eu/wp-content/uploads/2017/03/Geisel-Library-South-2048.jpg')";
   }
 
   render() {
@@ -118,14 +117,12 @@ export class Register extends React.Component {
           <div className="content-box">
             <h3 className="basic-title">Register account</h3>
 
-            <label htmlFor="email"><strong>UCSD Email:</strong></label><br />
-            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" required/> <br />
+            <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" placeholder="UCSD email" required/> <br />
 
-            <label htmlFor="password"><strong>Password:</strong></label><br />
-            <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" required/> <br />
 
-            <label htmlFor="repass"><strong>Re-enter password:</strong></label><br />
-            <input value={this.state.repeat} onChange={this.handleChange} type="password" className="basic-input" name="repass" id="repass" required/><br />
+            <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" placeholder="Password" required/> <br />
+
+            <input value={this.state.repeat} onChange={this.handleChange} type="password" className="basic-input" name="repass" id="repass" placeholder="Confirm password" required/><br />
 
             <ImageUploader
               withIcon={false}
@@ -136,18 +133,16 @@ export class Register extends React.Component {
               maxFileSize={5242880}
               singleImage={true}
             />
-            <label><strong>Name:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" value={this.state.name}/>
+            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" placeholder="Name" value={this.state.name}/>
             <br />
 
-            <label><strong>Phone Number:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" value={this.state.tel}/>
+            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" placeholder="Phone number" value={this.state.tel}/>
             <br />
-            <label><strong>Zipcode:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" value={this.state.zipcode}/>
+
+            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" placeholder="ZIP Code" value={this.state.zipcode}/>
             <br />
-            <label><strong>City:</strong></label>
-            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" value={this.state.city}/>
+
+            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" placeholder="City" value={this.state.city}/> < br/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
           </div>
           </form>
