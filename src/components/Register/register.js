@@ -115,7 +115,7 @@ export class Register extends React.Component {
         <form className="register-form">
         
           <div className="content-box">
-            <h3 className="basic-title">Register account</h3>
+            <h3 className="basic-title">REGISTER ACCOUNT</h3>
 
             <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" placeholder="UCSD email" required/> <br />
 

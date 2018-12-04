@@ -120,7 +120,9 @@
 #login-button:active, #register-button:active, #forgot-button:active, #cancel-button:active{
   transform: translateY(1px);
 }
-
+#login-button:hover{
+  background-color: #00A6FB ;
+  }
 #login-forgot-pass{
   float: right;
   margin-right: 5px;
