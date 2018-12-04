@@ -152,7 +152,7 @@ export class Messages extends React.Component {
     });
     */
 
-  getActiveConversation(id){
+  getActiveConversation(id, listing){
     this.setState({currID: id}, () => {
       this.getMessages();
     });
