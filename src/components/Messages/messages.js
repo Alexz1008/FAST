@@ -336,6 +336,7 @@ export class Messages extends React.Component {
 
   render() {
     var messages = "Loading...";
+    var listings;
     if(this.state.messages) {
       messages = this.state.messages.map(message =>
         <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent' : 'messages-received'} key={message['Listing_ID']}>
@@ -347,13 +348,15 @@ export class Messages extends React.Component {
           </div>
         </div>
       );
+      listings = this.state.listings.reverse();
     }
     return (
       <div className="messages">
         <Header />
         {this.state.loaded ?
         <div className="messages-content">
-          <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
+        {console.log(this.state.listings)}
+          <MessageSidebar listings={listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
           <div className="messages-messenger">
             <div className="messages-messages" id = "messageBody">
               {messages}
