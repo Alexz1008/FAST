@@ -68,6 +68,7 @@ export class Messages extends React.Component {
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.postMessage()
+      
     }
   }
   
@@ -216,6 +217,8 @@ export class Messages extends React.Component {
         constDB.child("Next_Message_ID").set(Message_ID + 1);
       });
       document.getElementById('messages-input').value = '';
+
+      
     }
   }
 
@@ -242,6 +245,7 @@ export class Messages extends React.Component {
       list = list.join(separator);
       }
       db.child(listName).set(list);
+      
     });
   }
  
@@ -259,6 +263,9 @@ export class Messages extends React.Component {
         }
       }
       this.setState({messages: messages});
+      var chatScroll = document.getElementById("messageBody");
+      chatScroll.scrollTop = chatScroll.scrollHeight;
+      
     });
   }
       
@@ -348,7 +355,7 @@ export class Messages extends React.Component {
         <div className="messages-content">
           <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
           <div className="messages-messenger">
-            <div className="messages-messages">
+            <div className="messages-messages" id = "messageBody">
               {messages}
             </div>
             <div className="messages-messenger-container">
