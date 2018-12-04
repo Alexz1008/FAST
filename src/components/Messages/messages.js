@@ -47,7 +47,6 @@ export class Messages extends React.Component {
     this.postMessage = this.postMessage.bind(this);
     this.addToConversationList = this.addToConversationList.bind(this);
     this.getMessages = this.getMessages.bind(this);
-    this.getArrayFromList = this.getArrayFromList.bind(this);
     this.confirmTransaction = this.confirmTransaction.bind(this);
 
     this.messagesDB = fire.database().ref("Message");
@@ -211,22 +210,12 @@ export class Messages extends React.Component {
         // Add to the new messages list locally
         let messageIDList = snapshot.child("Conversation/" + Conversation_ID + "/Message_List").val().split(",");
         
-        // For each message in the list, add them to messages
-        var i;
-        for(i = 0; i < messageIDList.length; i++) {
-          if(messageIDList[i] != "") {
-            messages.push(snapshot.child("Message/" + messageIDList[i]).val());
-          }
-        }
-        messages.push(NewMessage);
-        
         // Add the new message to the message list DB
         messageDB.child(Message_ID).set(NewMessage);
         this.addToConversationList(Conversation_ID, Message_ID);
         constDB.child("Next_Message_ID").set(Message_ID + 1);
       });
       document.getElementById('messages-input').value = '';
-      this.setState({message:'', messages: messages});
     }
   }
 
@@ -258,8 +247,8 @@ export class Messages extends React.Component {
  
   getMessages() {
     // Evan code fix
-    let messages = [];
     fire.database().ref().on('value', snapshot => {
+      let messages = [];
       let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
       
       // For each message in the list, add them to messages
@@ -271,6 +260,7 @@ export class Messages extends React.Component {
       }
       this.setState({messages: messages});
     });
+  }
       
     /*
     if (this.state && this.state.user && this.state.currID) {
@@ -302,32 +292,6 @@ export class Messages extends React.Component {
       });
     }
     */
-  }
-
-  getArrayFromList(list) {
-    let arr = [];
-    var item = "";
-    var separator = ",";
-   
-    if (list) {
-      //get items from list
-      for (var i = 0; i < list.length; i++) {
-        var curr = list.charAt(i);
-        if (curr !== separator) {
-	  item = item + curr;
-        } else {
-	  arr.push(item);
-          item = "";
-        }
-      }
-    
-      if (item) {
-        arr.push(item);
-      }
-    }
-
-    return arr;
-  }
   
   confirmTransaction() {
     // TODO make sure this checks that the seller only has 1 confirmation per listing!
@@ -366,7 +330,6 @@ export class Messages extends React.Component {
   render() {
     var messages = "Loading...";
     if(this.state.messages) {
-      console.log("Before", messages);
       messages = this.state.messages.map(message =>
         <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent' : 'messages-received'} key={message['Listing_ID']}>
           <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent-text' : 'messages-received-text'} key={message['Listing_ID']}>
@@ -377,7 +340,6 @@ export class Messages extends React.Component {
           </div>
         </div>
       );
-      console.log(messages);
     }
     return (
       <div className="messages">
