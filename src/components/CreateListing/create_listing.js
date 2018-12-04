@@ -34,7 +34,8 @@ export class CreateListing extends React.Component{
       // console.log("Success");
     // });
     this.state = {
-      image: []
+      image: [],
+      tags: ""
     };
   }
 
@@ -63,6 +64,7 @@ export class CreateListing extends React.Component{
     const Seller_ID = this.state.user.uid;
     const Is_Transaction_Log = false;
     const Seller_Confirmed = false;
+    const Listing_Tag = this.state.tags;
 
     var Seller_Name;
     var Seller_Average_Review;
@@ -77,14 +79,18 @@ export class CreateListing extends React.Component{
     fire.database().ref().once("value").then(function(snapshot) {
       Seller_Name = snapshot.child("Users/" + Seller_ID + "/Name").val();
       Seller_Average_Review = snapshot.child("Users/" + Seller_ID + "/Average_Review").val();
-      Listing_ID = snapshot.child("Constants/Next_Conversation_ID").val();
+      Listing_ID = snapshot.child("Constants/Next_Listing_ID").val();
       idExists = snapshot.child("Listing/" + Listing_ID).exists();
       while(idExists) {
         Listing_ID += 1;
         idExists = snapshot.child(Listing_ID).exists();
       }
       listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
+<<<<<<< HEAD
                                     Seller_Name, Seller_Average_Review, Is_Transaction_Log, Seller_Confirmed});
+=======
+                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Listing_Tag});
+>>>>>>> ee3f890ad85ac2e380bb0dcc1aa1d44f924315a9
 
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(Listing_ID + 1);
@@ -98,8 +104,11 @@ export class CreateListing extends React.Component{
     this.setState({ [e.target.name]: e.target.value});
   }
 
+  // update tags when tags are checked
   tagCallback = (tagList) => {
-	  	this.setState({tag: tagList});
+    var separator = ",";
+    var tags = tagList.join(separator);
+    this.setState({tags: tags});
   }
 
   onDrop(file, picture) {
