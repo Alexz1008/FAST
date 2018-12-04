@@ -15,9 +15,7 @@ const active = [true];
 export class MessageSidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.setState({listings: this.props.listings}, () =>{
-      console.log(this.state.listings);
-    });
+    this.state = {listings: this.props.listings};
     this.getSidebarButtons = this.getSidebarButtons.bind(this);
   }
 	
@@ -33,7 +31,7 @@ export class MessageSidebar extends React.Component {
     // make sure this.state is loaded
     if (this.state && this.state.listings) {
       return this.state.listings.map((item) =>
-        <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} 
+        <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} key={item['Listing_ID']} 
 	  convID={item['Conversation_ID']} active={item['Conversation_ID'] == currID}
 	  callbackFunction={this.props.callbackFunction}/>
       );
