@@ -31,7 +31,7 @@ export class EditReview extends React.Component {
           this.setState({listingID: listing_id, loaded: true});
           
           // Somehow check firebase for your old title, rating, and review, and set them in the boxes
-          //
+
           //
           //
         });
