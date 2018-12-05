@@ -62,6 +62,7 @@ export class Home extends React.Component {
       else {
         this.setState({user: null});
         history.push("/");
+        alert("You must log in!");
         //localStorage.removeItem('user');
       }
     });
