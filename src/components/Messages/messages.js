@@ -208,6 +208,7 @@ export class Messages extends React.Component {
     var userID = this.state.user.uid;
     var listing = this.state.activeListing;
     var buttonClick, confirmText, disableButton, buttonClass;
+    var d = new Date();
     fire.database().ref().once('value', snapshot => {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
       var sellerID = snapshot.child("Conversation/" + convID + "/Seller_ID").val();
@@ -220,7 +221,6 @@ export class Messages extends React.Component {
         
         // If seller has already confirmed, complete the transaction and log it
         if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
-          var d = new Date();
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
           fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "-" + d.getMonth() + "-" + d.getYear());
