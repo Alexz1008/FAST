@@ -77,7 +77,7 @@ export class EditReview extends React.Component {
       var Reviewed_User = Is_Seller ? Seller_ID : Buyer_ID;
       Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
         
-      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date});
+      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Review_Author: User_ID});
       
       // Add to reviewee's review list
       Is_Seller ? addToUserList(Seller_ID, next_id, "Reviews") : addToUserList(Buyer_ID, next_id, "Reviews");
