@@ -15,6 +15,7 @@ export class Messages extends React.Component {
     this.getMessages = this.getMessages.bind(this);
     this.handleConfirmTransaction = this.handleConfirmTransaction.bind(this);
     this.handleCancelTransaction = this.handleCancelTransaction.bind(this);
+    this.updateButton = this.updateButton.bind(this);
 
     this.messagesDB = fire.database().ref("Message");
     this.conversationsDB = fire.database().ref("Conversation");
@@ -24,8 +25,10 @@ export class Messages extends React.Component {
 
     this.state = {
       confirmText: "Loading...",
-      listingConfirmed: false,
       loaded: false,
+      disableButton: true,
+      buttonClick: "",
+      buttonClass: "messages-confirmtransaction-loading",
       conversations: "",
       listings: ""
     };
@@ -33,9 +36,49 @@ export class Messages extends React.Component {
   
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this.postMessage()
-      
+      this.postMessage();
     }
+  }
+  
+  updateButton(listing) {
+    var confirmText = "Loading..."
+    var disableButton = true;
+    var buttonClick = null;
+    var buttonClass = 'messages-confirmtransaction-loading';
+    this.setState({buttonClick, confirmText, disableButton, buttonClass});
+    fire.database().ref().once('value', snapshot => {
+      listing["Seller_Confirmed"] = snapshot.child("Listing/" + listing['Listing_ID'] + "/Seller_Confirmed").val();
+      if (listing['Is_Transaction_Log']) {
+        buttonClick = null;
+        confirmText = 'Transaction Complete';
+        disableButton = true;
+        buttonClass = 'messages-confirmtransaction-complete';
+      }
+      // Case 2, user is a buyer
+      else if (!listing['User_Is_Seller']) {
+        buttonClick = listing['Conv_Buyer_Confirmed'] ? this.handleCancelTransaction : this.handleConfirmTransaction;
+        confirmText = listing['Conv_Buyer_Confirmed'] ? "Cancel Transaction" : "Confirm Transaction";
+        disableButton = false;
+        buttonClass = listing['Conv_Buyer_Confirmed'] ? 'messages-confirmtransaction-cancel' : 'messages-confirmtransaction-confirm'
+      }
+      // Case 2, user is a seller
+      else {
+        // Subcase, has the listing been confirmed by the seller yet
+        if(listing['Seller_Confirmed']) {
+          buttonClick = listing['Conv_Seller_Confirmed'] ? this.handleCancelTransaction : null;
+          confirmText = listing['Conv_Seller_Confirmed'] ? "Cancel Transaction" : "Already Confirmed";
+          disableButton = listing['Conv_Seller_Confirmed'] ? false : true;
+          buttonClass = listing['Conv_Seller_Confirmed'] ? 'messages-confirmtransaction-cancel' : 'messages-confirmtransaction-confirmed'
+        }
+        else {
+          buttonClick = this.handleConfirmTransaction;
+          confirmText = "Confirm Transaction";
+          disableButton = false;
+          buttonClass = 'messages-confirmtransaction-confirm'
+        }
+      }
+      this.setState({buttonClick, confirmText, disableButton, buttonClass, activeListing: listing});
+    });
   }
   
   getConversations() {
@@ -53,15 +96,17 @@ export class Messages extends React.Component {
           let listing = snapshot.child("Listing/" + id).val();
           if(listing != null) {
             listing['Conversation_ID'] = userConvs[i];
-            listing['Conv_Seller_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Seller_Confirm");
+            listing['Conv_Seller_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Seller_Confirm").val();
+            listing['Conv_Buyer_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_Confirm").val();
+            listing['User_Is_Seller'] = (snapshot.child("Conversation/" + userConvs[i] + "/Seller_ID").val() === userID);
             listings.push(listing);
-          
-            // Figure out if a seller has confirmed this listing once before
-            var listingConfirmed = listing.Seller_Confirmed;
-            var convSellerConfirmed = 
-            this.setState({currID: userConvs[i], listingConfirmed: listing.Seller_Confirmed,
-                            confirmText: listing.Seller_Confirmed ? 'Already confirmed' : 'Confirm Transaction'}, () => {
-                this.getMessages();
+            
+            // Appropriately set the class, disable/enable the button, the button text, and onClick
+            // Case 1, the listing has already been confirmed
+            this.updateButton(listing);
+                
+            this.setState({currID: userConvs[i], activeListing: listing}, () => {
+              this.getMessages();
             });
           }
         }
@@ -71,7 +116,8 @@ export class Messages extends React.Component {
   }
 
   getActiveConversation(id, listing){
-    this.setState({currID: id}, () => {
+    this.updateButton(listing);
+    this.setState({currID: id, activeListing: listing}, () => {
       this.getMessages();
     });
   }
@@ -140,7 +186,6 @@ export class Messages extends React.Component {
   getMessages() {
     fire.database().ref().on('value', snapshot => {
       let messages = [];
-      console.log(this.state.currID);
       let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
       
       // For each message in the list, add them to messages
@@ -161,6 +206,8 @@ export class Messages extends React.Component {
     // Check if the user is the buyer or seller
     var convID = this.state.currID;
     var userID = this.state.user.uid;
+    var listing = this.state.activeListing;
+    var buttonClick, confirmText, disableButton, buttonClass;
     fire.database().ref().once('value', snapshot => {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
       var sellerID = snapshot.child("Conversation/" + convID + "/Seller_ID").val();
@@ -169,30 +216,33 @@ export class Messages extends React.Component {
       // Buyer confirms transaction
       if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
         fire.database().ref().child("Conversation/" + convID + "/Buyer_Confirm").set(true);
+        listing['Conv_Buyer_Confirmed'] = true;
         
         // If seller has already confirmed, complete the transaction and log it
         if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
+          listing['Is_Transaction_Log'] = true;
           
           // Add the log to both user's transaction histories
           addToUserList(userID, listingID, "Completed_Transactions");
           addToUserList(sellerID, listingID, "Completed_Transactions");
-          this.setState({listingConfirmed: true, confirmText: 'Cancel Transaction'});
         }
       }
-      
       // Seller confirms transaction
       else {
         fire.database().ref().child("Conversation/" + convID + "/Seller_Confirm").set(true);
         fire.database().ref().child("Listing/" + listingID + "/Seller_Confirmed").set(true);
+        listing['Conv_Seller_Confirmed'] = true;
+        listing['Seller_Confirmed'] = true;
         if(snapshot.child("Conversation/" + convID + "/Buyer_Confirm").val()) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
+          listing['Is_Transaction_Log'] = true;
           
           addToUserList(userID, listingID, "Completed_Transactions");
           addToUserList(buyerID, listingID, "Completed_Transactions");
-          this.setState({listingConfirmed: true, confirmText: 'Cancel Transaction'});
         }
       }
+      this.updateButton(listing);
     });
   }
   
@@ -200,6 +250,7 @@ export class Messages extends React.Component {
     // Check if the user is the buyer or seller
     var convID = this.state.currID;
     var userID = this.state.user.uid;
+    var listing = this.state.activeListing;
     fire.database().ref().once('value', snapshot => {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
       var sellerID = snapshot.child("Conversation/" + convID + "/Seller_ID").val();
@@ -208,15 +259,17 @@ export class Messages extends React.Component {
       // Buyer cancels transaction
       if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
         fire.database().ref().child("Conversation/" + convID + "/Buyer_Confirm").set(false);
-        this.setState({listingConfirmed: false, confirmText: 'Confirm Transaction'});
+        listing['Conv_Buyer_Confirmed'] = false;
       }
       
       // Seller cancels transaction
       else {
         fire.database().ref().child("Conversation/" + convID + "/Seller_Confirm").set(false);
         fire.database().ref().child("Listing/" + listingID + "/Seller_Confirmed").set(false);
-        this.setState({listingConfirmed: false, confirmText: 'Confirm Transaction'});
+        listing['Conv_Seller_Confirmed'] = false;
+        listing['Seller_Confirmed'] = false;
       }
+      this.updateButton(listing);
     });
   }
 
@@ -251,8 +304,8 @@ export class Messages extends React.Component {
             <div className="messages-messenger-container">
               <input className="messages-messenger-input" id="messages-input" onKeyPress={this._handleKeyPress} onChange={this.handleChange}></input>
               <button className="messages-messenger-sender" onClick={this.postMessage}>Send</button>
-              <button className={this.state.listingConfirmed ? "messages-confirmtransaction-disabled" : "messages-confirmtransaction-enabled"}
-              disabled={this.state.listingConfirmed} onClick={this.state.listingConfirmed ? this.handleCancelTransaction : this.handleConfirmTransaction}>{this.state.confirmText}</button>
+              <button className={this.state.buttonClass}
+              disabled={this.state.disableButton} onClick={this.state.buttonClick}>{this.state.confirmText}</button>
             </div>
           </div>
         </div>
