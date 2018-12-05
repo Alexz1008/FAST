@@ -28,7 +28,8 @@ export class Register extends React.Component {
       name: '',
       tel: '',
       zipcode: '',
-      city: ''
+      city: '',
+      valid_image: false
     };
   }
 
@@ -64,6 +65,21 @@ export class Register extends React.Component {
         alert("Triton Market is for users with emails of the domain @ucsd.edu only! Please register using a valid @ucsd.edu email address and try again.");
         return;
     }
+    //Validate the password to ensure sufficient length and matching of confirmed and original passwords
+    if(! this.passwordValidation()){
+        //passwordValidation() alerts users of any problem with entered passwords
+        return;
+    }
+    //Ensure that profile picture is added
+    if(! this.imageAdded()){
+        return;
+    }
+    //Ensure that remaining user fields are filled
+    if(! this.fieldsFilled()){
+        return;
+    }
+    
+
     const { history } = this.props;
     // Try registration of the user with the provided email and passwords
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=> {
@@ -77,6 +93,7 @@ export class Register extends React.Component {
       })
       .catch((error)=> {
         // Log the error if verification sending was unsuccessful
+        
         console.log(error);
       });
       // Push the user back to login after finishing up registration
@@ -99,14 +116,78 @@ export class Register extends React.Component {
     else return false;
   }
 
+  //Check if the entered password is valid, alerting the user if not
+  passwordValidation(){
+    let current_password = this.state.password;
+    let current_repass = this.state.repass;
+    //Check if password is at least 8 chars; if not, alert user and fail validation
+    if(current_password === null || current_password.length < 8){
+      alert("Password must have at least 8 characters.");
+      return false;
+    }
+    //Check if confirm password matches original password; if not, alert user and fail validation
+    if(current_password !== current_repass){
+      alert("Confirm password must match password.");
+      return false;
+    }
+    return true;
+  }
+
+  //Check if the user has added a profile picture
+  imageAdded(){
+    if (!this.state.valid_image){
+      alert("Please add a profile picture.");
+      return false;
+    }
+    return true;
+  }
+
+  //Check if the remaining fields have something filled in
+  fieldsFilled(){
+    let current_name = this.state.name;
+    let current_tel = this.state.tel;
+    let current_zip = this.state.zipcode;
+    let current_city = this.state.city;
+    //Ensure that user has entered some name, alert otherwise
+    if(current_name === null || current_name.length < 1){
+      alert("Please enter your name.");
+      return false;
+    }
+     //Ensure that user has entered some phone number, alert otherwise
+    if(current_tel === null || current_tel.length < 1){
+      alert("Please enter your phone number.");
+      return false;
+    }
+    //Ensure that user has entered some ZIP code, alert otherwise
+    if(current_zip === null || current_zip.length < 1){
+      alert("Please enter your ZIP Code.");
+      return false;
+    }
+    //Ensure that user has entered some city, alert otherwise
+    if(current_city === null || current_city.length < 1){
+      alert("Please enter your city.");
+      return false;
+    }
+    //All fields filled
+    return true;
+  }
+  
   // Setup a handleChange method to map the form to the proper values
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
   }
 
-  // Setup an onDrop method to handle when users drag and drop a file in as their profile picture
+  // Setup an onDrop method to handle when upload their profile picture
   onDrop(file, picture) {
-    this.setState({image: this.state.image.concat(picture)});
+    let box = document.getElementById('reg-content-box');
+    //grow and shrink register content box based on whether picture preview is present
+    if(! this.state.valid_image) {
+      box.style.height = '750px';
+    }else box.style.height = '600px';
+    this.setState({
+      valid_image: (! this.state.valid_image),
+      image: this.state.image.concat(picture)
+    });
   }
 
   render() {
@@ -116,7 +197,7 @@ export class Register extends React.Component {
         <div className="center">
         <form className="register-form">
         
-          <div className="content-box">
+          <div className="content-box" id="reg-content-box">
             <h3 className="basic-title">REGISTER ACCOUNT</h3>
 
             <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" placeholder="UCSD email" required/> <br />
@@ -135,18 +216,18 @@ export class Register extends React.Component {
               maxFileSize={5242880}
               singleImage={true}
             />
-            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" placeholder="Name" value={this.state.name}/>
+            <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" placeholder="Name" value={this.state.name} required/>
             <br />
 
-            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" placeholder="Phone number" value={this.state.tel}/>
+            <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" placeholder="Phone number" value={this.state.tel} required/>
             <br />
 
-            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" placeholder="ZIP Code" value={this.state.zipcode}/>
+            <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" placeholder="ZIP Code" value={this.state.zipcode} required/>
             <br />
 
-            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" placeholder="City" value={this.state.city}/> < br/>
+            <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" placeholder="City" value={this.state.city} required/> < br/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
-            <a class="button" className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
+            <a className="button" className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
           </div>
           </form>
         </div>
