@@ -78,7 +78,7 @@ export class Register extends React.Component {
         console.log(error);
       });
       // Push the user back to login after finishing up registration
-      history.push("/login");
+      history.push("/");
     })
     .catch((error)=> {
       // If there is any error, report it to the user and take them back to register

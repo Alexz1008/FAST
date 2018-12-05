@@ -17,13 +17,16 @@ export class Home extends React.Component {
   }
 
   componentWillUnmount() {
-    this.firebaseRef.off();
+    if(this.firebaseRef)
+      this.firebaseRef.off();
   }
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
+      console.log("User check:", user);
       if(user) {
         this.setState({user});
         this.firebaseRef = fire.database().ref();
@@ -58,6 +61,7 @@ export class Home extends React.Component {
       // Otherwise set the current user to null
       else {
         this.setState({user: null});
+        history.push("/");
         //localStorage.removeItem('user');
       }
     });
