@@ -50,10 +50,17 @@ export class Home extends React.Component {
           let food = [];
           let furniture = [];
           let housing = [];
-	  let textbooks = [];
+	        let textbooks = [];
           let separator = ",";
-          let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val().split(",");
-          let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val().split(",");
+          let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val();
+          let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val();
+          // only split when use have interestedlistings/ savedlistings
+          if (interestedlistings && interestedlistings.length > 1){
+            interestedlistings = interestedlistings.split(",");
+          }
+          if (savedlistings && savedlistings.length > 1){
+            savedlistings = savedlistings.split(",");
+          }
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
           dataSnapshot.child("Listing").forEach(childSnapshot => {
             // Make sure to only push items that are not transaction logs
@@ -62,8 +69,8 @@ export class Home extends React.Component {
               item['Next_Conversation_ID'] = nextconversationid;
 
               // Check if this listing was marked as interested or not
-              item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
-              item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
+              item['isInterested'] = (interestedlistings) ? (interestedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
+              item['isSaved'] = (savedlistings) ? (savedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
               items.push(item);
 
 	      // get the tags of this listing
