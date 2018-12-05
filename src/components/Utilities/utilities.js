@@ -99,3 +99,35 @@ export function addToUserList(userID, itemID, listName) {
     db.child(listName).set(list);
   });
 }
+
+
+
+// adds a message ID to the appropriate conversation
+// convID - The conversation you are adding to
+// itemID - The ID of whatever message is being added
+export function addToConversationList(convID, messageID) {
+  var separator = ",";
+  var list = "" + messageID;
+  var db = this.conversationsDB.child(convID);
+  var listName = "Message_List";
+
+  db.once("value").then(function(snapshot) {
+    // if other items in the list exist, concatenate to the list
+    if (snapshot.child(listName).exists()){
+      list = snapshot.child(listName).val().split(separator);
+
+    // if this id is a duplicate, don't concatenate    
+    if(list.indexOf("" + messageID) == -1) {
+        list = list.concat(messageID);
+    }
+
+    //Filter the list to remove any empty items in the list
+    list = list.filter(function (el) {
+      return el != "";
+    });
+    list = list.join(separator);
+    }
+    db.child(listName).set(list);
+    
+  });
+}

@@ -39,8 +39,8 @@ export class Home extends React.Component {
             this.firebaseRef.child("Constants").set({Next_Conversation_ID, Next_Listing_ID, Next_Message_ID});
           }
           let items = [];
-          let interestedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Interest_Listings").val().split(",");
-          let savedlistings = dataSnapshot.child("Users/" + this.state.user.uid + "/Saved_Listings").val().split(",");
+          let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val().split(",");
+          let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val().split(",");
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
           dataSnapshot.child("Listing").forEach(childSnapshot => {
             // Make sure to only push items that are not transaction logs
@@ -54,8 +54,7 @@ export class Home extends React.Component {
               items.push(item);
             }
           });
-          this.setState({items});
-          this.setState({loaded:true});
+          this.setState({items, loaded: true});
         });
       }
       // Otherwise set the current user to null
@@ -81,7 +80,7 @@ export class Home extends React.Component {
         <Header />
         <div className="content">
           <div className="content-sidebar">
-          {/*<Sidebar />*/}
+          <Sidebar />
           </div>
           <div className="content-listings">
             {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className = "loading-circle"><img src= {LoadingImg}></img></div>}
