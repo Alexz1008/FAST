@@ -108,7 +108,7 @@ export function addToUserList(userID, itemID, listName) {
 export function addToConversationList(convID, messageID) {
   var separator = ",";
   var list = "" + messageID;
-  var db = this.conversationsDB.child(convID);
+  var db = fire.database().ref().child("Conversation/" + convID);
   var listName = "Message_List";
 
   db.once("value").then(function(snapshot) {

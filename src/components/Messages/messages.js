@@ -176,6 +176,7 @@ export class Messages extends React.Component {
         
         // Add the new message to the message list DB
         messageDB.child(Message_ID).set(NewMessage);
+        console.log(Conversation_ID);
         addToConversationList(Conversation_ID, Message_ID);
         constDB.child("Next_Message_ID").set(Message_ID + 1);
       });
