@@ -48,10 +48,11 @@ export class Register extends React.Component {
     const My_Listings = "";
     const Completed_Transactions = "";
     const Reviews = "";
+    const Sum_Of_Reviews = 0;
     var userID = u.user.uid;
 
     // Set the next child with the generated userID to this newly created user
-    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, My_Listings, Completed_Transactions, Reviews});
+    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, My_Listings, Completed_Transactions, Reviews, Sum_Of_Reviews});
   }
 
   // Setup a register method to add a user into our firebase users database

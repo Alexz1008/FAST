@@ -20,19 +20,6 @@ export class CreateListing extends React.Component{
     this.constantsDB = fire.database().ref("Constants");
     this.listingsDB = fire.database().ref("Listing");
     this.usersDB = fire.database().ref("Users");
-
-    // Load in the next unique listing DB number, or create one if it doesn't exist yet
-    // this.constantsDB.on('value', dataSnapshot => {
-      // if(dataSnapshot.child("Next_Listing_ID").exists()) {
-        // let nextID = dataSnapshot.child("Next_Listing_ID").val();
-        // this.setState({id: nextID});
-      // }
-      // else {
-        // this.constantsDB.child("Next_Listing_ID").set(1);
-        // this.setState({id: 1});
-      // }
-      // console.log("Success");
-    // });
     this.state = {
       image: [],
       tags: ""
@@ -62,9 +49,12 @@ export class CreateListing extends React.Component{
     const Listing_Description = this.state.desc;
     const Listing_Post_Date = this.getPostDate();
     const Seller_ID = this.state.user.uid;
+    const Buyer_ID = "";
     const Is_Transaction_Log = false;
     const Seller_Confirmed = false;
     const Listing_Tag = this.state.tags;
+    const Buyer_Reviewed = false;
+    const Seller_Reviewed = false;
 
     var Seller_Name;
     var Seller_Average_Review;
@@ -83,10 +73,10 @@ export class CreateListing extends React.Component{
       idExists = snapshot.child("Listing/" + Listing_ID).exists();
       while(idExists) {
         Listing_ID += 1;
-        idExists = snapshot.child(Listing_ID).exists();
+        idExists = snapshot.child("Listing/" + Listing_ID).exists();
       }
-      listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID,
-                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Seller_Confirmed, Listing_Tag});
+      listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID, Buyer_ID,
+                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Seller_Confirmed, Listing_Tag, Buyer_Reviewed, Seller_Reviewed});
 
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(Listing_ID + 1);

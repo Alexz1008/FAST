@@ -220,7 +220,10 @@ export class Messages extends React.Component {
         
         // If seller has already confirmed, complete the transaction and log it
         if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
+          var d = new Date();
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
+          fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
+          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "-" + d.getMonth() + "-" + d.getYear());
           listing['Is_Transaction_Log'] = true;
           
           // Add the log to both user's transaction histories
@@ -236,6 +239,8 @@ export class Messages extends React.Component {
         listing['Seller_Confirmed'] = true;
         if(snapshot.child("Conversation/" + convID + "/Buyer_Confirm").val()) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
+          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "-" + d.getMonth() + "-" + d.getYear());
+          fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
           listing['Is_Transaction_Log'] = true;
           
           addToUserList(userID, listingID, "Completed_Transactions");

@@ -29,10 +29,15 @@ export class TransactionHistory extends React.Component {
         this.firebaseRef.on('value', dataSnapshot => {
           let items = [];
           let completedTransactions = dataSnapshot.child("Users/" + this.state.user.uid + "/Completed_Transactions").val().split(",");
+          var reviewed;
           var i;
           for (i = 0; i < completedTransactions.length; i++) {
             if(completedTransactions[i] !== "") {
-              items.push(dataSnapshot.child("Listing/" + completedTransactions[i]).val());
+              let item = dataSnapshot.child("Listing/" + completedTransactions[i]).val()
+              let User_Is_Seller = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_ID").val() === user;
+              User_Is_Seller ? item['reviewed'] = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_Reviewed").val() :
+                              item['reviewed'] = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Buyer_Reviewed").val();
+              items.push(item);
             }
           }
           this.setState({items});
@@ -49,7 +54,8 @@ export class TransactionHistory extends React.Component {
   render () {
     const listings = this.state.items.map(item =>
       <div className="listing" key={item['Listing_ID']}>
-        <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true} />
+        <Listing id={item['Listing_ID']} title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true}
+        reviewed={item['reviewed']}/>
       </div>
     );
     return (

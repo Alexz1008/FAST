@@ -11,6 +11,7 @@ export class Listing extends React.Component {
     this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
     this.handleAddInterestClick = this.handleAddInterestClick.bind(this);
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
+    this.getListingID = this.getListingID.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, isSaved: this.props.isSaved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
                   isLog: this.props.isLog, reviewed: this.props.reviewed, rating: this.props.rating, postdate: this.props.postdate, sellername: this.props.sellername,
@@ -85,7 +86,10 @@ export class Listing extends React.Component {
     console.log("review");
   }
   handleDeleteReviewClick() {
-    console.log("review");
+    const { history } = this.props;
+  }
+  getListingID() {
+    return this.state.id;
   }
   render() {
     const isInterested = this.state.isInterested;
@@ -122,8 +126,8 @@ export class Listing extends React.Component {
                   isMyListing ?
                   console.log("invalid interested listing")
                   :
-                  <button className='listing-button-unselected' id="writeReview" onClick={this.handleReviewClick}><Link to='/write_review'>
-                    {this.state.reviewed ? 'Edit Review' : 'Write Review'}</Link> 
+                  <button className='listing-button-unselected' id="writeReview" onClick={this.handleReviewClick}><a href={'/write_review?id=' + this.getListingID()}>
+                    {this.state.reviewed ? 'Edit Review' : 'Write Review'}</a> 
                   </button>
                 }
                 {

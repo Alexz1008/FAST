@@ -25,7 +25,6 @@ export class Home extends React.Component {
   componentDidMount(){
     const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
-      // If the user is detected, save it to the current state
       if(user) {
         this.setState({user});
         this.firebaseRef = fire.database().ref();
