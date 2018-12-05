@@ -24,7 +24,7 @@ class Tag extends Component {
 	}
 
 	render() {
-		const categories = ["iclicker", "food", "furniture", "housing", "textbooks"];
+		const categories = ["i-Clickers", "Food", "Furniture", "Housing", "Textbooks"];
 		const tagList = categories.map(item => {
 			return (
 				<div key={item}>

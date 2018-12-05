@@ -1,18 +1,21 @@
 import React from 'react'
 import './sidebar.css';
 
-const Sidebar = () => (
-  <div className="sidebar">
-    <button className="sidebar-button">
-      <div className="sidebar-text">i-Clickers</div>
-    </button>
-    <button className="sidebar-button">
-      <div className="sidebar-text">Textbooks</div>
-    </button>
-    <button className="sidebar-button">
-      <div className="sidebar-text">Furniture</div>
-    </button>
-  </div>
-)
+export class Sidebar extends React.Component {
+  render() {
+    const categories = ["i-Clickers", "Food", "Furniture", "Housing", "Textbooks"];
+    const SidebarButtons = categories.map(item => 	
+      <button className="sidebar-button" name={item} onClick={(e) => this.props.callbackFunction(item)}>
+        <div className="sidebar-text">{item}</div>
+      </button>
+    )
+
+    return (
+      <div className="sidebar">
+	{SidebarButtons}
+      </div>
+    )
+  }
+}
 
 export default Sidebar
