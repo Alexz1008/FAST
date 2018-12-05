@@ -102,6 +102,8 @@ export class Register extends React.Component {
     .catch((error)=> {
       // If there is any error, report it to the user and take them back to register
       console.log(error);
+      //prevents user from entering email for account that already exists
+      alert(error);
       history.push("/register");
     });
   }
