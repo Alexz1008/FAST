@@ -10,9 +10,17 @@ export class Home extends React.Component {
   constructor(props) {
     super(props);
 
+    this.setTag = this.setTag.bind(this);
+
     this.state = {
       items: [],
-      loaded: false
+      iclickers: [],
+      food: [],
+      furniture: [],
+      housing: [],
+      textbooks: [],
+      loaded: false,
+      currTag: ""
     };
   }
 
@@ -38,6 +46,12 @@ export class Home extends React.Component {
             this.firebaseRef.child("Constants").set({Next_Conversation_ID, Next_Listing_ID, Next_Message_ID, Next_Review_ID});
           }
           let items = [];
+          let iclickers = [];
+          let food = [];
+          let furniture = [];
+          let housing = [];
+	  let textbooks = [];
+          let separator = ",";
           let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val().split(",");
           let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val().split(",");
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val()
@@ -51,9 +65,29 @@ export class Home extends React.Component {
               item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
               item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);
               items.push(item);
+
+	      // get the tags of this listing
+              let tags = item['Listing_Tag'].split(separator);
+
+	      // check whether listing has each tag
+	      if(tags.indexOf("i-Clickers") != -1) {
+		iclickers.push(item);
+	      }
+	      if (tags.indexOf("Food") != -1) {
+		food.push(item);	
+	      }
+	      if (tags.indexOf("Furniture") != -1) {
+		furniture.push(item);
+	      }
+	      if (tags.indexOf("Housing") != -1) {
+		housing.push(item);
+	      }
+	      if (tags.indexOf("Textbooks") != -1) {
+		textbooks.push(item);
+	      }
             }
           });
-          this.setState({items, loaded: true});
+          this.setState({items, iclickers, food, furniture, housing, textbooks, loaded: true});
         });
       }
       // Otherwise set the current user to null
@@ -66,8 +100,40 @@ export class Home extends React.Component {
     });
   }
 
+  // sets or removes the current tag filter
+  setTag(tag) {
+    if(tag !== this.state.currTag) {
+      this.setState({currTag: tag}, () => {
+        console.log(tag);
+      });
+    } else {
+      this.setState({currTag: ""}, () => {
+        console.log("");
+      });
+    }
+  }
+
   render() {
-    const listings = this.state.items.map(item =>
+    var listings;	  
+    var subList;
+    var tag = this.state.currTag;
+
+    // get proper sublist of listings
+    if (tag == "i-Clickers") {
+      subList = this.state.iclickers;
+    } else if (tag == "Food") {
+      subList = this.state.food;
+    } else if (tag == "Furniture") {
+      subList = this.state.furniture;
+    } else if (tag == "Housing") {
+      subList = this.state.housing;
+    } else if (tag == "Textbooks") {
+      subList = this.state.textbooks;
+    } else {
+      subList = this.state.items;
+    }
+
+    listings = subList.map(item =>
       <div className="listing" key={item['Listing_ID']}>
         <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
@@ -79,7 +145,7 @@ export class Home extends React.Component {
         <Header />
         <div className="content">
           <div className="content-sidebar">
-          <Sidebar />
+          <Sidebar callbackFunction={this.setTag}/>
           </div>
           <div className="content-listings">
             {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className = "loading-circle"><img src= {LoadingImg}></img></div>}

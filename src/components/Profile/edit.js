@@ -130,7 +130,7 @@ class Edit extends Component {
                   <label>City:</label>
                   <input onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
                   <br />
-                  <button className="profile-button" onClick={this.handleSubmit}><Link to='/profile'>Save Changes</Link></button>
+                  <a href='/profile' className="profile-button" onClick={this.handleSubmit}>Save Changes</a>
                 </form>
                 :
             console.log("error")}

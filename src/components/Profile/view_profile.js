@@ -81,7 +81,7 @@ class ViewProfile extends Component {
                   <br />
                   City: {this.state.city}
                   <br />
-                  <button className="profile-button" ><Link to='/edit_profile'>edit profile</Link></button>
+                  <a className="profile-button" href='/edit_profile'>edit profile</a>
                 </form>
               :
               console.log("None")}
