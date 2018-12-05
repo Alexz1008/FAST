@@ -68,7 +68,7 @@ export class Login extends React.Component {
         <div className="center">
           <form className="login-form">
           <div className="content-box">
-            <h3 className="basic-title">LOG IN</h3><br /><br /> <br /> <br / > <br/>  <br /><br /><br />
+            <h3 className="basic-title">LOG IN</h3><br /><br /> <br /> <br /> <br/>  <br /><br /><br />
 
             <label htmlFor="email"><strong></strong></label> <br />
             <input value={this.state.email} onChange={this.handleChange} placeholder="UCSD Email" type="email" className="basic-input" name="email" id="email" required /> <br />

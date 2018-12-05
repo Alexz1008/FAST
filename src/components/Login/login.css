@@ -108,6 +108,7 @@
   border: none;
   color: white;
   cursor: pointer;
+  outline: 0;
 }
 .basic-button-cancel{
   display: block;
