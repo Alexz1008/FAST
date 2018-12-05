@@ -11,6 +11,7 @@ import { EditProfile } from '../Profile/edit_profile'
 import { EditListing } from '../EditListing/edit_listing'
 import { Review } from '../Review/review'
 import { WriteReview } from '../Review/write_review'
+import { EditReview } from '../Review/edit_review'
 import { Register } from '../Register/register'
 import { TransactionHistory } from '../TransactionHistory/transaction_history'
 import fire from '../Fire/fire'
@@ -66,6 +67,7 @@ export class Main extends React.Component {
         <Route path='/edit_listing' component={EditListing}/>
         <Route path='/review' component={Review}/>
         <Route path='/write_review' component={WriteReview}/>
+        <Route path='/edit_review' component={EditReview}/>
       </Switch>
     )
   }

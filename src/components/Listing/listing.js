@@ -126,7 +126,8 @@ export class Listing extends React.Component {
                   isMyListing ?
                   console.log("invalid interested listing")
                   :
-                  <button className='listing-button-unselected' id="writeReview" onClick={this.handleReviewClick}><a href={'/write_review?id=' + this.getListingID()}>
+                  <button className='listing-button-unselected' id="writeReview" onClick={this.handleReviewClick}>
+                    <a href={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
                     {this.state.reviewed ? 'Edit Review' : 'Write Review'}</a> 
                   </button>
                 }

@@ -6,7 +6,7 @@ import './review.css'
 import {addToUserList} from '../Utilities/utilities'
 //by default, using styles from ./login.css
 
-export class WriteReview extends React.Component {
+export class EditReview extends React.Component {
   constructor(props) {
     super(props);
     this.submit_review = this.submit_review.bind(this);
@@ -29,6 +29,11 @@ export class WriteReview extends React.Component {
             alert("You cannot write a review for a listing you haven't completed");
           }
           this.setState({listingID: listing_id, loaded: true});
+          
+          // Somehow check firebase for your old title, rating, and review, and set them in the boxes
+          //
+          //
+          //
         });
       }
       else {
@@ -72,7 +77,7 @@ export class WriteReview extends React.Component {
       var Reviewed_User = Is_Seller ? Seller_ID : Buyer_ID;
       Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
         
-      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Listing_ID});
+      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date});
       
       // Add to reviewee's review list
       Is_Seller ? addToUserList(Seller_ID, next_id, "Reviews") : addToUserList(Buyer_ID, next_id, "Reviews");
