@@ -4,7 +4,13 @@
 .content-profile {
   display: flex;
 }
-
+.loading-circle{
+   display: flex;
+   justify-content: center;
+   position: absolute;
+   top: 40%;
+   left: 40%;
+}
 
 .profile-form{
  margin: 5% auto;
@@ -78,7 +84,9 @@ textarea {
  margin-top: 1.618rem;
  margin-left: auto;
  font-weight: 400;
+ font-size: 18px;
  text-align: center;
+ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
  text-transform: uppercase;
  color: black;
  vertical-align: middle;

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import './profile.css'
 import './edit_profile'
 import fire from '../Fire/fire'
+import userImage from './userImage.png'
+import LoadingImg from '../Home/circle-loading-gif.gif'
 
 class ViewProfile extends Component {
       constructor(props) {
@@ -71,7 +73,10 @@ class ViewProfile extends Component {
                 <form className="profile-form">
                   <div className="profile-name">{this.state.name}</div>
                   <br />
-                  <img className="profile-img" src={this.state.image[this.state.image.length-1]} alt="did not load" />
+                  {this.state.image ? 
+                    <img className="profile-img" src = {this.state.image[this.state.image.length-1]} alt="did not load" />
+                    : <img className="profile-img" src = {userImage} />
+                  }
                   <br />
                   <hr/>
                   Overall Rating: {this.state.rating}
@@ -86,8 +91,7 @@ class ViewProfile extends Component {
                   <br />
                   <a className="profile-button" href='/edit_profile'>edit profile</a>
                 </form>
-              :
-              console.log("None")}
+              :<div><img className = "loading-circle" src= {LoadingImg}></img></div>}
             </div>
         );
     }
