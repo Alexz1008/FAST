@@ -93,12 +93,15 @@ export class Messages extends React.Component {
       for(i = 0; i < userConvs.length; i++) {
         if(userConvs[i] != "") {
           let id = snapshot.child("Conversation/" + userConvs[i] + "/Listing_ID").val();
+          let Buyer_ID = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_ID").val();
           let listing = snapshot.child("Listing/" + id).val();
           if(listing != null) {
+            listing['Buyer_ID'] = Buyer_ID;
             listing['Conversation_ID'] = userConvs[i];
             listing['Conv_Seller_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Seller_Confirm").val();
             listing['Conv_Buyer_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_Confirm").val();
             listing['User_Is_Seller'] = (snapshot.child("Conversation/" + userConvs[i] + "/Seller_ID").val() === userID);
+            listing['Buyer_Name'] = (snapshot.child("Users/" + Buyer_ID + "/Name").val());
             listings.push(listing);
             
             // Appropriately set the class, disable/enable the button, the button text, and onClick
@@ -176,7 +179,6 @@ export class Messages extends React.Component {
         
         // Add the new message to the message list DB
         messageDB.child(Message_ID).set(NewMessage);
-        console.log(Conversation_ID);
         addToConversationList(Conversation_ID, Message_ID);
         constDB.child("Next_Message_ID").set(Message_ID + 1);
       });
@@ -302,7 +304,7 @@ export class Messages extends React.Component {
         <Header />
         {this.state.loaded ?
         <div className="messages-content">
-          <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation}/>
+          <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation} userID={this.state.user.uid}/>
           <div className="messages-messenger">
             <div className="messages-messages" id="messageBody">
               {messages}

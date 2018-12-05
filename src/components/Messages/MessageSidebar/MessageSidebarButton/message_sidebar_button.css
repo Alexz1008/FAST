@@ -36,3 +36,8 @@
 .conversation-title {
   padding-left: 5px;
 }
+
+.conversation-button-right {
+  display: flex;
+  flex-direction: column;
+}

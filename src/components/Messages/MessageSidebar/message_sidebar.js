@@ -21,7 +21,7 @@ export class MessageSidebar extends React.Component {
     // make sure this.state is loaded
     if (this.state && this.state.listings) {
       return this.state.listings.map((item) =>
-        <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} 
+        <MessageSidebarButton image={item['Listing_Pic']} title={item['Listing_Title']} userID={this.props.userID} 
 	  convID={item['Conversation_ID']} active={item['Conversation_ID'] == currID} listing={item}
 	  callbackFunction={this.props.callbackFunction}/>
       );
