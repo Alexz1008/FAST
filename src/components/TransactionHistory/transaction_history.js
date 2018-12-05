@@ -34,7 +34,7 @@ export class TransactionHistory extends React.Component {
           for (i = 0; i < completedTransactions.length; i++) {
             if(completedTransactions[i] !== "") {
               let item = dataSnapshot.child("Listing/" + completedTransactions[i]).val()
-              let User_Is_Seller = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_ID").val() === user;
+              let User_Is_Seller = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_ID").val() === user.uid;
               User_Is_Seller ? item['reviewed'] = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Buyer_Reviewed").val() :
                               item['reviewed'] = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_Reviewed").val();
               items.push(item);
