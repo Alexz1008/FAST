@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../Header/header'
 import './review.css'
 //by default, using styles from ./login.css
@@ -24,7 +25,7 @@ export class WriteReview extends React.Component {
     
           <br />
     
-          <button type="submit" class="basic-button" id="create-review-button">Post review</button> <br />
+          <button type="submit" class="basic-button" id="create-review-button"><Link to='/transaction_history'>Post review</Link></button> <br />
     
         </div>
         </form>
