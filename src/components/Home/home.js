@@ -35,7 +35,8 @@ export class Home extends React.Component {
             const Next_Conversation_ID = 1;
             const Next_Listing_ID = 1;
             const Next_Message_ID = 1;
-            this.firebaseRef.child("Constants").set({Next_Conversation_ID, Next_Listing_ID, Next_Message_ID});
+            const Next_Review_ID = 1;
+            this.firebaseRef.child("Constants").set({Next_Conversation_ID, Next_Listing_ID, Next_Message_ID, Next_Review_ID});
           }
           let items = [];
           let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val().split(",");
