@@ -14,7 +14,7 @@ export class Home extends React.Component {
 
     this.state = {
       items: [],
-      iclickers: [];
+      iclickers: [],
       food: [],
       furniture: [],
       housing: [],
@@ -133,7 +133,7 @@ export class Home extends React.Component {
       subList = this.state.items;
     }
 
-    listings = this.state.subList.map(item =>
+    listings = subList.map(item =>
       <div className="listing" key={item['Listing_ID']}>
         <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
@@ -145,7 +145,7 @@ export class Home extends React.Component {
         <Header />
         <div className="content">
           <div className="content-sidebar">
-          <Sidebar />
+          <Sidebar callbackFunction={this.setTag}/>
           </div>
           <div className="content-listings">
             {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className = "loading-circle"><img src= {LoadingImg}></img></div>}
