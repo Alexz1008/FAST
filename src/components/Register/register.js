@@ -183,9 +183,7 @@ export class Register extends React.Component {
   onDrop(file, picture) {
     let box = document.getElementById('reg-content-box');
     //grow and shrink register content box based on whether picture preview is present
-    if(! this.state.valid_image) {
-      box.style.height = '750px';
-    }else box.style.height = '600px';
+    box.style.height = (!this.state.valid_image ? '750px' : '600px');
     this.setState({
       valid_image: (! this.state.valid_image),
       image: this.state.image.concat(picture)

@@ -89,7 +89,7 @@ class Edit extends Component {
         const City = this.state.city;
         let userDB = this.usersDB;
 
-        this.userDB.child(userID).update({"UCSD_Email": UCSD_Email,"Name":Name, "User_Pic" : User_Pic, "Phone": Phone, "Zip" : Zip, "City":City})
+        this.usersDB.child(userID).update({"UCSD_Email": UCSD_Email,"Name":Name, "User_Pic" : User_Pic, "Phone": Phone, "Zip" : Zip, "City":City})
       }
     }
     
@@ -103,11 +103,11 @@ class Edit extends Component {
             <div>
             {this.state.loaded ?
                 <form className="profile-form"  >
-                <img className="profile-img" src={this.state.image} alt="did not load" />
+                <img className="profile-img" src={this.state.image[this.state.image.length-1]} alt="did not load" />
 
                   <ImageUploader
                     withIcon={false}
-                    withPreview ={true}
+                    withPreview ={false}
                     buttonText='Upload Picture'
                     onChange={this.onDrop}
                     imgExtension={['.jpg', '.gif', '.png', '.gif']}
@@ -130,7 +130,7 @@ class Edit extends Component {
                   <label>City:</label>
                   <input onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
                   <br />
-                  <a href='/profile' className="profile-button" onClick={this.handleSubmit}>Save Changes</a>
+                  <a href="/profile" className="profile-button" onClick={this.handleSubmit}>Save Changes</a>
                 </form>
                 :
             console.log("error")}

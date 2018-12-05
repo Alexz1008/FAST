@@ -7,7 +7,10 @@ import fire from '../Fire/fire'
 class ViewProfile extends Component {
       constructor(props) {
         super(props);
-        this.state = {loaded: false};
+        this.state = {
+          loaded: false,
+          image: []
+        };
       }
 
     componentWillUnmount() {
@@ -68,7 +71,7 @@ class ViewProfile extends Component {
                 <form className="profile-form">
                   <div className="profile-name">{this.state.name}</div>
                   <br />
-                  <img className="profile-img" src={this.state.image} alt="did not load" />
+                  <img className="profile-img" src={this.state.image[this.state.image.length-1]} alt="did not load" />
                   <br />
                   <hr/>
                   Overall Rating: {this.state.rating}
