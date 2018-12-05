@@ -1,37 +1,42 @@
 .listing {
   width: 300px;
-  height: 460px;
+  height: 300px;
   margin: 10px;
+  padding-top: 10px;
+  padding-left: 5px;
   position: relative;
 }
 
 .listing-container {
-  box-shadow:	0 4px 8px 0 rgba(0,0,0,0.30);
+  border-radius: 10px;
+  box-shadow: 5px 5px 16px 0 rgba(0,0,0,.2);
   width: 300px;
-  height: 460px;
+  height: 410px;
   display: flex;
+  font-size: 20px;
+  font-weight: 300;
   justify-content: space-between;
   flex-direction: column;
 }
 .listing-container-self {
-  box-shadow:	0 4px 8px 0 #00A6FB;
-  border: solid 2px #00A6FB;
+  /*box-shadow:	0 4px 8px 0 #00A6FB;*/
+  /*border: solid 2px #00A6FB;*/
   width: 300px;
   height: 460px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 }
-
-.listing-header {
-  margin: 5px;
-  display: flex;
-  justify-content: space-evenly;
+.listing-upper {
+  height: 200px;
 }
-
-.listing-header-item {
-  padding: 5px;
-  color: #00487C;
+.listing-header,.listing-poster,.listing-header-item {
+  /*padding-top: 3px;*/
+  font-size: 15px;
+  font-weight: 300;
+  display: flex;
+  color: black;
+  justify-content: space-evenly;
 }
 
 .listing-lower {
@@ -48,9 +53,13 @@
 }
 
 .listing-title {
-  background-color: #00487C;
+  padding-top: 12px;
+  /*background-color: #00487C;*/
   height: 40px;
-  color: white;
+  color: #00487C;
+  font-weight: 450;
+  font-size: 25px;
+  text-transform: uppercase;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,6 +69,9 @@
 .listing-desc {
   margin: 5px;
   height: 80px;
+  font-size: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .listing-picture {
@@ -67,7 +79,9 @@
   justify-content: center;
   width: 300px;
   height: 200px;
-  object-fit: scale-down;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /*object-fit: scale-down;*/
 }
 .listing-button-unselected {
   height: 40px;
@@ -75,8 +89,9 @@
   border: none;
   color: white;
   background-color: #00487C;
-  margin-left: 5px;
-  border-radius: 5%;
+  margin-left: 30px;
+  border-radius: 5px;
+  position: relative;
 }
 .listing-button-selected {
   height: 40px;
@@ -84,11 +99,21 @@
   border: none;
   color: white;
   background-color: #00A6FB;
-  margin-left: 5px;
-  border-radius: 5%;  
+  margin-left: 30px;
+  border-radius: 5px;  
 }
-
-
+.listing-button-unselected:hover{
+  -webkit-animation: bounce-top 0.9s both;
+          animation: bounce-top 0.9s both;
+  background-color: #00A6FB;
+  transition: background-color 0.3s ease-in;
+}
+.listing-button-selected:hover{
+  -webkit-animation: bounce-top 0.9s both;
+          animation: bounce-top 0.9s both;
+  background-color: #00487C;
+  transition: background-color 0.3s ease-in;
+}
 .transaction-ok{
 	display:block;
 }
