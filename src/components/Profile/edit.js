@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
 import './profile.css'
 import ImageUploader from 'react-images-upload';
 import fire from '../Fire/fire'
@@ -108,8 +107,8 @@ class Edit extends Component {
             {this.state.loaded ?
                 <form className="profile-form"  >
                   {this.state.image ? 
-                    <img className="profile-img" src = {this.state.image[this.state.image.length-1]} alt="did not load" />
-                    : <img className="profile-img" src = {userImage} />
+                    <img className="profile-img" src = {this.state.image[this.state.image.length-1]} alt="Profile" />
+                    : <img className="profile-img" src = {userImage} alt="Default Profile" />
                   }
                   <ImageUploader
                     withIcon={false}
@@ -138,7 +137,7 @@ class Edit extends Component {
                   <br />
                   <button className="profile-button" onClick={this.updateUserProfile}>Save Changes</button>
                 </form>
-                :<div><img className = "loading-circle" src= {LoadingImg}></img></div>}
+                :<div><img className="loading-circle" src={LoadingImg} alt="Loading..."></img></div>}
             </div>
         );
     }

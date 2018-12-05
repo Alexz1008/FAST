@@ -4,7 +4,7 @@ import './create_listing.css'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
 import fire from '../Fire/fire'
-import { addToUserList, removeFromUserList } from '../Utilities/utilities'
+import { addToUserList } from '../Utilities/utilities'
 
 //by default, also using styles from ./login.css
 

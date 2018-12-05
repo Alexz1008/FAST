@@ -58,7 +58,6 @@ export class EditReview extends React.Component {
     var Review_ID;
     var Is_Seller;
     var Transaction_Date;
-    const { history } = this.props;
     fire.database().ref().once('value', snapshot => {
       // Make sure the review ID does not exist yet
       var next_id = snapshot.child("Constants/Next_Review_ID").val();

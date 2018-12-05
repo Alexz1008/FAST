@@ -4,7 +4,6 @@ import React from 'react'
 //By default, forgot_password.js uses styles from ./login.css
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
-import { Link } from 'react-router-dom'
 
 
 export class ForgotPassword extends React.Component {

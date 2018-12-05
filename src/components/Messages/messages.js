@@ -91,11 +91,11 @@ export class Messages extends React.Component {
       // Load in every conversation the user has
       var i;
       for(i = 0; i < userConvs.length; i++) {
-        if(userConvs[i] != "") {
+        if(userConvs[i] !== "") {
           let id = snapshot.child("Conversation/" + userConvs[i] + "/Listing_ID").val();
           let Buyer_ID = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_ID").val();
           let listing = snapshot.child("Listing/" + id).val();
-          if(listing != null) {
+          if(listing !== null) {
             listing['Buyer_ID'] = Buyer_ID;
             listing['Conversation_ID'] = userConvs[i];
             listing['Conv_Seller_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Seller_Confirm").val();
@@ -161,7 +161,6 @@ export class Messages extends React.Component {
       var d = new Date();
       let messageDB = this.messagesDB;
       let constDB = this.constantsDB
-      let messages = [];
 
       TimeStamp = "" + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
@@ -173,9 +172,6 @@ export class Messages extends React.Component {
           idExists = snapshot.child("Message/" + Message_ID).exists();
         }
         const NewMessage = {Message, Sender_ID, TimeStamp, Message_ID};
-        
-        // Add to the new messages list locally
-        let messageIDList = snapshot.child("Conversation/" + Conversation_ID + "/Message_List").val().split(",");
         
         // Add the new message to the message list DB
         messageDB.child(Message_ID).set(NewMessage);
@@ -194,7 +190,7 @@ export class Messages extends React.Component {
       // For each message in the list, add them to messages
       var i;
       for(i = 0; i < messageIDList.length; i++) {
-        if(messageIDList[i] != "") {
+        if(messageIDList[i] !== "") {
           messages.push(snapshot.child("Message/" + messageIDList[i]).val());
         }
       }
@@ -210,7 +206,6 @@ export class Messages extends React.Component {
     var convID = this.state.currID;
     var userID = this.state.user.uid;
     var listing = this.state.activeListing;
-    var buttonClick, confirmText, disableButton, buttonClass;
     var d = new Date();
     fire.database().ref().once('value', snapshot => {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
@@ -261,8 +256,6 @@ export class Messages extends React.Component {
     var listing = this.state.activeListing;
     fire.database().ref().once('value', snapshot => {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
-      var sellerID = snapshot.child("Conversation/" + convID + "/Seller_ID").val();
-      var buyerID = snapshot.child("Conversation/" + convID + "/Buyer_ID").val();
       
       // Buyer cancels transaction
       if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
@@ -283,7 +276,6 @@ export class Messages extends React.Component {
 
   render() {
     var messages = "Loading...";
-    var listings;
     if(this.state.messages && this.state.messages.length >= 0) {
       messages = this.state.messages.map(message =>
         <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent' : 'messages-received'} key={message['Listing_ID']}>

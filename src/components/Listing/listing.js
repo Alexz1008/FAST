@@ -86,7 +86,7 @@ export class Listing extends React.Component {
     console.log("review");
   }
   handleDeleteReviewClick() {
-    const { history } = this.props;
+    console.log("delete review");
   }
   getListingID() {
     return this.state.id;

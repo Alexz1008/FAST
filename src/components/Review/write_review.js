@@ -52,7 +52,6 @@ export class WriteReview extends React.Component {
     var Review_ID;
     var Is_Seller;
     var Transaction_Date;
-    const { history } = this.props;
 
     fire.database().ref().once('value', snapshot => {
       // Make sure the review ID does not exist yet
@@ -82,7 +81,7 @@ export class WriteReview extends React.Component {
       var totalReviews = snapshot.child("Users/" + Reviewed_User + "/Reviews").val().split(",");
       // Filter the list to remove any empty items in the list
       totalReviews = totalReviews.filter(function (el) {
-        return el != "";
+        return el !== "";
       });
       totalReviews = totalReviews.length + 1;
       fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews);

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
 import './profile.css'
 import './edit_profile'
 import fire from '../Fire/fire'
@@ -11,7 +10,13 @@ class ViewProfile extends Component {
         super(props);
         this.state = {
           loaded: false,
-          image: []
+          image: [],
+          name: '',
+          rating: '',
+          tel: '',
+          email: '',
+          zipcode: '',
+          city: ''
         };
       }
 
@@ -25,15 +30,6 @@ class ViewProfile extends Component {
         // If the user is detected, save it to the current state
         if(user) {
           this.setState({user});
-          this.state = {
-            name: '',
-            rating: '',
-            image: [],
-            tel: '',
-            email: '',
-            zipcode: '',
-            city: ''
-          };
           this.firebaseRef = fire.database().ref();
           this.firebaseRef.on('value', dataSnapshot => {
             let name = dataSnapshot.child("Users/" + user.uid + "/Name").val();
@@ -74,8 +70,8 @@ class ViewProfile extends Component {
                   <div className="profile-name">{this.state.name}</div>
                   <br />
                   {this.state.image ? 
-                    <img className="profile-img" src = {this.state.image[this.state.image.length-1]} alt="did not load" />
-                    : <img className="profile-img" src = {userImage} />
+                    <img className="profile-img" src = {this.state.image[this.state.image.length-1]} alt="Profile" />
+                    : <img className="profile-img" src ={userImage} alt="Default Profile"/>
                   }
                   <br />
                   <hr/>
@@ -91,7 +87,7 @@ class ViewProfile extends Component {
                   <br />
                   <a className="profile-button" href='/edit_profile'>edit profile</a>
                 </form>
-              :<div><img className = "loading-circle" src= {LoadingImg}></img></div>}
+              :<div><img className="loading-circle" src={LoadingImg} alt="Loading..."></img></div>}
             </div>
         );
     }

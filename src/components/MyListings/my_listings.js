@@ -2,7 +2,6 @@ import React from 'react'
 import Header from '../Header/header'
 import './my_listings.css'
 import { Listing } from '../Listing/listing'
-import firebase from 'firebase';
 import fire from '../Fire/fire';
 
 export class MyListings extends React.Component {
@@ -23,9 +22,7 @@ export class MyListings extends React.Component {
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
-        this.setState({user});
-        //localStorage.setItem('user',user.uid);
-        this.state = {page: 'Interested', saved: [], interested: [], posted: []};
+        this.setState({user, page: 'Interested', saved: [], interested: [], posted: []});
 
         this.firebaseRef = fire.database().ref();
         this.firebaseRef.on('value', dataSnapshot => {

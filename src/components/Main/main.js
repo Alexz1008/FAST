@@ -15,7 +15,6 @@ import { EditReview } from '../Review/edit_review'
 import { Register } from '../Register/register'
 import { TransactionHistory } from '../TransactionHistory/transaction_history'
 import fire from '../Fire/fire'
-import firebase from 'firebase';
 
 export class Main extends React.Component {
   constructor(props) {

@@ -15,7 +15,7 @@ export function removeFromUserList(userID, itemID, listName) {
       
       // Find and remove the ID
       let removeIndex = list.indexOf("" + itemID);
-      if(removeIndex != -1) {
+      if(removeIndex !== -1) {
         list.splice(removeIndex, 1);
       }
       list = list.join(separator);
@@ -40,7 +40,7 @@ export function removeFromUserInterested(userID, itemID, sellerID) {
       
       // Find and remove the ID
       let removeIndex = listInterest.indexOf("" + itemID);
-      if(removeIndex != -1) {
+      if(removeIndex !== -1) {
         listInterest.splice(removeIndex, 1);
       }
       listInterest = listInterest.join(separator);
@@ -54,7 +54,7 @@ export function removeFromUserInterested(userID, itemID, sellerID) {
     // Iterate through every conversation until the one with matching seller id is found
     var i;
     for(i = 0; i < convs.length; i++) {
-      if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() == sellerID) {
+      if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() === sellerID) {
         db.child("/Conversation/" + convs[i]).remove();
         
         // Remove the appropriate number from the user's conversation list
@@ -87,12 +87,12 @@ export function addToUserList(userID, itemID, listName) {
       list = snapshot.child(listName).val().split(separator);
       
       // if this id is a duplicate, don't concatenate
-      if(list.indexOf("" + itemID) == -1) {
+      if(list.indexOf("" + itemID) === -1) {
         list = list.concat(itemID);
       }
       // Filter the list to remove any empty items in the list
       list = list.filter(function (el) {
-        return el != "";
+        return el !== "";
       });
       list = list.join(separator);
     }
@@ -117,13 +117,13 @@ export function addToConversationList(convID, messageID) {
       list = snapshot.child(listName).val().split(separator);
 
     // if this id is a duplicate, don't concatenate    
-    if(list.indexOf("" + messageID) == -1) {
+    if(list.indexOf("" + messageID) === -1) {
         list = list.concat(messageID);
     }
 
     //Filter the list to remove any empty items in the list
     list = list.filter(function (el) {
-      return el != "";
+      return el !== "";
     });
     list = list.join(separator);
     }

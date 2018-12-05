@@ -6,7 +6,6 @@ import React from 'react'
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
 import ImageUploader from 'react-images-upload'
-import { Link } from 'react-router-dom'
 
 export class Register extends React.Component {
   constructor(props) {
@@ -227,9 +226,9 @@ export class Register extends React.Component {
 
             <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" placeholder="City" value={this.state.city} required/> < br/>
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
-            <a className="button" className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
+            <a className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
           </div>
-          </form>
+        </form>
         </div>
       </div>
     );

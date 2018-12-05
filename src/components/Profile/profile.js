@@ -10,7 +10,8 @@ export class Profile extends React.Component {
     return (
       <div>
         <Header />
-          <ViewProfile />
+        <ViewProfile />
+        <Reviews />
       </div>
     );
   }

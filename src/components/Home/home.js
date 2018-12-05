@@ -77,19 +77,19 @@ export class Home extends React.Component {
               let tags = item['Listing_Tag'].split(separator);
 
 	      // check whether listing has each tag
-	      if(tags.indexOf("i-Clickers") != -1) {
+	      if(tags.indexOf("i-Clickers") !== -1) {
 		iclickers.push(item);
 	      }
-	      if (tags.indexOf("Food") != -1) {
+	      if (tags.indexOf("Food") !== -1) {
 		food.push(item);	
 	      }
-	      if (tags.indexOf("Furniture") != -1) {
+	      if (tags.indexOf("Furniture") !== -1) {
 		furniture.push(item);
 	      }
-	      if (tags.indexOf("Housing") != -1) {
+	      if (tags.indexOf("Housing") !== -1) {
 		housing.push(item);
 	      }
-	      if (tags.indexOf("Textbooks") != -1) {
+	      if (tags.indexOf("Textbooks") !== -1) {
 		textbooks.push(item);
 	      }
             }
@@ -126,15 +126,15 @@ export class Home extends React.Component {
     var tag = this.state.currTag;
 
     // get proper sublist of listings
-    if (tag == "i-Clickers") {
+    if (tag === "i-Clickers") {
       subList = this.state.iclickers;
-    } else if (tag == "Food") {
+    } else if (tag === "Food") {
       subList = this.state.food;
-    } else if (tag == "Furniture") {
+    } else if (tag === "Furniture") {
       subList = this.state.furniture;
-    } else if (tag == "Housing") {
+    } else if (tag === "Housing") {
       subList = this.state.housing;
-    } else if (tag == "Textbooks") {
+    } else if (tag === "Textbooks") {
       subList = this.state.textbooks;
     } else {
       subList = this.state.items;
@@ -155,7 +155,7 @@ export class Home extends React.Component {
           <Sidebar callbackFunction={this.setTag}/>
           </div>
           <div className="content-listings">
-            {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className = "loading-circle"><img src= {LoadingImg}></img></div>}
+            {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className="loading-circle"><img src={LoadingImg} alt="Loading..."></img></div>}
           </div>
         </div>
       </div>

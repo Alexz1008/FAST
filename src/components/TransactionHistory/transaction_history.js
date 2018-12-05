@@ -29,7 +29,6 @@ export class TransactionHistory extends React.Component {
         this.firebaseRef.on('value', dataSnapshot => {
           let items = [];
           let completedTransactions = dataSnapshot.child("Users/" + this.state.user.uid + "/Completed_Transactions").val().split(",");
-          var reviewed;
           var i;
           for (i = 0; i < completedTransactions.length; i++) {
             if(completedTransactions[i] !== "") {
@@ -62,7 +61,7 @@ export class TransactionHistory extends React.Component {
       <div>
         <Header />
         <div className="content">
-          {this.state.loaded ? listings.length ? listings : <div className = "content-text"> You have no completed transactions.</div> : <div className = "history-loading"><center><img src= {LoadingImg}></img></center></div>}
+          {this.state.loaded ? listings.length ? listings : <div className = "content-text"> You have no completed transactions.</div> : <div className = "history-loading"><center><img src={LoadingImg} alt="Loading..."></img></center></div>}
         </div>
       </div>
     )
