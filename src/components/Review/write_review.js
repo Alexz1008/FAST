@@ -79,7 +79,12 @@ export class WriteReview extends React.Component {
       Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Reviewed").set(true) : fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Reviewed").set(true);
       
       var sumOfReviews = snapshot.child("Users/" + Reviewed_User + "Sum_Of_Reviews").val();
-      var totalReviews = snapshot.child("Users/" + Reviewed_User + "Reviews").val().split(",").length;
+      var totalReviews = snapshot.child("Users/" + Reviewed_User + "Reviews").val().split(",");
+      // Filter the list to remove any empty items in the list
+      totalReviews = totalReviews.filter(function (el) {
+        return el != "";
+      });
+      totalReviews = totalReviews.length + 1;
       fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews);
     });
       
