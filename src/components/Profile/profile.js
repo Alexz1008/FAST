@@ -26,6 +26,7 @@ export class Profile extends React.Component {
       // Make sure the user exists before checking
       if (profileUser !== "" && snapshot.child("Users/" + profileUser).exists()) {
         let reviews = [];
+        let isUser = this.state.user.uid === profileUser;
         let name = snapshot.child("Users/" + profileUser + "/Name").val();
         let rating = snapshot.child("Users/" + profileUser + "/Average_review").val();
         let image = snapshot.child("Users/" + profileUser + "/User_Pic").val();
@@ -33,7 +34,7 @@ export class Profile extends React.Component {
         let email = snapshot.child("Users/" + profileUser + "/UCSD_Email").val();
         let zipcode = snapshot.child("Users/" + profileUser + "/Zip").val();
         let city = snapshot.child("Users/" + profileUser + "/City").val();
-        this.setState({name, rating, image, tel, email, zipcode, city});
+        this.setState({name, rating, image, tel, email, zipcode, city, isUser});
         
         // Load in all reviews
         let reviewList = snapshot.child("Users/" + profileUser + "/Reviews").val().split(",");
@@ -71,6 +72,7 @@ export class Profile extends React.Component {
           // Make sure the user exists before checking
           if (profileUser !== "" && snapshot.child("Users/" + profileUser).exists()) {
             let reviews = [];
+            let isUser = user.uid === profileUser;
             let name = snapshot.child("Users/" + profileUser + "/Name").val();
             let rating = snapshot.child("Users/" + profileUser + "/Average_review").val();
             let image = snapshot.child("Users/" + profileUser + "/User_Pic").val();
@@ -78,7 +80,7 @@ export class Profile extends React.Component {
             let email = snapshot.child("Users/" + profileUser + "/UCSD_Email").val();
             let zipcode = snapshot.child("Users/" + profileUser + "/Zip").val();
             let city = snapshot.child("Users/" + profileUser + "/City").val();
-            this.setState({name, rating, image, tel, email, zipcode, city});
+            this.setState({name, rating, image, tel, email, zipcode, city, isUser});
             
             // Load in all reviews
             let reviewList = snapshot.child("Users/" + profileUser + "/Reviews").val().split(",");
@@ -120,7 +122,7 @@ export class Profile extends React.Component {
         <Header />
       {this.state.loaded ?
         <div>
-          <ViewProfile name={this.state.name} rating={this.state.rating} image={this.state.image} tel={this.state.tel} email={this.state.email} zipcode={this.state.zipcode} city={this.state.city}/>
+          <ViewProfile name={this.state.name} rating={this.state.rating} image={this.state.image} tel={this.state.tel} email={this.state.email} zipcode={this.state.zipcode} city={this.state.city} isUser={this.state.isUser}/>
           {reviews}
         </div>
       :

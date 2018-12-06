@@ -34,7 +34,7 @@ class ViewProfile extends Component {
           <br />
           City: {this.props.city}
           <br />
-          <a className="profile-button" href='/edit_profile'>edit profile</a>
+          {this.props.isUser ? <a className="profile-button" href='/edit_profile'>edit profile</a>: null}
         </form>
       </div>
     );
