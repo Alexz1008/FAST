@@ -193,19 +193,27 @@ export class Messages extends React.Component {
   getMessages() {
     fire.database().ref().on('value', snapshot => {
       let messages = [];
-      let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
-      
-      // For each message in the list, add them to messages
-      var i;
-      for(i = 0; i < messageIDList.length; i++) {
-        if(messageIDList[i] !== "") {
-          messages.push(snapshot.child("Message/" + messageIDList[i]).val());
+      if (snapshot.child("Conversation/" + this.state.currID + "/Message_List").exists()) {
+        let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
+        
+        // For each message in the list, add them to messages
+        var i;
+        for(i = 0; i < messageIDList.length; i++) {
+          if(messageIDList[i] !== "") {
+            messages.push(snapshot.child("Message/" + messageIDList[i]).val());
+          }
+        }
+        this.setState({messages: messages});
+        if(document.getElementById("messageBody")) {
+          var chatScroll = document.getElementById("messageBody");
+          chatScroll.scrollTop = chatScroll.scrollHeight;
         }
       }
-      this.setState({messages: messages});
-      if(document.getElementById("messageBody")) {
-        var chatScroll = document.getElementById("messageBody");
-        chatScroll.scrollTop = chatScroll.scrollHeight;
+      // Conversation no longer exists, just remove it
+      else {
+        let userConvs = fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").val().split(",");
+        userConvs.splice(userConvs.indexOf(this.state.currID), 1);
+        fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").set(userConvs);
       }
     });
   }

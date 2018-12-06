@@ -82,7 +82,7 @@ export class Listing extends React.Component {
     fire.database().ref().child("Listing/" + this.props.id).remove();
     
     // Delete any related conversations
-    this.firebaseRef.once('value', snapshot => {
+    fire.database().ref().once('value', snapshot => {
       let convs = snapshot.child("Users/" + this.state.user.uid + "/Conversations").val().split(",");
       var i;
       for(i = 0; i < convs.length; i++) {
