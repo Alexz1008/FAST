@@ -78,14 +78,9 @@ export class Listing extends React.Component {
     removeFromUserInterested(this.state.user.uid, this.state.id, this.state.sellerid);
   }
   handleDeleteListingClick() {
-    console.log("Delete this listing");
     fire.database().ref().child("Listing/" + this.props.id).remove();
   }
   handleEditListingClick() {
-    console.log("delete listing");
-  }
-  handleReviewClick() {
-    console.log("review");
   }
   handleDeleteReviewClick() {
     console.log("delete review");
@@ -129,9 +124,9 @@ export class Listing extends React.Component {
                   isMyListing ?
                   null
                   :
-                  <button className='listing-button-unselected' id="writeReview" onClick={this.handleReviewClick}>
-                    <a href={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
-                    {this.state.reviewed ? 'Edit Review' : 'Write Review'}</a> 
+                  <button className='listing-button-unselected' id="writeReview">
+                    <Link to={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
+                    {this.state.reviewed ? 'Edit Review' : 'Write Review'}</Link>
                   </button>
                 }
                 {
@@ -162,9 +157,9 @@ export class Listing extends React.Component {
               </div>
               <div>
                 {isMyListing ?
-                    <Link to="/edit_listing"><button className='listing-button-unselected' id="editListing">
-                      Edit
-                    </button></Link>
+                  <Link to={'/edit_listing?id=' + this.getListingID()}><button className='listing-button-unselected' id="editListing">
+                    Edit
+                  </button></Link>
                 : null}
               </div>
               <div>

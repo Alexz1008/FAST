@@ -80,9 +80,11 @@ export class Header extends React.Component {
                       <div className="navbar-search">
                           <form action='/home' className="navbar-search-form">
                               <input type="text" name="search" className="navbar-search-input"/>
-                              <button type="submit" className="navbar-search-button"><img className="navbar-search-image"
-                                                                                          src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
-                                                                                          alt="Search"/></button>
+                              <button type="submit" className="navbar-search-button">
+                                <img className="navbar-search-image" 
+                                src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
+                                alt="Search"/>
+                              </button>
                           </form>
                       </div>
                       <Link to='' onClick={ () => this.handleLogout()}>
