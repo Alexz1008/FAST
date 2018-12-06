@@ -125,7 +125,7 @@ export class Listing extends React.Component {
               <div className="listing-log">
                 {
                   isMyListing ?
-                  console.log("invalid interested listing")
+                  null
                   :
                   <button className='listing-button-unselected' id="writeReview" onClick={this.handleReviewClick}>
                     <a href={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
@@ -138,13 +138,13 @@ export class Listing extends React.Component {
                     Delete Review
                   </button>
                   :
-                  console.log("no review")}
+                  null}
               </div>
             :
             <div className="listing-regular">
               <div>
                   {isMyListing ?
-                    console.log("invalid interest listing")
+                    null
                   :
                   <button className={this.state.isSaved ? 'listing-button-selected' : 'listing-button-unselected'} id="saveButton" onClick={this.state.isSaved ? this.handleRemoveClickSaved : this.handleAddClickSaved}>
                     {this.state.isSaved ? 'Saved' : 'Save'}
@@ -152,7 +152,7 @@ export class Listing extends React.Component {
               </div>
               <div>
                   {isMyListing ?
-                    console.log("invalid interest listing")
+                    null
                   :
                   <button className={isInterested ? 'listing-button-selected' : 'listing-button-unselected'} id="interestedListing" onClick={this.state.isInterested ? this.handleRemoveInterestClick : this.handleAddInterestClick}>
                     {isInterested ? 'Interested' : 'Show Interest'}
@@ -163,14 +163,14 @@ export class Listing extends React.Component {
                     <Link to="/edit_listing"><button className='listing-button-unselected' id="editListing">
                       Edit
                     </button></Link>
-                    : console.log("invalid edit listing")}
+                : null}
               </div>
               <div>
                 {isMyListing ?
                   <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
                     Delete
                   </button>
-                : console.log("invalid delete listing")}
+                : null}
               </div>
             </div>
           }
