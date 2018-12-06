@@ -1,21 +1,22 @@
-# base image
-FROM node:8.12.0
+# use node for base image
+FROM node:10.14.1
 
-# set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+# update system
+RUN apt-get update
+RUN apt-get -y install nodejs
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
+# create and set working directory
+WORKDIR /app
+ADD . /app
 
-# install and cache app dependencies
-COPY package.json /usr/src/app/package.json
-RUN npm install
-RUN npm install firebase
-RUN npm install expressjs
-RUN npm install react-router
-RUN npm install react-router-dom
-RUN npm install react-images-upload
+# copy package.json install dependencies using cache for efficiency
+COPY package.json /tmp/package.json
+RUN cd /app/src && npm install
+RUN cd /app/src && npm install express expressjs firebase react react-dom react-image-upload react-images-upload react-router react-router-dom react-scripts
 
-# start app
-CMD ["npm", "start"]
+
+# expose port 80 -- localhost
+EXPOSE 80
+
+# start web application
+CMD ["npm", "start", "--prefix /app/src"]
