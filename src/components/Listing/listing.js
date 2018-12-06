@@ -87,7 +87,8 @@ export class Listing extends React.Component {
       var i;
       for(i = 0; i < convs.length; i++) {
         let conv = snapshot.child("Conversation/" + convs[i]).val();
-        if(conv['Listing_ID'] === this.props.id) {
+        console.log(conv);
+        if(conv && conv['Listing_ID'] === this.props.id) {
           fire.database().ref().child("Conversation/" + convs[i]).remove();
         }
       }
