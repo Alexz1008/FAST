@@ -33,6 +33,10 @@ export class TransactionHistory extends React.Component {
           for (i = 0; i < completedTransactions.length; i++) {
             if(completedTransactions[i] !== "") {
               let item = dataSnapshot.child("Listing/" + completedTransactions[i]).val()
+              if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
+                item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
+                fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+              }
               let User_Is_Seller = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_ID").val() === user.uid;
               User_Is_Seller ? item['reviewed'] = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Buyer_Reviewed").val() :
                               item['reviewed'] = dataSnapshot.child("Listing/" + completedTransactions[i] + "/Seller_Reviewed").val();

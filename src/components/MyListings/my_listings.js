@@ -37,6 +37,10 @@ export class MyListings extends React.Component {
             // Make sure the listing is not a log before pushing
             let item = childSnapshot.val();
             if(item['Is_Transaction_Log'] === false) {
+              if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
+                item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
+                fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+              }
               item['Next_Conversation_ID'] = nextconversationid;
               item['isInterested'] = (interestedlistings.indexOf("" + item['Listing_ID']) !== -1);
               item['isSaved'] = (savedlistings.indexOf("" + item['Listing_ID']) !== -1);

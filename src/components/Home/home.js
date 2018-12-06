@@ -67,6 +67,11 @@ export class Home extends React.Component {
             let item = childSnapshot.val();
             if(item['Is_Transaction_Log'] === false) {
               item['Next_Conversation_ID'] = nextconversationid;
+              // Update the rating of the listing if the user's rating has changed recently
+              if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
+                item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
+                fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+              }
 
               // Check if this listing was marked as interested or not
               item['isInterested'] = (interestedlistings) ? (interestedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
