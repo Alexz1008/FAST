@@ -157,7 +157,7 @@ export class Home extends React.Component {
         <Header />
         <div className="content">
           <div className="content-sidebar">
-          <Sidebar callbackFunction={this.setTag}/>
+          <Sidebar callbackFunction={this.setTag} currTag ={this.state.currTag}/>
           </div>
           <div className="content-listings">
             {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className="loading-circle"><img src={LoadingImg} alt="Loading..."></img></div>}
