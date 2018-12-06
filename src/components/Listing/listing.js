@@ -11,6 +11,7 @@ export class Listing extends React.Component {
     this.handleRemoveClickSaved = this.handleRemoveClickSaved.bind(this);
     this.handleAddInterestClick = this.handleAddInterestClick.bind(this);
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
+    this.handleDeleteListingClick = this.handleDeleteListingClick.bind(this);
     this.getListingID = this.getListingID.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, isSaved: this.props.isSaved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
@@ -77,7 +78,8 @@ export class Listing extends React.Component {
     removeFromUserInterested(this.state.user.uid, this.state.id, this.state.sellerid);
   }
   handleDeleteListingClick() {
-    console.log("delete listing");
+    console.log("Delete this listing");
+    fire.database().ref().child("Listing/" + this.props.id).remove();
   }
   handleEditListingClick() {
     console.log("delete listing");
@@ -167,7 +169,7 @@ export class Listing extends React.Component {
               </div>
               <div>
                 {isMyListing ?
-                  <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick()}>
+                  <button className='listing-button-unselected' id="deleteListing" onClick={this.handleDeleteListingClick}>
                     Delete
                   </button>
                 : null}
