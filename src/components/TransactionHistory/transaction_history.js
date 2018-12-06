@@ -54,7 +54,7 @@ export class TransactionHistory extends React.Component {
     const listings = this.state.items.map(item =>
       <div className="listing" key={item['Listing_ID']}>
         <Listing id={item['Listing_ID']} title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true}
-        reviewed={item['reviewed']}/>
+        reviewed={item['reviewed']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} transactiondate={item['Transaction_Date']}/>
       </div>
     );
     return (

@@ -8,7 +8,6 @@ export class Review extends React.Component {
   }
   
   render() {
-    console.log(this);
     return(
       <div className="reviews-review-container">
         <div className="reviews-review-title">

@@ -101,7 +101,7 @@ export class Listing extends React.Component {
       <div className="listing-upper">
         <img className="listing-picture" src={this.state.image} alt="did not load" />
         <div className="listing-title">{this.state.title} </div>
-        <div className="listing-poster">Poster: {this.state.sellername}</div>
+        <div className="listing-poster">Seller: <Link to={"/profile?uid=" + this.props.sellerid}>{this.state.sellername}</Link></div>
         <div className="listing-header">
           <div className="listing-header-item">
             Rating: {this.state.rating}
@@ -110,7 +110,7 @@ export class Listing extends React.Component {
             ${this.state.price}
           </div>
           <div className="listing-header-item">
-            Posted: {this.state.postdate}
+          {isLog ? <div>Completed: {this.props.transactiondate}</div> : <div>Posted: {this.state.postdate}</div>}
           </div>
         </div>
         <hr width="80%"/>
