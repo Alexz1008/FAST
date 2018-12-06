@@ -80,6 +80,18 @@ export class Listing extends React.Component {
   handleDeleteListingClick() {
     // Remove the listing from existence
     fire.database().ref().child("Listing/" + this.props.id).remove();
+    
+    // Delete any related conversations
+    this.firebaseRef.once('value', snapshot => {
+      let convs = snapshot.child("Users/" + this.state.user.uid + "/Conversations").val().split(",");
+      var i;
+      for(i = 0; i < convs.length; i++) {
+        let conv = snapshot.child("Conversation/" + convs[i]).val();
+        if(conv['Listing_ID'] === this.props.id) {
+          fire.database().ref().child("Conversation/" + convs[i]).remove();
+        }
+      }
+    });
   }
   handleEditListingClick() {
   }

@@ -84,6 +84,7 @@ export class Messages extends React.Component {
   getConversations() {
     var userID = this.state.user.uid;
     let listings = [];
+    let convList = [];
     fire.database().ref().once('value', snapshot => {
       // Check if the user has any conversations
       let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
@@ -92,25 +93,32 @@ export class Messages extends React.Component {
       var i;
       for(i = 0; i < userConvs.length; i++) {
         if(userConvs[i] !== "") {
-          let id = snapshot.child("Conversation/" + userConvs[i] + "/Listing_ID").val();
-          let Buyer_ID = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_ID").val();
-          let listing = snapshot.child("Listing/" + id).val();
-          if(listing !== null) {
-            listing['Buyer_ID'] = Buyer_ID;
-            listing['Conversation_ID'] = userConvs[i];
-            listing['Conv_Seller_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Seller_Confirm").val();
-            listing['Conv_Buyer_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_Confirm").val();
-            listing['User_Is_Seller'] = (snapshot.child("Conversation/" + userConvs[i] + "/Seller_ID").val() === userID);
-            listing['Buyer_Name'] = (snapshot.child("Users/" + Buyer_ID + "/Name").val());
-            listings.push(listing);
-            
-            // Appropriately set the class, disable/enable the button, the button text, and onClick
-            // Case 1, the listing has already been confirmed
-            this.updateButton(listing);
-                
-            this.setState({currID: userConvs[i], activeListing: listing}, () => {
-              this.getMessages();
-            });
+          // Make sure the conversation exists, remove it if it doesn't
+          if(snapshot.child("Conversation/" + userConvs[i]).exists()) {
+            let id = snapshot.child("Conversation/" + userConvs[i] + "/Listing_ID").val();
+            let Buyer_ID = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_ID").val();
+            let listing = snapshot.child("Listing/" + id).val();
+            if(listing !== null) {
+              listing['Buyer_ID'] = Buyer_ID;
+              listing['Conversation_ID'] = userConvs[i];
+              listing['Conv_Seller_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Seller_Confirm").val();
+              listing['Conv_Buyer_Confirmed'] = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_Confirm").val();
+              listing['User_Is_Seller'] = (snapshot.child("Conversation/" + userConvs[i] + "/Seller_ID").val() === userID);
+              listing['Buyer_Name'] = (snapshot.child("Users/" + Buyer_ID + "/Name").val());
+              listings.push(listing);
+              
+              // Appropriately set the class, disable/enable the button, the button text, and onClick
+              // Case 1, the listing has already been confirmed
+              this.updateButton(listing);
+                  
+              this.setState({currID: userConvs[i], activeListing: listing}, () => {
+                this.getMessages();
+              });
+            }
+          }
+          // If the conversation no longer exists, delete it from the list
+          else {
+              userConvs.splice(i, 1);
           }
         }
       }
