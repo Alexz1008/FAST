@@ -29,6 +29,7 @@ class Edit extends Component {
       fire.auth().onAuthStateChanged((user) => {
         // If the user is detected, save it to the current state
         if(user) {
+          this.setState({user})
           this.getProfile();
         }
         // Otherwise set the current user to null
@@ -71,10 +72,9 @@ class Edit extends Component {
 
     handleChange(event) {
       this.setState({[event.target.name]: event.target.value});
-      console.log(event.target.value);
     }
     //check the state and update the profile
-    updateUserProfile(event) {
+    updateUserProfile() {
       const user = firebase.auth().currentUser;
       const UCSD_Email = this.state.email;
       const User_Pic = this.state.image;
@@ -84,10 +84,7 @@ class Edit extends Component {
       const City = this.state.city;
       var userID = user.uid;
 
-      this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City});
-      const { history } = this.props;
-      alert('your profile has been updated successfully');
-      history.push("/profile");
+      this.usersDB.child(userID).update({UCSD_Email, Name, User_Pic, Phone, Zip, City});
     }
     // upload the image
     onDrop(file, picture) {
@@ -98,14 +95,14 @@ class Edit extends Component {
       else{
         this.setState({image:picture});
       }
-      console.log(picture);
     }
 
     render(){
         return(
             <div>
             {this.state.loaded ?
-                <form className="profile-form"  >
+                <form action="/profile" className="profile-form">
+                  <input type="hidden" value={this.state.user.uid} name="uid" />
                   {this.state.image ? 
                     <img className="profile-img" src = {this.state.image[this.state.image.length-1]} alt="Profile" />
                     : <img className="profile-img" src = {userImage} alt="Default Profile" />
