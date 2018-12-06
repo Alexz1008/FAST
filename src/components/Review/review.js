@@ -3,28 +3,36 @@ import './review.css'
 //by default, using styles from ./login.css
 
 export class Review extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  
   render() {
+    console.log(this);
     return(
       <div className="reviews-review-container">
         <div className="reviews-review-title">
-          <center><b>Singular Banana</b></center>
+          <center><b>{this.props.reviewtitle}</b></center>
         </div>
         <div className="reviews-review-attributes">
           <div className="reviews-review-attribute">
-            Posted by: Alex Zhou
+            Seller: {this.props.sellername}
           </div>
           <div className="reviews-review-attribute">
-            Date: 11-25-18
+            Reviewer: {this.props.reviewername}
           </div>
           <div className="reviews-review-attribute">
-            Score: 4
+            Date: {this.props.transactiondate}
+          </div>
+          <div className="reviews-review-attribute">
+            Score: {this.props.reviewrating}
           </div>
         </div>
         <div className="reviews-review-header">
-          <b>Excellent purchase</b>
+          <b>{this.props.reviewheader}</b>
         </div>
         <div className="reviews-review-text">
-          This was an excellent purchase for an excellent item and I think the service was gillexcellent.
+        {this.props.reviewcontent}
         </div>
       </div>
     );

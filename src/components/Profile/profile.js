@@ -1,17 +1,97 @@
 import React from 'react'
 import Header from '../Header/header'
-import { Reviews } from '../Review/reviews'
+import { Review } from '../Review/review'
 import '../App.css'
 import './profile.css'
 import ViewProfile from './view_profile'
+import fire from '../Fire/fire'
+
 
 export class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: false
+    };
+  }
+  
+  componentWillReceiveProps(props) {
+    const { history } = props;
+    this.setState({loaded: false});
+    var profileUser = props.location.search.substring(5);
+    
+    // Load in profile info and all reviews of the user we're viewing
+    fire.database().ref().once("value", snapshot => {
+      console.log(profileUser);
+      
+      // Make sure the user exists before checking
+      if (profileUser !== "" && snapshot.child("Users/" + profileUser).exists()) {
+        let reviews = [];
+        let name = snapshot.child("Users/" + profileUser + "/Name").val();
+        let rating = snapshot.child("Users/" + profileUser + "/Average_review").val();
+        let image = snapshot.child("Users/" + profileUser + "/User_Pic").val();
+        let tel = snapshot.child("Users/" + profileUser + "/Phone").val();
+        let email = snapshot.child("Users/" + profileUser + "/UCSD_Email").val();
+        let zipcode = snapshot.child("Users/" + profileUser + "/Zip").val();
+        let city = snapshot.child("Users/" + profileUser + "/City").val();
+        this.setState({name, rating, image, tel, email, zipcode, city});
+        
+        // Load in all reviews
+        let reviewList = snapshot.child("Users/" + profileUser + "/Reviews").val().split(",");
+        
+        // push each review from reviewList
+        var i;
+        for (i = 0; i < reviewList.length; i++) {
+          if(reviewList[i] !== "") {
+            var review = snapshot.child("Review/" + reviewList[i]).val()
+            review['Listing_Title'] = snapshot.child("Listing/" + review['Listing_ID'] + "/Listing_Title").val();
+            reviews.push(review);
+          }
+        }
+        this.setState({reviews, loaded: true});
+      }
+      else {
+        history.push("/home");
+        alert("User not found");
+      }
+    });
+  }
+  
+  componentDidMount(){
+    const { history } = this.props;
+    fire.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({user});
+      }
+      // Otherwise set the current user to null
+      else {
+        this.setState({user: null});
+        history.push("/");
+        alert("You must log in!");
+      }
+    });
+  }
+  
   render () {
+    var reviews;
+    if(this.state.loaded) {
+      reviews = this.state.reviews.map(item =>
+        <div>
+          <Review sellername={item['Seller_Name']} reviewername={item['Reviewer_Name']} transactiondate={item['Transaction_Date']} reviewrating={item['Review_Rating']}
+          reviewcontent={item['Review_Content']} reviewheader={item['Review_Title']} reviewtitle={item['Listing_Title']}/>
+        </div>
+      );
+    }
     return (
       <div>
         <Header />
-        <ViewProfile />
-        <Reviews />
+      {this.state.loaded ?
+        <div>
+          <ViewProfile name={this.state.name} rating={this.state.rating} image={this.state.image} tel={this.state.tel} email={this.state.email} zipcode={this.state.zipcode} city={this.state.city}/>
+          {reviews}
+        </div>
+      :
+      null}
       </div>
     );
   }

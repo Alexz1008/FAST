@@ -48,7 +48,9 @@ export class WriteReview extends React.Component {
     const Review_Content = this.state.review;
     const Listing_ID = this.state.listingID;
     const User_ID = this.state.user.uid;
-
+    
+    var Reviewer_Name;
+    var Seller_Name;
     var Review_ID;
     var Is_Seller;
     var Transaction_Date;
@@ -71,7 +73,9 @@ export class WriteReview extends React.Component {
       var Reviewed_User = Is_Seller ? Seller_ID : Buyer_ID;
       Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
         
-      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Listing_ID});
+      var Reviewer_Name = snapshot.child("Users/" + User_ID + "/Name").val();
+      var Seller_Name = snapshot.child("Users/" + Seller_ID + "/Name").val();
+      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Listing_ID, Reviewer_Name, Seller_Name});
       
       // Add to reviewee's review list
       Is_Seller ? addToUserList(Seller_ID, next_id, "Reviews") : addToUserList(Buyer_ID, next_id, "Reviews");
