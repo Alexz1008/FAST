@@ -78,6 +78,7 @@ export class Listing extends React.Component {
     removeFromUserInterested(this.state.user.uid, this.state.id, this.state.sellerid);
   }
   handleDeleteListingClick() {
+    // Remove the listing from existence
     fire.database().ref().child("Listing/" + this.props.id).remove();
   }
   handleEditListingClick() {

@@ -195,9 +195,10 @@ export class Messages extends React.Component {
         }
       }
       this.setState({messages: messages});
-      var chatScroll = document.getElementById("messageBody");
-      chatScroll.scrollTop = chatScroll.scrollHeight;
-      
+      if(document.getElementById("messageBody")) {
+        var chatScroll = document.getElementById("messageBody");
+        chatScroll.scrollTop = chatScroll.scrollHeight;
+      }
     });
   }
   
