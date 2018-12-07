@@ -122,6 +122,8 @@ export class Messages extends React.Component {
           }
         }
       }
+      fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.join(","));
+      
       this.setState({conversations: userConvs[i], listings: listings.reverse(), loaded: true});
     });
   }
@@ -212,15 +214,6 @@ export class Messages extends React.Component {
             var chatScroll = document.getElementById("messageBody");
             chatScroll.scrollTop = chatScroll.scrollHeight;
           }
-        }
-        // Conversation no longer exists, just remove it
-        else {
-          let userConvs = fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").val().split(",");
-          if(userConvs.indexOf(this.state.currID) !== -1) {
-            userConvs.splice(userConvs.indexOf(this.state.currID), 1);
-          }
-          fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").set(userConvs);
-          this.setState({currID: null});
         }
       }
     });
