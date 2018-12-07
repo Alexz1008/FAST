@@ -27,3 +27,13 @@ Index.js is in charge of rendering everything. This means there will be no point
 Components are separated into folders. Some components may just be full pages, like home.js and profile.js, and others may be commonly used parts that can be reused, like listing.js and header.js.
 
 Main.js is responsible for all routing. In other words, Main.js is what handles what component to display when we're at a certain url. This is what you'd need to change if you wanted to add a new page URL in.
+
+## Docker
+1. First build the container locally
+	$ docker build -t [tag] .
+2. Login to docker and push it to the repo
+	$ docker login
+	$ docker tag [tag] [docker_username/repository:tag]
+	$ docker push [docker_username/repository:tag]
+3. Now just follow part two of lab7 and upload to aws. Make sure to run below command as stated in the lab.
+	$ docker run -p 443:80 [docker_username/repository:tag]

@@ -15,7 +15,7 @@ RUN cd /app/src && npm install
 RUN cd /app/src && npm install express expressjs firebase react react-dom react-image-upload react-images-upload react-router react-router-dom react-scripts
 
 
-# expose port 80 -- localhost
+# expose port 80 -- localhost:3000
 EXPOSE 80
 
 # start web application
