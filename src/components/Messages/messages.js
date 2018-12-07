@@ -238,7 +238,7 @@ export class Messages extends React.Component {
         if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
-          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "/" + d.getMonth());
+          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set((d.getMonth()+1) + "/" + d.getDate());
           listing['Is_Transaction_Log'] = true;
           
           // Add the log to both user's transaction histories
@@ -254,7 +254,7 @@ export class Messages extends React.Component {
         listing['Seller_Confirmed'] = true;
         if(snapshot.child("Conversation/" + convID + "/Buyer_Confirm").val()) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
-          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "/" + d.getMonth());
+          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getMonth() + "/" + d.getDate());
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
           listing['Is_Transaction_Log'] = true;
           
