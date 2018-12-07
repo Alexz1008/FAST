@@ -49,13 +49,10 @@ export class WriteReview extends React.Component {
     const Listing_ID = this.state.listingID;
     const User_ID = this.state.user.uid;
     
-    var Reviewer_Name;
-    var Seller_Name;
     var Review_ID;
     var Is_Seller;
     var Transaction_Date;
 
-    const { history } = this.props;
     fire.database().ref().once('value', snapshot => {
       // Make sure the review ID does not exist yet
       var next_id = snapshot.child("Constants/Next_Review_ID").val();

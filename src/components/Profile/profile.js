@@ -72,7 +72,6 @@ export class Profile extends React.Component {
     fire.auth().onAuthStateChanged((user) => {
       if(user) {
         this.setState({user});
-        const { history } = this.props;
         this.setState({loaded: false});
         var profileUser = this.props.location.search.substring(5);
         
@@ -133,7 +132,8 @@ export class Profile extends React.Component {
         <Header />
       {this.state.loaded ?
         <div>
-          <ViewProfile name={this.state.name} rating={this.state.rating} image={this.state.image} tel={this.state.tel} email={this.state.email} zipcode={this.state.zipcode} city={this.state.city} isUser={this.state.isUser}/>
+          <ViewProfile name={this.state.name} rating={this.state.rating} image={this.state.image} tel={this.state.tel} email={this.state.email} zipcode={this.state.zipcode} city={this.state.city} isUser={this.state.isUser}
+          averagereview={this.state.averagereview}/>
           {reviews}
         </div>
       :

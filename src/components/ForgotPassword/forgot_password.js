@@ -51,7 +51,7 @@ export class ForgotPassword extends React.Component {
           <form className="forgot-password-form">
           <div className="content-box">
           
-           <img src = {Logo} width = "200" className = "center" title = "Triton Market"></img>
+           <img src = {Logo} width = "200" className = "center" title = "Triton Market" alt="Logo"></img>
             <h3 className="basic-title">FORGOT PASSWORD</h3>
 
 

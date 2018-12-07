@@ -3,7 +3,7 @@ import Header from '../Header/header'
 import MessageSidebar from './MessageSidebar/message_sidebar'
 import './messages.css'
 import fire from '../Fire/fire'
-import { addToUserList, addToConversationList } from '../Utilities/utilities'
+import { addToUserList, addToConversationList, removeFromUserList } from '../Utilities/utilities'
 
 export class Messages extends React.Component {
   constructor(props) {
@@ -84,7 +84,6 @@ export class Messages extends React.Component {
   getConversations() {
     var userID = this.state.user.uid;
     let listings = [];
-    let convList = [];
     fire.database().ref().once('value', snapshot => {
       // Check if the user has any conversations
       let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
@@ -262,6 +261,7 @@ export class Messages extends React.Component {
           
           addToUserList(userID, listingID, "Completed_Transactions");
           addToUserList(buyerID, listingID, "Completed_Transactions");
+          removeFromUserList(buyerID, listingID, "Interest_Transactions");
         }
       }
       this.updateButton(listing);
