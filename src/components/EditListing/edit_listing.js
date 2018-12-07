@@ -14,7 +14,22 @@ export class EditListing extends React.Component {
   }
   
   componentDidMount(){
-    this.loadEditListing(this.props);
+      const { history } = this.props;
+      fire.auth().onAuthStateChanged((user) => {
+          // If the user is detected, save it to the current state
+          if (user) {
+              this.setState({user});
+              this.loadEditListing(this.props);
+              //localStorage.setItem('user',user.uid);
+          }
+          // Otherwise set the current user to null
+          else {
+              this.setState({user: null});
+              history.push("/");
+              alert("You must log in!");
+              //localStorage.removeItem('user');
+          }
+      })
   }
   componentWillReceiveProps(props) {
     this.loadEditListing(props);

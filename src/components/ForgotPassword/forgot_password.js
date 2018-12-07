@@ -4,6 +4,7 @@ import React from 'react'
 //By default, forgot_password.js uses styles from ./login.css
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
+import Logo from '../Login/TM2.png'
 
 
 export class ForgotPassword extends React.Component {
@@ -49,6 +50,8 @@ export class ForgotPassword extends React.Component {
         <div className="center">
           <form className="forgot-password-form">
           <div className="content-box">
+          
+           <img src = {Logo} width = "200" className = "center" title = "Triton Market"></img>
             <h3 className="basic-title">FORGOT PASSWORD</h3>
 
 

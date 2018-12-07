@@ -5,6 +5,7 @@ import React from 'react'
 import './login.css'
 import fire from '../Fire/fire'
 import {withRouter} from 'react-router-dom'
+import Logo from './TM2.png'
 
 export class Login extends React.Component {
   constructor(props) {
@@ -68,7 +69,8 @@ export class Login extends React.Component {
         <div className="center">
           <form className="login-form">
           <div className="content-box">
-            <h3 className="basic-title">LOG IN</h3><br /><br /> <br /> <br /> <br/>  <br /><br /><br />
+            <img src = {Logo} width = "200" className = "center" title = "Triton Market"></img>
+            <h3 className="basic-title">LOG IN</h3><br /><br /> <br /> 
 
             <label htmlFor="email"><strong></strong></label> <br />
             <input value={this.state.email} onChange={this.handleChange} placeholder="UCSD Email" type="email" className="basic-input" name="email" id="email" required /> <br />
@@ -78,7 +80,7 @@ export class Login extends React.Component {
 
           
 
-            <button onClick={this.login} type="submit" className="basic-button" id="login-button" >Login</button> <br /> <br /> <br /> <br /><br /><br /><br />
+            <button onClick={this.login} type="submit" className="basic-button" id="login-button" >Login</button> <br /> <br /> <br /> 
               <a id ="create-account" href="/register">Register account</a>
               <a id="login-forgot-pass" href="/forgot_password">Forgot password?</a><br />
           </div>

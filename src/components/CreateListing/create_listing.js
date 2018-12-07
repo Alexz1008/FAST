@@ -28,6 +28,7 @@ export class CreateListing extends React.Component{
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
@@ -36,8 +37,10 @@ export class CreateListing extends React.Component{
       }
       // Otherwise set the current user to null
       else {
-        this.setState({user: null});
-        //localStorage.removeItem('user');
+          this.setState({user: null});
+          history.push("/");
+          alert("You must log in!");
+          //localStorage.removeItem('user');
       }
     });
   }
@@ -116,14 +119,12 @@ export class CreateListing extends React.Component{
       <Header />
       <form className="listing-form" autoComplete="off">
         <div className="content-box">
-          <h3 id="create-listing-title" className="basic-title">Create listing</h3>
+          <h3 id="create-listing-title" className="basic-title">CREATE LISTING</h3>
 
-          <label htmlFor="listing-title"><strong>Title:</strong></label> <br />
-          <input type="text" className="basic-input" name="title" id="listing-title"
+          <input type="text" className="basic-input" placeholder= "Title" name="title" id="listing-title"
 	    onChange={this.handleChange} required/> <br />
 
-          <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
-          <input type="text" className="basic-input" name="price" id="listing-price"
+          <input type="text" className="basic-input" placeholder="Price" name="price" id="listing-price"
 	    onChange={this.handleChange} />
 
           <ImageUploader
@@ -136,8 +137,7 @@ export class CreateListing extends React.Component{
             singleImage={true}
           />
 
-          <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br />
-          <textarea name="desc" id="listing-content" onChange={this.handleChange} /> <br />
+          <textarea name="desc" id="listing-content" onChange={this.handleChange} placeholder="Describe your listing..." /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
           <Tag callbackFunction={this.tagCallback} /> <br />

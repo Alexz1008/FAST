@@ -26,6 +26,7 @@ class Edit extends Component {
 
     // If the component gets mounted successfully, authenticate the user
     componentDidMount(){
+      const { history } = this.props;
       fire.auth().onAuthStateChanged((user) => {
         // If the user is detected, save it to the current state
         if(user) {
@@ -34,7 +35,9 @@ class Edit extends Component {
         }
         // Otherwise set the current user to null
         else {
-          console.log('no user detected!')
+          console.log('no user detected!');
+          history.push("/");
+          alert("You must log in!");
         }
       });
     }
@@ -46,7 +49,6 @@ class Edit extends Component {
         rating: '',
         image: [],
         tel: '',
-        email: '',
         zipcode: '',
         city: '',
       });
@@ -56,14 +58,12 @@ class Edit extends Component {
         let rating = dataSnapshot.child("Users/" + user.uid + "/Average_review").val();
         let image = dataSnapshot.child("Users/" + user.uid + "/User_Pic").val();
         let tel = dataSnapshot.child("Users/" + user.uid + "/Phone").val();
-        let email = dataSnapshot.child("Users/" + user.uid + "/UCSD_Email").val();
         let zipcode = dataSnapshot.child("Users/" + user.uid + "/Zip").val();
         let city = dataSnapshot.child("Users/" + user.uid + "/City").val();
         this.setState({name});
         this.setState({rating});
         this.setState({image});
         this.setState({tel});
-        this.setState({email});
         this.setState({zipcode});
         this.setState({city});
         this.setState({loaded: true});
@@ -76,7 +76,6 @@ class Edit extends Component {
     //check the state and update the profile
     updateUserProfile() {
       const user = firebase.auth().currentUser;
-      const UCSD_Email = this.state.email;
       const User_Pic = this.state.image;
       const Name = this.state.name;
       const Phone = this.state.tel;
@@ -84,7 +83,7 @@ class Edit extends Component {
       const City = this.state.city;
       var userID = user.uid;
 
-      this.usersDB.child(userID).update({UCSD_Email, Name, User_Pic, Phone, Zip, City});
+      this.usersDB.child(userID).update({Name, User_Pic, Phone, Zip, City});
     }
     // upload the image
     onDrop(file, picture) {
@@ -122,9 +121,6 @@ class Edit extends Component {
 
                   <label>Tel:</label>
                   <input onChange= {e => this.setState({tel: e.target.value})} value={this.state.tel}/>
-                  <br />
-                  <label>UCSD Email:</label>
-                  <input onChange= {e => this.setState({email: e.target.value})} value={this.state.email}/>
                   <br />
                   <label>Zipcode:</label>
                   <input onChange= {e => this.setState({zipcode: e.target.value})} value={this.state.zipcode}/>
