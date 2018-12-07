@@ -85,7 +85,7 @@
 }
 .listing-button-unselected {
   height: 40px;
-  width: 90px;
+  width: 100px;
   border: none;
   color: white;
   background-color: #00487C;
@@ -95,7 +95,7 @@
 }
 .listing-button-selected {
   height: 40px;
-  width: 90px;
+  width: 100px;
   border: none;
   color: white;
   background-color: #00A6FB;

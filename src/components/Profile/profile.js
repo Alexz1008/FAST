@@ -90,7 +90,8 @@ export class Profile extends React.Component {
             let email = snapshot.child("Users/" + profileUser + "/UCSD_Email").val();
             let zipcode = snapshot.child("Users/" + profileUser + "/Zip").val();
             let city = snapshot.child("Users/" + profileUser + "/City").val();
-            this.setState({name, rating, image, tel, email, zipcode, city, isUser});
+            let averagereview = snapshot.child("Users/" + profileUser + "/Average_Review").val();
+            this.setState({name, rating, image, tel, email, zipcode, city, isUser, averagereview});
             
             // Load in all reviews
             let reviewList = snapshot.child("Users/" + profileUser + "/Reviews").val().split(",");
