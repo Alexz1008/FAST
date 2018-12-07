@@ -192,6 +192,7 @@ export class Messages extends React.Component {
         constDB.child("Next_Message_ID").set(Message_ID + 1);
       });
       document.getElementById('messages-input').value = '';
+      this.setState({message: null});
     }
   }
  
