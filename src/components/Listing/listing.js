@@ -97,7 +97,33 @@ export class Listing extends React.Component {
   handleEditListingClick() {
   }
   handleDeleteReviewClick() {
-    console.log("delete review");
+    // Figure out if this review is from the viewpoint of the buyer or seller
+    
+    fire.database().ref().once('value', snapshot => {
+      let childToRemove = this.state.isMyListing ? "/Seller_Review_ID" : "/Buyer_Review_ID";
+      let userToUpdate = this.state.isMyListing ? this.props.buyerid : this.props.sellerid;
+      var Review_ID = this.state.isMyListing ? this.props.sellerreviewid : this.props.buyerreviewid; 
+      var reviewScore = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
+      
+      // Remove the review from existence
+      fire.database().ref().child("Review/" + Review_ID).remove();
+      
+      // Update the listing to show that the buyer/seller no longer has a review
+      fire.database().ref().child("Users/" + this.state.id + childToRemove).remove();
+      
+      // Update the user's average review score
+      let userReviewList = snapshot.child("Users/" + userToUpdate + "/Reviews").val().split(",");
+      let userReviewSum = snapshot.child("Users/" + userToUpdate + "/Sum_Of_Reviews").val();
+      
+      // Remove the review from the user's review list and change the review sum
+      userReviewList.splice(userReviewList.indexOf(Review_ID), 1);
+      userReviewSum -= reviewScore;
+      userReviewList = userReviewList.join(",");
+      
+      // Update the user's review list and sum
+      fire.database().ref().child("Users/" + userToUpdate + "/Reviews").set(userReviewList);
+      fire.database().ref().child("Users/" + userToUpdate + "/Sum_Of_Reviews").set(userReviewSum);
+    });
   }
   getListingID() {
     return this.state.id;
@@ -139,7 +165,7 @@ export class Listing extends React.Component {
                   null
                   :
                   <button className='listing-button-unselected' id="writeReview">
-                    <Link to={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
+                    <Link to={this.state ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
                     {this.state.reviewed ? 'Edit Review' : 'Write Review'}</Link>
                   </button>
                 }

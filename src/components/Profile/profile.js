@@ -43,11 +43,20 @@ export class Profile extends React.Component {
         var i;
         for (i = 0; i < reviewList.length; i++) {
           if(reviewList[i] !== "") {
-            var review = snapshot.child("Review/" + reviewList[i]).val()
-            review['Listing_Title'] = snapshot.child("Listing/" + review['Listing_ID'] + "/Listing_Title").val();
-            reviews.push(review);
+            // Make sure the review exists, otherwise remove it
+            if(snapshot.child("Review/" + reviewList[i]).exists()) {
+              var review = snapshot.child("Review/" + reviewList[i]).val()
+              review['Listing_Title'] = snapshot.child("Listing/" + review['Listing_ID'] + "/Listing_Title").val();
+              reviews.push(review);
+            }
+            else {
+              reviewList.splice(i, 1);
+            }
           }
         }
+        // Update the state and set the new updated review list
+        reviewList = reviewList.join(",");
+        fire.database().ref().child("Users/" + profileUser + "/Reviews").set(reviewList);
         this.setState({reviews, loaded: true});
       }
       else {
