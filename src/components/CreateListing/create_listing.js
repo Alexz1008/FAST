@@ -28,6 +28,7 @@ export class CreateListing extends React.Component{
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
@@ -36,8 +37,10 @@ export class CreateListing extends React.Component{
       }
       // Otherwise set the current user to null
       else {
-        this.setState({user: null});
-        //localStorage.removeItem('user');
+          this.setState({user: null});
+          history.push("/");
+          alert("You must log in!");
+          //localStorage.removeItem('user');
       }
     });
   }

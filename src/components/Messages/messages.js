@@ -142,6 +142,7 @@ export class Messages extends React.Component {
 
   // Create a method to authenticate the user with our existing database
   authListener(callback) {
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       if(user) {
         this.setState({user});
@@ -149,6 +150,8 @@ export class Messages extends React.Component {
       }
       else {
         this.setState({user: null});
+          history.push("/");
+          alert("You must log in!");
       }
     });
   }
