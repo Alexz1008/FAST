@@ -26,6 +26,7 @@ class Edit extends Component {
 
     // If the component gets mounted successfully, authenticate the user
     componentDidMount(){
+      const { history } = this.props;
       fire.auth().onAuthStateChanged((user) => {
         // If the user is detected, save it to the current state
         if(user) {
@@ -34,7 +35,9 @@ class Edit extends Component {
         }
         // Otherwise set the current user to null
         else {
-          console.log('no user detected!')
+          console.log('no user detected!');
+          history.push("/");
+          alert("You must log in!");
         }
       });
     }

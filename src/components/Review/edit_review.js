@@ -28,12 +28,20 @@ export class EditReview extends React.Component {
             history.push("/transaction_history");
             alert("You cannot write a review for a listing you haven't completed");
           }
-          this.setState({listingID: listing_id, loaded: true});
           
           // Somehow check firebase for your old title, rating, and review, and set them in the boxes
-
-          //
-          //
+          var Is_Seller = snapshot.child("Listing/" + listing_id + "/Seller_ID").val() === user.uid;
+          let Reviewed_User = Is_Seller ? snapshot.child("Listing/" + listing_id + "/Seller_ID").val() : snapshot.child("Listing/" + listing_id + "/Buyer_ID").val();
+      
+          let Review_ID = Is_Seller ? snapshot.child("Listing/" + listing_id + "/Seller_Review").val() : snapshot.child("Listing/" + listing_id + "/Buyer_Review").val();
+          let oldRating = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
+          var oldSum = snapshot.child("Users/" + Reviewed_User + "Sum_Of_Reviews").val();
+          var totalReviews = snapshot.child("Users/" + Reviewed_User + "Reviews").val().split(",").length;
+          document.getElementById("review-title").value = snapshot.child("Review/" + Review_ID + "/Review_Title").val();
+          document.getElementById("review-rating").value = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
+          document.getElementById("review-content").value = snapshot.child("Review/" + Review_ID + "/Review_Content").val();
+          
+          this.setState({listingID: listing_id, loaded: true, Is_Seller, Review_ID, oldRating, Reviewed_User});
         });
       }
       else {
@@ -53,40 +61,19 @@ export class EditReview extends React.Component {
     const Review_Content = this.state.review;
     const Listing_ID = this.state.listingID;
     const User_ID = this.state.user.uid;
+    const Is_Seller = this.state.Is_Seller;
+    const Review_ID = this.state.Review_ID;
+    const oldRating = this.state.oldRating;
+    const oldSum = this.state.oldSum;
+    const totalReviews = this.state.totalReviews;
+    const Reviewed_User = this.state.Reviewed_User;
     
+    // Update the review
+    fire.database().ref().child("Review/" + Review_ID).update({Review_Title, Review_Rating, Review_Content});
     
-    var Review_ID;
-    var Is_Seller;
-    var Transaction_Date;
-    fire.database().ref().once('value', snapshot => {
-      // Make sure the review ID does not exist yet
-      var next_id = snapshot.child("Constants/Next_Review_ID").val();
-      var idExists = snapshot.child("Review/" + next_id).exists();
-      const Seller_ID = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val();
-      const Buyer_ID = snapshot.child("Listing/" + Listing_ID + "/Buyer_ID").val();
-      while(idExists) {
-        next_id += 1;
-        idExists = snapshot.child("Review/" + next_id).exists();
-      }
-      Review_ID = next_id;
-      fire.database().ref().child("Constants/Next_Review_ID").set(next_id + 1);
-      
-      // Check if this review is by the seller or buyer
-      Is_Seller = !(snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID);
-      var Reviewed_User = Is_Seller ? Seller_ID : Buyer_ID;
-      Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
-        
-      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Review_Author: User_ID});
-      
-      // Add to reviewee's review list
-      Is_Seller ? addToUserList(Seller_ID, next_id, "Reviews") : addToUserList(Buyer_ID, next_id, "Reviews");
-      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Reviewed").set(true) : fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Reviewed").set(true);
-      
-      var sumOfReviews = snapshot.child("Users/" + Reviewed_User + "Sum_Of_Reviews").val();
-      var totalReviews = snapshot.child("Users/" + Reviewed_User + "Reviews").val().split(",").length;
-      fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews);
-    });
-      
+    // Update review score
+    let sumOfReviews = oldSum - oldRating + Review_Rating;
+    fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews);
   }
   
   render() {
@@ -95,24 +82,23 @@ export class EditReview extends React.Component {
         <Header />
         <form className="listing-form" autoComplete="off">
         <div>
-        
         {this.state.loaded ?
           <div className="content-box">
-            <h3 id="create-review-title" className="basic-title">Write review for Gary Gillespie</h3>
+            <h3 id="create-review-title" className="basic-title">Edit review</h3>
       
             <label htmlFor="review-title"><strong>Title:</strong></label> <br /> 
-            <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" required/> <br />
+            <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" defaultValue="Loading..." required/> <br />
 
             <label htmlFor="review-rating"><strong>Rating:</strong></label> <br /> 
-            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" required/> <br /><br />
+            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" defaultValue="Loading..." required/> <br /><br />
       
             <label htmlFor="review-content" name="review"><strong>Review:</strong></label> <br /> 
-            <textarea onChange={this.handleChange}  name="review" id="review-content" /> <br />
+            <textarea onChange={this.handleChange} id="review-content" name="review" defaultValue="Loading..." id="review-content" /> <br />
       
       
             <br />
       
-            <button onClick={this.submit_review} type="submit" className="basic-button" id="create-review-button"><Link to='/transaction_history'>Post review</Link></button> <br />
+            <button onClick={this.submit_review} type="submit" className="basic-button" id="create-review-button"><Link to='/transaction_history'>Save Changes</Link></button> <br />
           </div>
           :
           null}

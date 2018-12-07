@@ -142,6 +142,7 @@ export class Messages extends React.Component {
 
   // Create a method to authenticate the user with our existing database
   authListener(callback) {
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       if(user) {
         this.setState({user});
@@ -149,6 +150,8 @@ export class Messages extends React.Component {
       }
       else {
         this.setState({user: null});
+          history.push("/");
+          alert("You must log in!");
       }
     });
   }
@@ -193,19 +196,27 @@ export class Messages extends React.Component {
   getMessages() {
     fire.database().ref().on('value', snapshot => {
       let messages = [];
-      let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
-      
-      // For each message in the list, add them to messages
-      var i;
-      for(i = 0; i < messageIDList.length; i++) {
-        if(messageIDList[i] !== "") {
-          messages.push(snapshot.child("Message/" + messageIDList[i]).val());
+      if (snapshot.child("Conversation/" + this.state.currID + "/Message_List").exists()) {
+        let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
+        
+        // For each message in the list, add them to messages
+        var i;
+        for(i = 0; i < messageIDList.length; i++) {
+          if(messageIDList[i] !== "") {
+            messages.push(snapshot.child("Message/" + messageIDList[i]).val());
+          }
+        }
+        this.setState({messages: messages});
+        if(document.getElementById("messageBody")) {
+          var chatScroll = document.getElementById("messageBody");
+          chatScroll.scrollTop = chatScroll.scrollHeight;
         }
       }
-      this.setState({messages: messages});
-      if(document.getElementById("messageBody")) {
-        var chatScroll = document.getElementById("messageBody");
-        chatScroll.scrollTop = chatScroll.scrollHeight;
+      // Conversation no longer exists, just remove it
+      else {
+        let userConvs = fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").val().split(",");
+        userConvs.splice(userConvs.indexOf(this.state.currID), 1);
+        fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").set(userConvs);
       }
     });
   }
@@ -230,7 +241,7 @@ export class Messages extends React.Component {
         if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
-          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "/" + d.getMonth());
+          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set((d.getMonth()+1) + "/" + d.getDate());
           listing['Is_Transaction_Log'] = true;
           
           // Add the log to both user's transaction histories
@@ -246,7 +257,7 @@ export class Messages extends React.Component {
         listing['Seller_Confirmed'] = true;
         if(snapshot.child("Conversation/" + convID + "/Buyer_Confirm").val()) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
-          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getDay() + "/" + d.getMonth());
+          fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getMonth() + "/" + d.getDate());
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
           listing['Is_Transaction_Log'] = true;
           

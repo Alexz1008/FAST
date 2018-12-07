@@ -21,6 +21,7 @@ export class TransactionHistory extends React.Component {
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
@@ -49,7 +50,10 @@ export class TransactionHistory extends React.Component {
       }
       // Otherwise set the current user to null
       else {
+        this.firebaseRef = fire.database().ref();
         this.setState({user: null});
+        history.push("/");
+        alert("You must log in!");
       }
     });
   }
@@ -58,7 +62,8 @@ export class TransactionHistory extends React.Component {
     const listings = this.state.items.map(item =>
       <div className="listing" key={item['Listing_ID']}>
         <Listing id={item['Listing_ID']} title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true}
-        reviewed={item['reviewed']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} transactiondate={item['Transaction_Date']}/>
+        reviewed={item['reviewed']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} transactiondate={item['Transaction_Date']} buyerreviewid={item['Buyer_Review_ID']} sellerreviewid={item['Seller_Review_ID']}
+        buyerid={item['Buyer_ID']}/>
       </div>
     );
     return (

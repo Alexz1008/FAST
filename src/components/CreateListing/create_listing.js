@@ -28,6 +28,7 @@ export class CreateListing extends React.Component{
 
   // If the component gets mounted successfully, authenticate the user
   componentDidMount(){
+    const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
@@ -36,8 +37,10 @@ export class CreateListing extends React.Component{
       }
       // Otherwise set the current user to null
       else {
-        this.setState({user: null});
-        //localStorage.removeItem('user');
+          this.setState({user: null});
+          history.push("/");
+          alert("You must log in!");
+          //localStorage.removeItem('user');
       }
     });
   }
@@ -76,7 +79,8 @@ export class CreateListing extends React.Component{
         idExists = snapshot.child("Listing/" + Listing_ID).exists();
       }
       listDB.child(Listing_ID).set({Listing_Title, Listing_Pic, Listing_Price, Listing_Description, Listing_Post_Date, Listing_ID, Seller_ID, Buyer_ID,
-                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Seller_Confirmed, Listing_Tag, Buyer_Reviewed, Seller_Reviewed});
+                                    Seller_Name, Seller_Average_Review, Is_Transaction_Log, Seller_Confirmed, Listing_Tag, Buyer_Reviewed, Seller_Reviewed,
+                                    });
 
       // Increment the unique listing ID and move on
       constDB.child("Next_Listing_ID").set(Listing_ID + 1);
