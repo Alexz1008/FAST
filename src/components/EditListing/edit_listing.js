@@ -11,6 +11,12 @@ export class EditListing extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.loadEditListing = this.loadEditListing.bind(this);
     this.handleSaveChanges = this.handleSaveChanges.bind(this);
+    this.tagCallback = this.tagCallback.bind(this);
+
+    this.state = {
+      image: [],
+      tags: ""
+    }
   }
   
   componentDidMount(){
@@ -80,9 +86,16 @@ export class EditListing extends React.Component {
     fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Title").set(this.state.title);
     fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Price").set(this.state.price);
     fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Description").set(this.state.content);
-    history.push("/home");
+    fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Tag").set(this.state.tags);
+    //history.push("/home");
   }
   
+  tagCallback = (tagList) => {
+    var separator = ",";
+    var tags = tagList.join(separator);
+    this.setState({tags: tags});
+  }
+
   render() {
     return (
       <div className="center">
@@ -109,7 +122,7 @@ export class EditListing extends React.Component {
                   <textarea onChange={this.handleChange} name="content" id="listing-content" defaultValue="Loading..."/> <br />
 
                   <label htmlFor="listing-tag"><strong>Add Tags:</strong></label> <br />
-                  <Tag /> <br />
+                  <Tag callbackFunction={this.tagCallback} /> <br />
 
                   <br />
 
