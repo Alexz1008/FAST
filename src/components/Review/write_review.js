@@ -105,7 +105,7 @@ export class WriteReview extends React.Component {
         
         {this.state.loaded ?
           <div className="content-box">
-            <h3 id="create-review-title" className="basic-title">Write review for Gary Gillespie</h3>
+            <h3 id="create-review-title" className="basic-title">Write review</h3>
       
             <label htmlFor="review-title"><strong>Title:</strong></label> <br /> 
             <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" required/> <br />
