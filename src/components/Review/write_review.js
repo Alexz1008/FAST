@@ -55,6 +55,7 @@ export class WriteReview extends React.Component {
     var Is_Seller;
     var Transaction_Date;
 
+    const { history } = this.props;
     fire.database().ref().once('value', snapshot => {
       // Make sure the review ID does not exist yet
       var next_id = snapshot.child("Constants/Next_Review_ID").val();
@@ -69,8 +70,8 @@ export class WriteReview extends React.Component {
       fire.database().ref().child("Constants/Next_Review_ID").set(next_id + 1);
       
       // Check if this review is by the seller or buyer
-      Is_Seller = !(snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID);
-      var Reviewed_User = Is_Seller ? Seller_ID : Buyer_ID;
+      Is_Seller = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID;
+      var Reviewed_User = Is_Seller ? Buyer_ID : Seller_ID;
       Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
         
       var Reviewer_Name = snapshot.child("Users/" + User_ID + "/Name").val();
@@ -78,21 +79,22 @@ export class WriteReview extends React.Component {
       fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Listing_ID, Reviewer_Name, Seller_Name});
       
       // Add to reviewee's review list
-      Is_Seller ? addToUserList(Seller_ID, next_id, "Reviews") : addToUserList(Buyer_ID, next_id, "Reviews");
-      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Reviewed").set(true) : fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Reviewed").set(true);
+      Is_Seller ? addToUserList(Buyer_ID, next_id, "Reviews") : addToUserList(Seller_ID, next_id, "Reviews");
+      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Reviewed").set(true) : fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Reviewed").set(true);
       
       // Add to the listing's review ID
-      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Review_ID").set(next_id) :
-                  fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Review_ID").set(next_id);
+      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Review_ID").set(next_id) :
+                  fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Review_ID").set(next_id);
       
-      var sumOfReviews = snapshot.child("Users/" + Reviewed_User + "/Sum_Of_Reviews").val();
+      var sumOfReviews = snapshot.child("Users/" + Reviewed_User + "/Sum_Of_Reviews").val() + parseInt(Review_Rating);
       var totalReviews = snapshot.child("Users/" + Reviewed_User + "/Reviews").val().split(",");
       // Filter the list to remove any empty items in the list
       totalReviews = totalReviews.filter(function (el) {
         return el !== "";
       });
-      totalReviews = totalReviews.length + 1;
-      fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews);
+      totalReviews.push("" + next_id);
+      fire.database().ref().child("Users/" + Reviewed_User + "/Sum_Of_Reviews").set(sumOfReviews);
+      fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews.length);
     });
   }
   
@@ -117,8 +119,7 @@ export class WriteReview extends React.Component {
             <textarea onChange={this.handleChange}  name="review" id="review-content" /> <br />
       
             <br />
-      
-            <button onClick={this.submit_review} type="submit" className="basic-button" id="create-review-button"><Link to='/transaction_history'>Post review</Link></button> <br />
+            <Link to='/home'><button onClick={this.submit_review} className="basic-button" id="create-review-button">Post review</button></Link> <br />
           </div>
           :
           null}

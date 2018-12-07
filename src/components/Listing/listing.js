@@ -12,6 +12,7 @@ export class Listing extends React.Component {
     this.handleAddInterestClick = this.handleAddInterestClick.bind(this);
     this.handleRemoveInterestClick = this.handleRemoveInterestClick.bind(this);
     this.handleDeleteListingClick = this.handleDeleteListingClick.bind(this);
+    this.handleDeleteReviewClick = this.handleDeleteReviewClick.bind(this);
     this.getListingID = this.getListingID.bind(this);
     this.state = {title: this.props.title, image: this.props.image, price: this.props.price, desc: this.props.desc, id: this.props.id,
                   isInterested: this.props.isInterested, isSaved: this.props.isSaved, confirmed: this.props.confirmed, isMyListing: this.props.isMyListing,
@@ -87,7 +88,6 @@ export class Listing extends React.Component {
       var i;
       for(i = 0; i < convs.length; i++) {
         let conv = snapshot.child("Conversation/" + convs[i]).val();
-        console.log(conv);
         if(conv && conv['Listing_ID'] === this.props.id) {
           fire.database().ref().child("Conversation/" + convs[i]).remove();
         }
@@ -98,18 +98,19 @@ export class Listing extends React.Component {
   }
   handleDeleteReviewClick() {
     // Figure out if this review is from the viewpoint of the buyer or seller
-    
     fire.database().ref().once('value', snapshot => {
-      let childToRemove = this.state.isMyListing ? "/Seller_Review_ID" : "/Buyer_Review_ID";
+      let childToRemove = this.state.isMyListing ? "/Buyer_Review_ID" : "/Seller_Review_ID";
       let userToUpdate = this.state.isMyListing ? this.props.buyerid : this.props.sellerid;
-      var Review_ID = this.state.isMyListing ? this.props.sellerreviewid : this.props.buyerreviewid; 
+      let reviewToRemove = this.state.isMyListing ? "/Buyer_Reviewed" : "/Seller_Reviewed";
+      var Review_ID = this.state.isMyListing ? this.props.buyerreviewid : this.props.sellerreviewid; 
       var reviewScore = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
       
       // Remove the review from existence
       fire.database().ref().child("Review/" + Review_ID).remove();
       
       // Update the listing to show that the buyer/seller no longer has a review
-      fire.database().ref().child("Users/" + this.state.id + childToRemove).remove();
+      fire.database().ref().child("Listing/" + this.state.id + childToRemove).remove();
+      fire.database().ref().child("Listing/" + this.state.id + reviewToRemove).set(false);
       
       // Update the user's average review score
       let userReviewList = snapshot.child("Users/" + userToUpdate + "/Reviews").val().split(",");
@@ -118,11 +119,16 @@ export class Listing extends React.Component {
       // Remove the review from the user's review list and change the review sum
       userReviewList.splice(userReviewList.indexOf(Review_ID), 1);
       userReviewSum -= reviewScore;
-      userReviewList = userReviewList.join(",");
       
       // Update the user's review list and sum
-      fire.database().ref().child("Users/" + userToUpdate + "/Reviews").set(userReviewList);
       fire.database().ref().child("Users/" + userToUpdate + "/Sum_Of_Reviews").set(userReviewSum);
+      (userReviewList.length === 0) ? fire.database().ref().child("Users/" + userToUpdate + "/Average_Review").set(0) :
+      fire.database().ref().child("Users/" + userToUpdate + "/Average_Review").set(userReviewSum / userReviewList.length);
+      var userReviewListJoined = userReviewList.join(",");
+      fire.database().ref().child("Users/" + userToUpdate + "/Reviews").set(userReviewListJoined);
+      
+      // Update the listing with new info
+      this.setState({reviewed: false, rating: userReviewList.length === 0 ? 0 : userReviewSum / userReviewList.length});
     });
   }
   getListingID() {
@@ -141,7 +147,7 @@ export class Listing extends React.Component {
         <div className="listing-poster">Seller: <Link to={"/profile?uid=" + this.props.sellerid}>{this.state.sellername}</Link></div>
         <div className="listing-header">
           <div className="listing-header-item">
-            Rating: {this.state.rating}
+            Rating: {this.state.rating === 0 ? "N/A" : this.state.rating}
           </div>
           <div className="listing-header-item">
             ${this.state.price}
@@ -164,10 +170,10 @@ export class Listing extends React.Component {
                   isMyListing ?
                   null
                   :
-                  <button className='listing-button-unselected' id="writeReview">
-                    <Link to={this.state ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
-                    {this.state.reviewed ? 'Edit Review' : 'Write Review'}</Link>
-                  </button>
+                  <Link to={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
+                    <button className='listing-button-unselected' id="writeReview">
+                      {this.state.reviewed ? 'Edit Review' : 'Write Review'}
+                    </button></Link>
                 }
                 {
                   reviewed ?

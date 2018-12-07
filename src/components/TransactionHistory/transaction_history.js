@@ -24,7 +24,7 @@ export class TransactionHistory extends React.Component {
     fire.auth().onAuthStateChanged((user) => {
       // If the user is detected, save it to the current state
       if(user) {
-        this.setState({user});
+        this.setState({user, loaded: false});
         this.firebaseRef = fire.database().ref();
         this.firebaseRef.on('value', dataSnapshot => {
           let items = [];
@@ -43,8 +43,7 @@ export class TransactionHistory extends React.Component {
               items.push(item);
             }
           }
-          this.setState({items});
-          this.setState({loaded:true});
+          this.setState({items, loaded: true});
         });
       }
       // Otherwise set the current user to null
@@ -55,13 +54,14 @@ export class TransactionHistory extends React.Component {
   }
   
   render () {
-    const listings = this.state.items.map(item =>
-      <div className="listing" key={item['Listing_ID']}>
-        <Listing id={item['Listing_ID']} title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true}
-        reviewed={item['reviewed']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} transactiondate={item['Transaction_Date']} buyerreviewid={item['Buyer_Review_ID']} sellerreviewid={item['Seller_Review_ID']}
-        buyerid={item['Buyer_ID']}/>
-      </div>
-    );
+    if(this.state.loaded) {
+      var listings = this.state.items.map(item =>
+        <div className="listing" key={item['Listing_ID']}>
+          <Listing id={item['Listing_ID']} title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true}
+          reviewed={item['reviewed']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} transactiondate={item['Transaction_Date']} buyerreviewid={item['Buyer_Review_ID']} sellerreviewid={item['Seller_Review_ID']}
+          buyerid={item['Buyer_ID']} isMyListing={item['Seller_ID'] === this.state.user.uid}/>
+        </div>);
+    }
     return (
       <div>
         <Header />
@@ -69,6 +69,6 @@ export class TransactionHistory extends React.Component {
           {this.state.loaded ? listings.length ? listings : <div className = "content-text"> You have no completed transactions.</div> : <div className = "history-loading"><center><img src={LoadingImg} alt="Loading..."></img></center></div>}
         </div>
       </div>
-    )
+    );
   }
 }

@@ -20,7 +20,6 @@ export class EditListing extends React.Component {
     this.loadEditListing(props);
   }
   handleChange(e) {
-    console.log(this.state);
     this.setState({ [e.target.name]: e.target.value});
   }
   

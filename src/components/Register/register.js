@@ -41,7 +41,7 @@ export class Register extends React.Component {
     const Phone = this.state.tel;
     const Zip = this.state.zipcode;
     const City = this.state.city;
-    const Average_Review = "N/A";
+    const Average_Review = 0;
     const Conversations = "";
     const Interest_Listings = "";
     const Saved_Listings = "";

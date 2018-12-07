@@ -116,11 +116,9 @@ export class Home extends React.Component {
   setTag(tag) {
     if(tag !== this.state.currTag) {
       this.setState({currTag: tag}, () => {
-        console.log(tag);
       });
     } else {
       this.setState({currTag: ""}, () => {
-        console.log("");
       });
     }
   }
@@ -135,7 +133,6 @@ export class Home extends React.Component {
     search = search.join(" ");
     search = decodeURIComponent(search);		// decode any special characters
     search = search.toLowerCase();			// convert to lowercase
-    console.log(search);
 
     // get proper sublist of listings
     if (tag === "i-Clickers") {

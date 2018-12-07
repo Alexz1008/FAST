@@ -22,6 +22,7 @@ export class EditReview extends React.Component {
         var listing_id = this.props.location.search.substring(4);
         fire.database().ref().once('value', snapshot => {
           var transaction_list = snapshot.child("Users/" + user.uid + "/Completed_Transactions").val().split(",");
+          console.log("Loaded");
           
           // Make sure we have access to the review
           if(transaction_list.indexOf(listing_id) === -1) {
@@ -31,17 +32,20 @@ export class EditReview extends React.Component {
           
           // Somehow check firebase for your old title, rating, and review, and set them in the boxes
           var Is_Seller = snapshot.child("Listing/" + listing_id + "/Seller_ID").val() === user.uid;
-          let Reviewed_User = Is_Seller ? snapshot.child("Listing/" + listing_id + "/Seller_ID").val() : snapshot.child("Listing/" + listing_id + "/Buyer_ID").val();
-      
-          let Review_ID = Is_Seller ? snapshot.child("Listing/" + listing_id + "/Seller_Review").val() : snapshot.child("Listing/" + listing_id + "/Buyer_Review").val();
-          let oldRating = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
-          var oldSum = snapshot.child("Users/" + Reviewed_User + "Sum_Of_Reviews").val();
-          var totalReviews = snapshot.child("Users/" + Reviewed_User + "Reviews").val().split(",").length;
-          document.getElementById("review-title").value = snapshot.child("Review/" + Review_ID + "/Review_Title").val();
-          document.getElementById("review-rating").value = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
-          document.getElementById("review-content").value = snapshot.child("Review/" + Review_ID + "/Review_Content").val();
+          let Reviewed_User = Is_Seller ? snapshot.child("Listing/" + listing_id + "/Buyer_ID").val() : snapshot.child("Listing/" + listing_id + "/Seller_ID").val();
+          let Review_ID = Is_Seller ? snapshot.child("Listing/" + listing_id + "/Buyer_Review_ID").val() : snapshot.child("Listing/" + listing_id + "/Seller_Review_ID").val();
           
-          this.setState({listingID: listing_id, loaded: true, Is_Seller, Review_ID, oldRating, Reviewed_User});
+          let oldRating = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
+          var oldSum = snapshot.child("Users/" + Reviewed_User + "/Sum_Of_Reviews").val();
+          var totalReviews = snapshot.child("Users/" + Reviewed_User + "/Reviews").val().split(",").length;
+          
+          var title = snapshot.child("Review/" + Review_ID + "/Review_Title").val();
+          var rating = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
+          var review = snapshot.child("Review/" + Review_ID + "/Review_Content").val();
+          this.setState({listingID: listing_id, loaded: true, Is_Seller, Review_ID, oldSum, oldRating, Reviewed_User, title, rating, review, totalReviews});
+          document.getElementById("review-title").value = title;
+          document.getElementById("review-rating").value = rating;
+          document.getElementById("review-content").value = review;
         });
       }
       else {
@@ -67,13 +71,17 @@ export class EditReview extends React.Component {
     const oldSum = this.state.oldSum;
     const totalReviews = this.state.totalReviews;
     const Reviewed_User = this.state.Reviewed_User;
+    const { history } = this.props;
     
     // Update the review
     fire.database().ref().child("Review/" + Review_ID).update({Review_Title, Review_Rating, Review_Content});
     
     // Update review score
-    let sumOfReviews = oldSum - oldRating + Review_Rating;
+    console.log(oldSum, oldRating, Review_Rating);
+    let sumOfReviews = oldSum - parseInt(oldRating) + parseInt(Review_Rating);
+    (totalReviews === 0) ? fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(0) :
     fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews);
+    fire.database().ref().child("Users/" + Reviewed_User + "/Sum_Of_Reviews").set(sumOfReviews);
   }
   
   render() {
@@ -97,8 +105,8 @@ export class EditReview extends React.Component {
       
       
             <br />
+            <Link to="/home"><button onClick={this.submit_review} className="basic-button" id="create-review-button">Save Changes</button></Link> <br />
       
-            <button onClick={this.submit_review} type="submit" className="basic-button" id="create-review-button"><Link to='/transaction_history'>Save Changes</Link></button> <br />
           </div>
           :
           null}
