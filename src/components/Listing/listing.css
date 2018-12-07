@@ -92,6 +92,7 @@
   margin-left: 30px;
   border-radius: 5px;
   position: relative;
+  outline: 0;
 }
 .listing-button-selected {
   height: 40px;
@@ -101,6 +102,7 @@
   background-color: #00A6FB;
   margin-left: 30px;
   border-radius: 5px;  
+  outline: 0;
 }
 .listing-button-unselected:hover{
   -webkit-animation: bounce-top 0.9s both;
@@ -108,12 +110,7 @@
   background-color: #00A6FB;
   transition: background-color 0.3s ease-in;
 }
-.listing-button-selected:hover{
-  -webkit-animation: bounce-top 0.9s both;
-          animation: bounce-top 0.9s both;
-  background-color: #00487C;
-  transition: background-color 0.3s ease-in;
-}
+
 .transaction-ok{
 	display:block;
 }
