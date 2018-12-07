@@ -215,8 +215,11 @@ export class Messages extends React.Component {
       // Conversation no longer exists, just remove it
       else {
         let userConvs = fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").val().split(",");
-        userConvs.splice(userConvs.indexOf(this.state.currID), 1);
+        if(userConvs.indexOf(this.state.currID) !== -1) {
+          userConvs.splice(userConvs.indexOf(this.state.currID), 1);
+        }
         fire.database().ref().child("Users/" + this.state.user.uid + "/Conversation").set(userConvs);
+        this.setState({currID: null});
       }
     });
   }
