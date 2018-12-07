@@ -129,7 +129,12 @@ export class Home extends React.Component {
     var listings;	  
     var subList;
     var tag = this.state.currTag;
-    var search = window.location.search.substring(8).toLowerCase();
+
+    var search = window.location.search.substring(8);	// get search query
+    search = search.split("+");				// replace + with space
+    search = search.join(" ");
+    search = decodeURIComponent(search);		// decode any special characters
+    search = search.toLowerCase();			// convert to lowercase
     console.log(search);
 
     // get proper sublist of listings
