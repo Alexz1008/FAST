@@ -54,7 +54,8 @@ export function removeFromUserInterested(userID, itemID, sellerID) {
     // Iterate through every conversation until the one with matching seller id is found
     var i;
     for(i = 0; i < convs.length; i++) {
-      if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() === sellerID) {
+      if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() === sellerID &&
+        snapshot.child("/Conversation/" + convs[i] + "/Buyer_ID").val() === userID) {
         db.child("/Conversation/" + convs[i]).remove();
         
         // Remove the appropriate number from the user's conversation list
