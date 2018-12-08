@@ -141,7 +141,6 @@ export class Home extends React.Component {
       search = "";
     }
 
-    console.log(search);
 
     // get proper sublist of listings
     if (tag === "i-Clickers") {
@@ -158,14 +157,17 @@ export class Home extends React.Component {
       subList = this.state.items;
     }
 
-    listings = subList.map(item =>
-      (item['Listing_Title'].toLowerCase().includes(search) || item['Listing_Description'].toLowerCase().includes(search)) &&
-        <div className="listing" key={item['Listing_ID']}>
-          <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
-                  isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
-                  rating={item['Seller_Average_Review']} isInterested={item['isInterested']} isSaved={item['isSaved']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
-        </div>
-    );
+    console.log(subList);
+    if(this.state.loaded) {
+      listings = subList.map(item =>
+        (item['Listing_Title'].toLowerCase().includes(search) || item['Listing_Description'].toLowerCase().includes(search)) &&
+          <div className="listing" key={item['Listing_ID']}>
+            <Listing title={item['Listing_Title']} image={item['Listing_Pic'] ? item['Listing_Pic'][item['Listing_Pic'].length-1] : null} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
+                    isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
+                    rating={item['Seller_Average_Review']} isInterested={item['isInterested']} isSaved={item['isSaved']} viewer={this.state.user} conversationID={item['Next_Conversation_ID']}/>
+          </div>
+      );
+    }
     return (
       <div>
         <Header />
