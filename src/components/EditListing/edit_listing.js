@@ -3,6 +3,7 @@ import Header from '../Header/header'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
 import fire from '../Fire/fire'
+import { Link } from 'react-router-dom'
 import './edit_listing.css'
 
 export class EditListing extends React.Component {
@@ -13,6 +14,7 @@ export class EditListing extends React.Component {
     this.loadEditListing = this.loadEditListing.bind(this);
     this.handleSaveChanges = this.handleSaveChanges.bind(this);
     this.tagCallback = this.tagCallback.bind(this);
+    this.onDrop = this.onDrop.bind(this);
 
     this.state = {
       image: [],
@@ -65,13 +67,16 @@ export class EditListing extends React.Component {
           }
           else {
             // Confirmed the listing exists and is the user's, now just load it in
-            document.getElementById("listing-title").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Title").val();
-            document.getElementById("listing-price").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Price").val();
-            document.getElementById("listing-content").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Description").val();
-	        var tags = snapshot.child("Listing/" + Listing_ID + "/Listing_Tag").val();
-	        var img = snapshot.child("Listing/" + Listing_ID + "/Listing_Pic").val();
-            this.setState({loaded: true, tags: tags, image: img}, () => {
-	        });
+            var title = snapshot.child("Listing/" + Listing_ID + "/Listing_Title").val();
+            var price = snapshot.child("Listing/" + Listing_ID + "/Listing_Price").val();
+            var content = snapshot.child("Listing/" + Listing_ID + "/Listing_Description").val();
+            var tags = snapshot.child("Listing/" + Listing_ID + "/Listing_Tag").val();
+            var img = snapshot.child("Listing/" + Listing_ID + "/Listing_Pic").val()[0];
+            this.setState({loaded: true, tags, image: img, title, price, content}, () => {
+              document.getElementById("listing-title").value = title;
+              document.getElementById("listing-price").value = price;
+              document.getElementById("listing-content").value = content;
+            });
           }
         });
       }
@@ -97,12 +102,25 @@ export class EditListing extends React.Component {
     var tags = tagList.join(separator);
     this.setState({tags: tags});
   }
+  
+  // upload the image
+  onDrop(file, picture) {
+    //when there was a image, concat the new one 
+    console.log(this.state.image);
+    if (this.state.image){
+      this.setState({image: this.state.image.concat(picture)});        
+    }
+    else{
+      this.setState({image:picture});
+    }
+  }
 
   render() {
     return (
       <div className="center">
           <Header />
-          <form action="/home" className="listing-form" autoComplete="off">
+          {this.state.loaded? 
+          <form className="listing-form" autoComplete="off">
               <div className="content-box">
                   <h3 id="edit-listing-title" className="basic-title">Edit Listing</h3>
 
@@ -116,11 +134,13 @@ export class EditListing extends React.Component {
                     <img className="listing-img" src ={this.state.image[this.state.image.length-1]} alt="List" /> : null
                   }
                   <ImageUploader
-                      withIcon={false}
-                      buttonText='Upload Picture'
-                      // onChange={e => this.setState({picture: e.target.picture})}
-                      imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                      maxFileSize={5242880}
+                    withIcon={false}
+                    withPreview ={false}
+                    buttonText='Upload Picture'
+                    onChange={this.onDrop}
+                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                    maxFileSize={5242880}
+                    singleImage={true}
                   />
 
                   <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br />
@@ -131,9 +151,10 @@ export class EditListing extends React.Component {
 
                   <br />
 
-                  <button disabled={!this.state.loaded} onClick={this.handleSaveChanges} className="basic-button" id="create-listing-button">Save Changes</button>
+                  <Link to="/home"><button disabled={!this.state.loaded} onClick={this.handleSaveChanges} className="basic-button" id="create-listing-button">Save Changes</button></Link>
               </div>
           </form>
+          : null}
 
       </div>
     );

@@ -53,20 +53,23 @@ export class Listing extends React.Component {
 
       // create the new conversation in the database after making sure the id doesn't exist yet
       this.conversationDB.once("value").then(function(snapshot) {
-        idExists = snapshot.child("Conversation/" + Conversation_ID).exists();
+        idExists = snapshot.child(Conversation_ID).exists();
+        console.log(idExists);
         while(idExists) {
           Conversation_ID += 1;
-          idExists = snapshot.child("Conversation/" + Conversation_ID).exists();
+          idExists = snapshot.child(Conversation_ID).exists();
         }
+        console.log(idExists, Conversation_ID);
 
         convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID, Buyer_Confirm, Seller_Confirm, Message_List});
 
         // Increment the unique conversation ID and move on
         constDB.child("Next_Conversation_ID").set(Conversation_ID + 1);
+        
+        // add conversation id to both users' conversation list
+        addToUserList(Buyer_ID, Conversation_ID, "Conversations");
+        addToUserList(Seller_ID, Conversation_ID, "Conversations");
       });
-      // add conversation id to both users' conversation list
-      addToUserList(Buyer_ID, Conversation_ID, "Conversations");
-      addToUserList(Seller_ID, Conversation_ID, "Conversations");
 
       // add listing to buyers interested list
       addToUserList(Buyer_ID, Listing_ID, "Interest_Listings");
