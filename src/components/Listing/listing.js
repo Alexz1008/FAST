@@ -166,15 +166,10 @@ export class Listing extends React.Component {
         <div>
           {isLog ?
               <div className="listing-log">
-                {
-                  isMyListing ?
-                  null
-                  :
                   <Link to={this.state.reviewed ? '/edit_review?id=' + this.getListingID() : 'write_review?id=' + this.getListingID()}>
                     <button className='listing-button-unselected' id="writeReview">
                       {this.state.reviewed ? 'Edit Review' : 'Write Review'}
                     </button></Link>
-                }
                 {
                   reviewed ?
                   <button className='listing-button-unselected' id="deleteReview" onClick={this.handleDeleteReviewClick}>
