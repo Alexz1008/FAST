@@ -71,7 +71,7 @@ export class EditListing extends React.Component {
             var price = snapshot.child("Listing/" + Listing_ID + "/Listing_Price").val();
             var content = snapshot.child("Listing/" + Listing_ID + "/Listing_Description").val();
             var tags = snapshot.child("Listing/" + Listing_ID + "/Listing_Tag").val();
-            var img = snapshot.child("Listing/" + Listing_ID + "/Listing_Pic").val()[0];
+            var img = snapshot.child("Listing/" + Listing_ID + "/Listing_Pic").val();
             this.setState({loaded: true, tags, image: img, title, price, content}, () => {
               document.getElementById("listing-title").value = title;
               document.getElementById("listing-price").value = price;
