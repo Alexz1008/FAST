@@ -53,11 +53,11 @@ export class WriteReview extends React.Component {
     var Is_Seller;
     var Transaction_Date;
 
-    if(Review_Rating < 1 || Review_Rating > 5){
-      alert("Rating must be between 1 and 5.");
+    if(!this.fieldsFilled()){
       return;
     }
 
+    const { history } = this.props;
     fire.database().ref().once('value', snapshot => {
       // Make sure the review ID does not exist yet
       var next_id = snapshot.child("Constants/Next_Review_ID").val();
@@ -97,10 +97,36 @@ export class WriteReview extends React.Component {
       totalReviews.push("" + next_id);
       fire.database().ref().child("Users/" + Reviewed_User + "/Sum_Of_Reviews").set(sumOfReviews);
       fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews.length);
+      history.push("/home");
     });
   }
-  
+
+  fieldsFilled(){
+    const Review_Title = this.state.title;
+    const Review_Rating = this.state.rating;
+    const Review_Content = this.state.review;
+
+    //Ensure that user has entered some title, alert otherwise
+    if(Review_Title === undefined || Review_Title.length < 1){
+      alert("Please add a title.");
+      return false;
+    }
+     //Ensure that user has entered some review rating, alert otherwise
+    if(Review_Rating === undefined || Review_Rating.length < 1 || Review_Rating < 1 || Review_Rating > 5){
+      alert("Rating must be between 1 and 5.");
+      return false;
+    }
+    //Ensure that user has entered some review content, alert otherwise
+    if(Review_Content === undefined || Review_Content.length < 1){
+      alert("Length:" + Review_Content.length);
+      return false;
+    }
+    alert("Called");
+    return (Review_Content && Review_Content.length > 0);
+  }
+
   render() {
+    
     return(
       <div className="center">
         <Header />
@@ -111,14 +137,14 @@ export class WriteReview extends React.Component {
           <div className="content-box">
             <h3 id="create-review-title" className="basic-title">Write review</h3>
       
-            <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" placeholder="Title" maxlength="20" required/> <br />
+            <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" placeholder="Title" maxLength="20" required/> <br />
 
-            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" maxlength="1" placeholder="Rating 1-5" required/> <br /><br />
+            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" maxLength="1" placeholder="Rating 1-5" required/> <br /><br />
       
-            <textarea onChange={this.handleChange}  name="review" id="review-content" maxlength="200" placeholder="Review content..."/> <br />
+            <textarea onChange={this.handleChange}  name="review" id="review-content" maxLength="200" placeholder="Review content..."/> <br />
       
             <br />
-            <Link to='/home'><button onClick={this.submit_review} className="basic-button" id="create-review-button">Post review</button></Link> <br />
+            <button onClick={this.submit_review} className="basic-button" id="create-review-button">Post review</button> <br />
           </div>
           :
           null}
