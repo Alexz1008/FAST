@@ -33,12 +33,12 @@ export class MyListings extends React.Component {
           let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val();
           let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val();
           let postedlistings = dataSnapshot.child("Users/" + user.uid + "/Posted_Listings").val();
-          
-          
+
+
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val();
           if (interestedlistings){
             interestedlistings = interestedlistings.split(",");
-            
+
             // Add all interested items to interested listings
             var i;
             for (i = 0; i < interestedlistings.length; i++) {
@@ -85,7 +85,7 @@ export class MyListings extends React.Component {
             }
             savedlistings = savedlistings.join(",");
           }
-          
+
           // Add all posted items to posted listings
           if (postedlistings){
             postedlistings = postedlistings.split(",");
@@ -112,7 +112,7 @@ export class MyListings extends React.Component {
           fire.database().ref().child("Users/" + user.uid + "/Interest_Listings").set(interestedlistings);
           fire.database().ref().child("Users/" + user.uid + "/Saved_Listings").set(savedlistings);
           fire.database().ref().child("Users/" + user.uid + "/Posted_Listings").set(postedlistings);
-          
+
           // Load in all the listings at the end
           this.setState({saved, interested, posted, loaded: true});
         });
@@ -140,7 +140,7 @@ export class MyListings extends React.Component {
 
   render () {
     var listings;
-    const display = <div className="display-info">You Have No {this.state.page} Listing.</div>;
+    const display = <div className="display-info">You Have No {this.state.page} Listings.</div>;
     if (this.state.page === 'Interested' && this.state.loaded === true) {
       listings = this.state.interested.map(item =>
         <div className="listing" key={item['Listing_ID']}>
