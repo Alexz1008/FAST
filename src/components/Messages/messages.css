@@ -56,17 +56,30 @@
   border: none;
 }
 
-.messages-confirmtransaction-enabled {
-  width: 200px;
-  background-color: #00487C;
+.messages-confirmtransaction-confirm{
+  width: 125px;
+  background-color: #00A6FB;
   border: none;
 }
-.messages-confirmtransaction-disabled {
-  width: 200px;
-  background-color: light-grey;
+.messages-confirmtransaction-confirm:hover{
+  
+  background-color: #00CEFB;
+}
+.messages-confirmtransaction-cancel {
+  width: 125px;
+  background-color: #00CEFB;
   border: none;
 }
-
+.messages-confirmtransaction-cancel:hover {
+  width: 125px;
+  background-color: #49deff;
+  border: none;
+}
+.messages-confirmtransaction-complete, .messages-confirmtransaction-loading{
+  width: 125px;
+  border: none;
+  
+}
 .messages-sent {
   color: white;
   text-align:right;
