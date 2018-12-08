@@ -5,6 +5,15 @@ import './messages.css'
 import fire from '../Fire/fire'
 import { addToUserList, addToConversationList, removeFromUserList } from '../Utilities/utilities'
 
+
+/* This code is a good example of MVC because of how React works.
+   In this case, our model is firebase, which we make calls to.
+   Our controller is every javascript method we have in the class (except for the render function)
+   and our view is the render() function specifically.
+   Notably, the render() function only displays what the controller has
+   put together for it, and the model simply does whatever the controller
+   asks it to do. */
+
 export class Messages extends React.Component {
   constructor(props) {
     super(props);
@@ -307,7 +316,7 @@ export class Messages extends React.Component {
             {message['Message']}
           </div>
           <div className="hover">
-          {message['TimeStamps']}
+            {message['TimeStamps']}
           </div>
         </div>
       );
@@ -323,7 +332,7 @@ export class Messages extends React.Component {
           <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation} userID={this.state.user.uid}/>
           <div className="messages-messenger">
             <div className="messages-messages" id="messageBody">
-              {messages}
+              {messages ? messages : "You have no messages."}
             </div>
             <div className="messages-messenger-container">
               <input className="messages-messenger-input" id="messages-input" onKeyPress={this._handleKeyPress} onChange={this.handleChange}></input>
