@@ -69,7 +69,7 @@ export class Login extends React.Component {
         <div className="center">
           <form className="login-form">
           <div className="content-box">
-            <img src = {Logo} width = "200" className = "center" title = "Triton Market"></img>
+            <img src = {Logo} width = "200" className = "center" title = "Triton Market" alt="Logo"></img>
             <h3 className="basic-title">LOG IN</h3><br /><br /> <br /> 
 
             <label htmlFor="email"><strong></strong></label> <br />

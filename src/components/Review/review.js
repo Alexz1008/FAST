@@ -3,9 +3,6 @@ import './review.css'
 //by default, using styles from ./login.css
 
 export class Review extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   
   render() {
     return(

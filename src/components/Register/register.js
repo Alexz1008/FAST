@@ -45,14 +45,14 @@ export class Register extends React.Component {
     const Conversations = "";
     const Interest_Listings = "";
     const Saved_Listings = "";
-    const My_Listings = "";
+    const Posted_Listings = "";
     const Completed_Transactions = "";
     const Reviews = "";
     const Sum_Of_Reviews = 0;
     var userID = u.user.uid;
 
     // Set the next child with the generated userID to this newly created user
-    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, My_Listings, Completed_Transactions, Reviews, Sum_Of_Reviews});
+    this.usersDB.child(userID).set({UCSD_Email, Name, User_Pic, Phone, Zip, City, Average_Review, Conversations, Interest_Listings, Saved_Listings, Posted_Listings, Completed_Transactions, Reviews, Sum_Of_Reviews});
   }
 
   // Setup a register method to add a user into our firebase users database
@@ -77,7 +77,7 @@ export class Register extends React.Component {
     if(! this.fieldsFilled()){
         return;
     }
-    
+
 
     const { history } = this.props;
     // Try registration of the user with the provided email and passwords
@@ -92,7 +92,7 @@ export class Register extends React.Component {
       })
       .catch((error)=> {
         // Log the error if verification sending was unsuccessful
-        
+
         console.log(error);
       });
       // Push the user back to login after finishing up registration
@@ -172,7 +172,7 @@ export class Register extends React.Component {
     //All fields filled
     return true;
   }
-  
+
   // Setup a handleChange method to map the form to the proper values
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
@@ -195,7 +195,7 @@ export class Register extends React.Component {
       <div className="container" id="container">
         <div className="center">
         <form className="register-form">
-        
+
           <div className="content-box" id="reg-content-box">
             <h3 className="basic-title">REGISTER ACCOUNT</h3>
 

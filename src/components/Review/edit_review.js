@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Header from '../Header/header'
 import fire from '../Fire/fire'
 import './review.css'
-import {addToUserList} from '../Utilities/utilities'
 //by default, using styles from ./login.css
 
 export class EditReview extends React.Component {
@@ -63,15 +62,11 @@ export class EditReview extends React.Component {
     const Review_Title = this.state.title;
     const Review_Rating = this.state.rating;
     const Review_Content = this.state.review;
-    const Listing_ID = this.state.listingID;
-    const User_ID = this.state.user.uid;
-    const Is_Seller = this.state.Is_Seller;
     const Review_ID = this.state.Review_ID;
     const oldRating = this.state.oldRating;
     const oldSum = this.state.oldSum;
     const totalReviews = this.state.totalReviews;
     const Reviewed_User = this.state.Reviewed_User;
-    const { history } = this.props;
     
     // Update the review
     fire.database().ref().child("Review/" + Review_ID).update({Review_Title, Review_Rating, Review_Content});
@@ -101,7 +96,7 @@ export class EditReview extends React.Component {
             <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" defaultValue="Loading..." required/> <br /><br />
       
             <label htmlFor="review-content" name="review"><strong>Review:</strong></label> <br /> 
-            <textarea onChange={this.handleChange} id="review-content" name="review" defaultValue="Loading..." id="review-content" /> <br />
+            <textarea onChange={this.handleChange} id="review-content" name="review" defaultValue="Loading..." /> <br />
       
       
             <br />

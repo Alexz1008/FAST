@@ -39,3 +39,10 @@
   box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
   margin-bottom: 5px;
 }
+.display-info{
+  margin:auto;
+  margin-top:20%;
+  margin-left: 30%;
+  font-size: 20px;
+  font-weight: 300;
+}

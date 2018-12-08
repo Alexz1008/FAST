@@ -4,9 +4,6 @@ import './edit_profile'
 import userImage from './userImage.png'
 
 class ViewProfile extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleChange(event) {
     this.setState({value: event.target.value});
