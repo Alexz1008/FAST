@@ -4,6 +4,7 @@
   margin: 10px;
   padding-top: 10px;
   padding-left: 5px;
+  padding-bottom: 150px;
   position: relative;
 }
 
@@ -11,7 +12,7 @@
   border-radius: 10px;
   box-shadow: 5px 5px 16px 0 rgba(0,0,0,.2);
   width: 300px;
-  height: 410px;
+  height: 465px;
   display: flex;
   font-size: 20px;
   font-weight: 300;
@@ -22,10 +23,14 @@
   /*box-shadow:	0 4px 8px 0 #00A6FB;*/
   /*border: solid 2px #00A6FB;*/
   width: 300px;
-  height: 460px;
+  height: 465px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 5px 5px 16px 0 rgba(0,0,0,.2);
+  font-size: 20px;
+  font-weight: 300;
 }
 .listing-upper {
   height: 200px;

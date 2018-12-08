@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: row;
   height: 95%;
-
+  padding-top: 40px;
 }
 
 .messages-sidebar {
@@ -34,7 +34,7 @@
   height: 40px;
   display: flex;
   justify-content: space-between;
-  
+
 }
 
 .messages-messenger-input {
@@ -85,15 +85,15 @@
   text-align:right;
   display: flex;
   flex-direction: row-reverse;
-  padding: 12px;  
+  padding: 12px;
   align-items: center;
 }
 .messages-sent-text{
-  
+
   background-color: grey;
   border-radius: 6px;
-  padding: 12px;  
-  
+  padding: 12px;
+
 }
 .messages-sent .hover{
     visibility: hidden;
@@ -111,11 +111,11 @@
   align-items: center;
 }
 .messages-received-text{
-  
+
   background-color: #39ACFC;
   border-radius: 6px;
-  padding: 12px;  
-  
+  padding: 12px;
+
 }
 .messages-received .hover{
     visibility: hidden;

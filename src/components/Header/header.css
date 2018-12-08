@@ -10,6 +10,9 @@ a {
   align-items: center;
   background-color: #00487c;
   justify-content: space-between;
+  position: fixed;
+  z-index: 1;
+  top: 0;
 }
 .navbar-left{
 	display: flex;
@@ -96,4 +99,4 @@ a {
 .navbar-text{
 	color: white;
 	padding: 15px;
-}	
+}

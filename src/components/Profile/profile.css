@@ -1,5 +1,6 @@
 .content {
   display: flex;
+  padding-top: 40px;
 }
 .content-profile {
   display: flex;

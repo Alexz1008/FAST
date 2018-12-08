@@ -4,7 +4,7 @@
 
 import firebase from 'firebase';
 
-// Submission DB reference because we want to make sure the limit isn't hit
+// Submission DB reference because we want to make sure the limit isn't hit (LIMIT EMPTY; DATABASE OPEN)
 /*
 var config = {
     apiKey: "AIzaSyA2yeckyonhkr_AuR4PrPTUEGPoRyrx36Q",
@@ -16,7 +16,7 @@ var config = {
   };
 */
 
-// New DB reference because we almost hit the limit for the last one
+// Testing DB reference because we almost hit the limit for the last one (LIMIT APPROACHING; DATABASE USABLE)
 var config = {
     apiKey: "AIzaSyAWQIHQswUxj1U3G_K_ZrctVNEURVw88V0",
     authDomain: "fast-v2-82035.firebaseapp.com",
@@ -26,7 +26,7 @@ var config = {
     messagingSenderId: "909068737826"
   };
 
-// Old DB reference in case new one breaks more stuff
+// Development DB reference in case new one breaks functionality (LIMIT HIT; DATABASE FROZEN)
 /*
 var config = {
   apiKey: "AIzaSyAMVKcugugokMLjDfp4N8KVqsEpvnzcqwU",

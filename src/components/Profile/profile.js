@@ -14,15 +14,15 @@ export class Profile extends React.Component {
       loaded: false
     };
   }
-  
+
   componentWillReceiveProps(props) {
     const { history } = props;
     this.setState({loaded: false});
     var profileUser = props.location.search.substring(5);
-    
+
     // Load in profile info and all reviews of the user we're viewing
     fire.database().ref().once("value", snapshot => {
-      
+
       // Make sure the user exists before checking
       if (profileUser !== "" && snapshot.child("Users/" + profileUser).exists()) {
         let reviews = [];
@@ -36,10 +36,10 @@ export class Profile extends React.Component {
         let city = snapshot.child("Users/" + profileUser + "/City").val();
         let averagereview = snapshot.child("Users/" + profileUser + "/Average_Review").val();
         this.setState({name, rating, image, tel, email, zipcode, city, isUser, averagereview});
-        
+
         // Load in all reviews
         let reviewList = snapshot.child("Users/" + profileUser + "/Reviews").val().split(",");
-        
+
         // push each review from reviewList
         var i;
         for (i = 0; i < reviewList.length; i++) {
@@ -66,7 +66,7 @@ export class Profile extends React.Component {
       }
     });
   }
-  
+
   componentDidMount(){
     const { history } = this.props;
     fire.auth().onAuthStateChanged((user) => {
@@ -74,10 +74,10 @@ export class Profile extends React.Component {
         this.setState({user});
         this.setState({loaded: false});
         var profileUser = this.props.location.search.substring(5);
-        
+
         // Load in profile info and all reviews of the user we're viewing
         fire.database().ref().once("value", snapshot => {
-          
+
           // Make sure the user exists before checking
           if (profileUser !== "" && snapshot.child("Users/" + profileUser).exists()) {
             let reviews = [];
@@ -91,10 +91,10 @@ export class Profile extends React.Component {
             let city = snapshot.child("Users/" + profileUser + "/City").val();
             let averagereview = snapshot.child("Users/" + profileUser + "/Average_Review").val();
             this.setState({name, rating, image, tel, email, zipcode, city, isUser, averagereview});
-            
+
             // Load in all reviews
             let reviewList = snapshot.child("Users/" + profileUser + "/Reviews").val().split(",");
-            
+
             // push each review from reviewList
             var i;
             for (i = 0; i < reviewList.length; i++) {
@@ -116,7 +116,7 @@ export class Profile extends React.Component {
       }
     });
   }
-  
+
   render () {
     var reviews;
     if(this.state.loaded) {
@@ -131,7 +131,7 @@ export class Profile extends React.Component {
       <div>
         <Header />
       {this.state.loaded ?
-        <div>
+        <div classname="content">
           <ViewProfile name={this.state.name} rating={this.state.rating} image={this.state.image} tel={this.state.tel} email={this.state.email} zipcode={this.state.zipcode} city={this.state.city} isUser={this.state.isUser}
           averagereview={this.state.averagereview}/>
           {reviews}
