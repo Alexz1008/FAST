@@ -118,11 +118,11 @@ export class WriteReview extends React.Component {
     }
     //Ensure that user has entered some review content, alert otherwise
     if(Review_Content === undefined || Review_Content.length < 1){
-      alert("Length:" + Review_Content.length);
+      alert("Please add review content");
       return false;
     }
-    alert("Called");
-    return (Review_Content && Review_Content.length > 0);
+    //All fields filled
+    return true;
   }
 
   render() {
