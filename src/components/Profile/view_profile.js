@@ -21,7 +21,6 @@ class ViewProfile extends Component {
           }
           <br />
           <hr/>
-          Overall Rating: {this.props.rating}
           <br />
           Tel: {this.props.tel}
           <br />
