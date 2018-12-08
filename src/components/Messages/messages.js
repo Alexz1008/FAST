@@ -33,13 +33,13 @@ export class Messages extends React.Component {
       listings: ""
     };
   }
-  
+
   _handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.postMessage();
     }
   }
-  
+
   updateButton(listing) {
     var confirmText = "Loading..."
     var disableButton = true;
@@ -80,14 +80,14 @@ export class Messages extends React.Component {
       this.setState({buttonClick, confirmText, disableButton, buttonClass, activeListing: listing});
     });
   }
-  
+
   getConversations() {
     var userID = this.state.user.uid;
     let listings = [];
     fire.database().ref().once('value', snapshot => {
       // Check if the user has any conversations
       let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
-      
+
       // Load in every conversation the user has
       var i;
       for(i = 0; i < userConvs.length; i++) {
@@ -105,11 +105,11 @@ export class Messages extends React.Component {
               listing['User_Is_Seller'] = (snapshot.child("Conversation/" + userConvs[i] + "/Seller_ID").val() === userID);
               listing['Buyer_Name'] = (snapshot.child("Users/" + Buyer_ID + "/Name").val());
               listings.push(listing);
-              
+
               // Appropriately set the class, disable/enable the button, the button text, and onClick
               // Case 1, the listing has already been confirmed
               this.updateButton(listing);
-                  
+
               this.setState({currID: userConvs[i], activeListing: listing}, () => {
                 this.getMessages();
               });
@@ -122,7 +122,7 @@ export class Messages extends React.Component {
         }
       }
       fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.join(","));
-      
+
       this.setState({conversations: userConvs[i], listings: listings.reverse(), loaded: true});
     });
   }
@@ -184,7 +184,7 @@ export class Messages extends React.Component {
           idExists = snapshot.child("Message/" + Message_ID).exists();
         }
         const NewMessage = {Message, Sender_ID, TimeStamp, Message_ID};
-        
+
         // Add the new message to the message list DB
         messageDB.child(Message_ID).set(NewMessage);
         addToConversationList(Conversation_ID, Message_ID);
@@ -194,14 +194,14 @@ export class Messages extends React.Component {
       this.setState({message: null});
     }
   }
- 
+
   getMessages() {
     fire.database().ref().on('value', snapshot => {
       let messages = [];
       if(this.state) {
         if (snapshot.child("Conversation/" + this.state.currID + "/Message_List").exists()) {
           let messageIDList = snapshot.child("Conversation/" + this.state.currID + "/Message_List").val().split(",");
-          
+
           // For each message in the list, add them to messages
           var i;
           for(i = 0; i < messageIDList.length; i++) {
@@ -218,7 +218,7 @@ export class Messages extends React.Component {
       }
     });
   }
-  
+
   handleConfirmTransaction() {
     // Check if the user is the buyer or seller
     var convID = this.state.currID;
@@ -229,22 +229,25 @@ export class Messages extends React.Component {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
       var sellerID = snapshot.child("Conversation/" + convID + "/Seller_ID").val();
       var buyerID = snapshot.child("Conversation/" + convID + "/Buyer_ID").val();
-      
+
       // Buyer confirms transaction
       if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
         fire.database().ref().child("Conversation/" + convID + "/Buyer_Confirm").set(true);
         listing['Conv_Buyer_Confirmed'] = true;
-        
+
         // If seller has already confirmed, complete the transaction and log it
         if(snapshot.child("Conversation/" + convID + "/Seller_Confirm").val() === true) {
           fire.database().ref().child("Listing/" + listingID + "/Is_Transaction_Log").set(true);
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
           fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set((d.getMonth()+1) + "/" + d.getDate());
           listing['Is_Transaction_Log'] = true;
-          
+
           // Add the log to both user's transaction histories
           addToUserList(userID, listingID, "Completed_Transactions");
           addToUserList(sellerID, listingID, "Completed_Transactions");
+
+          // Remove the listing from the buyer's interested listings
+          removeFromUserList(userID, listingID, "Interest_Listings");
         }
       }
       // Seller confirms transaction
@@ -258,16 +261,16 @@ export class Messages extends React.Component {
           fire.database().ref().child("Listing/" + listingID + "/Transaction_Date").set(d.getMonth() + "/" + d.getDate());
           fire.database().ref().child("Listing/" + listingID + "/Buyer_ID").set(buyerID);
           listing['Is_Transaction_Log'] = true;
-          
+
           addToUserList(userID, listingID, "Completed_Transactions");
           addToUserList(buyerID, listingID, "Completed_Transactions");
-          removeFromUserList(buyerID, listingID, "Interest_Transactions");
+          removeFromUserList(buyerID, listingID, "Interest_Listings");
         }
       }
       this.updateButton(listing);
     });
   }
-  
+
   handleCancelTransaction() {
     // Check if the user is the buyer or seller
     var convID = this.state.currID;
@@ -275,13 +278,13 @@ export class Messages extends React.Component {
     var listing = this.state.activeListing;
     fire.database().ref().once('value', snapshot => {
       var listingID = snapshot.child("Conversation/" + convID + "/Listing_ID").val();
-      
+
       // Buyer cancels transaction
       if(snapshot.child("Conversation/" + convID + "/Buyer_ID").val() === userID) {
         fire.database().ref().child("Conversation/" + convID + "/Buyer_Confirm").set(false);
         listing['Conv_Buyer_Confirmed'] = false;
       }
-      
+
       // Seller cancels transaction
       else {
         fire.database().ref().child("Conversation/" + convID + "/Seller_Confirm").set(false);
