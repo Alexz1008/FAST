@@ -137,7 +137,7 @@ export class CreateListing extends React.Component{
             singleImage={true}
           />
 
-          <textarea name="desc" id="listing-content" onChange={this.handleChange} maxlength="150" placeholder="Describe your listing..." /> <br />
+          <textarea name="desc" id="listing-content" onChange={this.handleChange} maxlength="175" placeholder="Describe your listing..." /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
           <Tag callbackFunction={this.tagCallback} tags={this.state.tags}/> <br />
