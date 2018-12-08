@@ -33,33 +33,32 @@
 
 .profile-form input,
 textarea {
- /*display: block;*/
- margin-right: 5%;
- padding: .5rem .75rem;
- font-size: 1rem;
- line-height: 1.25;
- color: #55595c;
- background-color: #fff;
- background-image: none;
- background-clip: padding-box;
- border: 2px solid #EEF8FE;
- /*border-top: 0;
- border-right: 0;
- border-bottom: 1px solid $color-grey;
- border-left: 0;
- border-radius: $radius;
- @include transition;
+  display: block;
+  margin: 0 auto;
+  transition: .5s; 
+  border: none;
+  border-bottom: 2px solid rgba(0,0,0,0.24);
+  background: transparent;
+  height: 18px;
+  color:black;
+  width: 250px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
 
- &:focus {
-  outline: 0;
-  border-bottom-color: $color-primary;
- }*/
 }
-
+.profile-form input::placeholder {
+    color: black;
+    opacity: 1;
+}
+.profile-form input:focus::-webkit-input-placeholder { 
+    color:transparent; 
+}
 .profile-form input:focus{
   transition: .5s;
-  border: 2px solid #00A6FB;
+  border-bottom: 2px solid #00487C;
   outline: none;
+  transition: .5s;
+  left: 0;
 }
 
 .profile-name{

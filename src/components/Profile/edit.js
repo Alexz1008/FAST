@@ -115,18 +115,13 @@ class Edit extends Component {
                     maxFileSize={5242880}
                     singleImage={true}
                   />
-                  <label>Name:</label>
-                  <input onChange= {e => this.setState({name: e.target.value})} value={this.state.name}/>
+                  <input onChange= {e => this.setState({name: e.target.value})} placeholder = "Name" value={this.state.name}/>
                   <br />
-
-                  <label>Tel:</label>
-                  <input onChange= {e => this.setState({tel: e.target.value})} value={this.state.tel}/>
+                  <input onChange= {e => this.setState({tel: e.target.value})} placeholder = "Telephone Number" value={this.state.tel}/>
                   <br />
-                  <label>Zipcode:</label>
-                  <input onChange= {e => this.setState({zipcode: e.target.value})} value={this.state.zipcode}/>
+                  <input onChange= {e => this.setState({zipcode: e.target.value})} placeholder = "Zip Code" value={this.state.zipcode}/>
                   <br />
-                  <label>City:</label>
-                  <input onChange= {e => this.setState({city: e.target.value})} value={this.state.city}/>
+                  <input onChange= {e => this.setState({city: e.target.value})} placeholder = "City" value={this.state.city}/>
                   <br />
                   <button className="profile-button" onClick={this.updateUserProfile}>Save Changes</button>
                 </form>
