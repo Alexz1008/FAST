@@ -22,7 +22,8 @@ export class CreateListing extends React.Component{
     this.usersDB = fire.database().ref("Users");
     this.state = {
       image: [],
-      tags: ""
+      tags: "",
+      valid_image: false
     };
   }
 
@@ -46,6 +47,7 @@ export class CreateListing extends React.Component{
   }
 
   createListing(e) {
+    
     const Listing_Title = this.state.title;
     const Listing_Pic = this.state.image;
     const Listing_Price = this.state.price;
@@ -66,6 +68,15 @@ export class CreateListing extends React.Component{
     let listDB = this.listingsDB;
     let constDB = this.constantsDB;
     e.preventDefault();
+
+    //Ensure all fields are filled; if not, can't create listing
+    if(!this.fieldsFilled()){
+      return;
+    }
+    //Ensure that profile picture is added
+    if(! this.imageAdded()){
+      return;
+    }    
 
     // Save the new listing to the database after making sure the id doesn't exist yet
     const { history } = this.props;
@@ -102,8 +113,11 @@ export class CreateListing extends React.Component{
   }
 
   onDrop(file, picture) {
-    this.setState({image: this.state.image.concat(picture)});
-    console.log(picture);
+    this.setState({
+      valid_image: (! this.state.valid_image),
+      image: this.state.image.concat(picture)
+    });
+
   }
 
   getPostDate() {
@@ -112,8 +126,46 @@ export class CreateListing extends React.Component{
     return currentDate;
   }
 
-  render () {
+  //Check if the user has added a picture
+  imageAdded(){
+    if (!this.state.valid_image){
+      alert("Please add a picture.");
+      return false;
+    }
+    return true;
+  }
+  
 
+  fieldsFilled(){
+    const Listing_Title = this.state.title;
+    const Listing_Pic = this.state.image;
+    const Listing_Price = this.state.price;
+    const Listing_Description = this.state.desc;
+    //Ensure that user has entered some title, alert otherwise
+    if(Listing_Title === undefined || Listing_Title.length < 1){
+      alert("Please enter a title.");
+      return false;
+    }
+     //Ensure that user has entered a listing price, alert otherwise
+    if(Listing_Price === undefined || Listing_Price.length < 1){
+      alert("Please enter a price.");
+      return false;
+    }
+    //Ensure that user has entered some description code, alert otherwise
+    if(Listing_Description === undefined || Listing_Description.length < 1){
+      alert("Please enter a description.");
+      return false;
+    }
+    //Ensure that user has uploaded a picture
+    if(Listing_Pic === undefined || Listing_Pic === null || Listing_Pic === '[]'){
+      alert("Please add a picture.");
+      return false;
+    }
+    //All fields filled
+    return true;
+  }
+
+  render () {
     return(
       <div className="center">
       <Header />
@@ -144,7 +196,7 @@ export class CreateListing extends React.Component{
 
           <br />
 
-          <button type="submit" className="basic-button" id="create-listing-button" onClick={this.createListing.bind(this)}>Create listing</button> <br />
+          <button type="submit" className="basic-button" disabled={!this.fieldsFilled} id="create-listing-button" onClick={this.createListing.bind(this)}>Create listing</button> <br />
 
         </div>
         </form>
