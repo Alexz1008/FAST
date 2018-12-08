@@ -119,7 +119,7 @@ export class CreateListing extends React.Component{
       <Header />
       <form className="listing-form" autoComplete="off">
         <div className="content-box">
-          <h3 id="create-listing-title" className="basic-title">CREATE LISTING</h3>
+          <h3 id="create-listing-title" className="basic-title" maxlength="20">CREATE LISTING</h3>
 
           <input type="text" className="basic-input" placeholder= "Title" name="title" id="listing-title"
 	    onChange={this.handleChange} required/> <br />
@@ -137,7 +137,7 @@ export class CreateListing extends React.Component{
             singleImage={true}
           />
 
-          <textarea name="desc" id="listing-content" onChange={this.handleChange} placeholder="Describe your listing..." /> <br />
+          <textarea name="desc" id="listing-content" onChange={this.handleChange} maxlength="150" placeholder="Describe your listing..." /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
           <Tag callbackFunction={this.tagCallback} tags={this.state.tags}/> <br />
