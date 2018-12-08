@@ -6,6 +6,7 @@
 .content-sidebar {
   width: 10%;
   box-shadow:	0 2px 4px 0 rgba(0,0,0,0.10);
+  
 }
   
 .content-listings {
@@ -17,6 +18,9 @@
 .sidebar {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  z-index: 1;
+  width: 10%;
 }
 
 .sidebar-button {
