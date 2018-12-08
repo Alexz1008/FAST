@@ -1,34 +1,33 @@
 .listing {
-  width: 300px;
-  height: 300px;
+  width: 375px;
+  height: 420px;
   margin: 10px;
   padding-top: 10px;
   padding-left: 5px;
-  padding-bottom: 150px;
+  padding-bottom: 175px;
   position: relative;
 }
 
 .listing-container {
   border-radius: 10px;
   box-shadow: 5px 5px 16px 0 rgba(0,0,0,.2);
-  width: 300px;
-  height: 465px;
+  width: 375px;
+  height: 600px;
   display: flex;
   font-size: 20px;
   font-weight: 300;
   justify-content: space-between;
   flex-direction: column;
 }
+
 .listing-container-self {
-  /*box-shadow:	0 4px 8px 0 #00A6FB;*/
-  /*border: solid 2px #00A6FB;*/
-  width: 300px;
-  height: 465px;
+  box-shadow:	0px 0px 8px 4px #00A6FB;
+  width: 375px;
+  height: 600px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 5px 5px 16px 0 rgba(0,0,0,.2);
   font-size: 20px;
   font-weight: 300;
 }
@@ -43,7 +42,9 @@
   color: black;
   justify-content: space-evenly;
 }
-
+.listing-poster{
+  justify-content: center;
+}
 .listing-lower {
   display: flex;
   margin: 5px;
@@ -58,9 +59,9 @@
 }
 
 .listing-title {
-  padding-top: 12px;
+  padding: 15px;
   /*background-color: #00487C;*/
-  height: 40px;
+  height: 20px;
   color: #00487C;
   font-weight: 450;
   font-size: 25px;
@@ -69,11 +70,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .listing-desc {
   margin: 5px;
-  height: 80px;
+  height: 75px;
   font-size: 15px;
   padding-left: 10px;
   padding-right: 10px;
@@ -83,8 +85,8 @@
 .listing-picture {
   display: flex;
   justify-content: center;
-  width: 300px;
-  height: 200px;
+  width: 375px;
+  height: 350px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   /*object-fit: scale-down;*/
@@ -95,7 +97,7 @@
   border: none;
   color: white;
   background-color: #00487C;
-  margin-left: 30px;
+  margin-left: 50px;
   border-radius: 5px;
   position: relative;
   outline: 0;
@@ -106,7 +108,7 @@
   border: none;
   color: white;
   background-color: #00A6FB;
-  margin-left: 30px;
+  margin-left: 50px;
   border-radius: 5px;  
   outline: 0;
 }
