@@ -97,7 +97,6 @@ export class WriteReview extends React.Component {
       totalReviews.push("" + next_id);
       fire.database().ref().child("Users/" + Reviewed_User + "/Sum_Of_Reviews").set(sumOfReviews);
       fire.database().ref().child("Users/" + Reviewed_User + "/Average_Review").set(sumOfReviews / totalReviews.length);
-      history.push("/home");
     });
   }
 
