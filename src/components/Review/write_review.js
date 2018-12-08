@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../Header/header'
 import fire from '../Fire/fire'
@@ -144,7 +144,7 @@ export class WriteReview extends React.Component {
             <textarea onChange={this.handleChange}  name="review" id="review-content" maxLength="200" placeholder="Review content..."/> <br />
       
             <br />
-            <button onClick={this.submit_review} className="basic-button" id="create-review-button">Post review</button> <br />
+            <Link to="/home"><button onClick={this.submit_review} className="basic-button" id="create-review-button">Post review</button></Link> <br />
           </div>
           :
           null}
