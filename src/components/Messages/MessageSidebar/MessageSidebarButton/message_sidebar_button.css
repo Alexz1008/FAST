@@ -10,11 +10,13 @@
   border-radius: 1%;
   box-shadow:	0 2px 4px 0 rgba(0,0,0,0.20);
   color: black;
+    align-items: center;
 }
 
 .conversation-button-active {
   display: flex;
   align-items: center;
+  
   justify-content: space-between;
   width: 96%;
   height: 100px;
@@ -24,6 +26,7 @@
   border-radius: 1%;
   box-shadow:	0px 0px 4px 4px #00A6FB;
   color: black;
+    align-items: center;
 }
 
 
@@ -34,10 +37,14 @@
 }
 
 .conversation-title {
-  padding-left: 5px;
+  padding-left: 5px;  
+  display:flex;
+  align-items: center;
 }
 
 .conversation-button-right {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 60%;
 }
