@@ -3,6 +3,7 @@ import Header from '../Header/header'
 import ImageUploader from 'react-images-upload';
 import Tag from '../Listing/tag'
 import fire from '../Fire/fire'
+import './edit_listing.css'
 
 export class EditListing extends React.Component {
   constructor(props) {
@@ -110,7 +111,10 @@ export class EditListing extends React.Component {
 
                   <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
                   <input type="text" onChange={this.handleChange} className="basic-input" name="price" id="listing-price" defaultValue="Loading..."/>
-
+                  
+                  {this.state.image ? 
+                    <img className="listing-img" src ={this.state.image[this.state.image.length-1]} alt="List" /> : null
+                  }
                   <ImageUploader
                       withIcon={false}
                       buttonText='Upload Picture'

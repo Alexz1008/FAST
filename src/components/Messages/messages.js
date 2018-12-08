@@ -107,10 +107,8 @@ export class Messages extends React.Component {
               listing['Buyer_Name'] = (snapshot.child("Users/" + Buyer_ID + "/Name").val());
               listings.push(listing);
 
-              // Appropriately set the class, disable/enable the button, the button text, and onClick
-              // Case 1, the listing has already been confirmed
+              
               this.updateButton(listing);
-
               this.setState({currID: userConvs[0], activeListing: listing}, () => {
                 this.getMessages();
               });
