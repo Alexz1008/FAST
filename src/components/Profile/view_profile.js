@@ -23,6 +23,7 @@ class ViewProfile extends Component {
           Average Review Score: {this.props.averagereview}
 
           <hr/>
+
           <br />
           Tel: {this.props.tel}
           <br />
