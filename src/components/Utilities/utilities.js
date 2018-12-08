@@ -55,7 +55,6 @@ export function removeFromUserInterested(userID, itemID, sellerID) {
     var i;
     for(i = 0; i < convs.length; i++) {
       if (snapshot.child("/Conversation/" + convs[i] + "/Seller_ID").val() === sellerID &&
-        snapshot.child("/Conversation/" + convs[i] + "/Buyer_ID").val() === userID &&
         snapshot.child("/Conversation/" + convs[i] + "/Listing_ID").val() === itemID) {
         db.child("/Conversation/" + convs[i]).remove();
         
