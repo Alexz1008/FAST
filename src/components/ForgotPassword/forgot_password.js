@@ -32,7 +32,6 @@ export class ForgotPassword extends React.Component {
     })
     .catch((error)=> {
       // If there was any error, log and alert then push back to login
-      console.log(error);
       alert(error);
       history.push("/login");
     });

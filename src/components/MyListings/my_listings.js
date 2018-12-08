@@ -140,7 +140,7 @@ export class MyListings extends React.Component {
 
   render () {
     var listings;
-    const display = <div className="display-info">You Have No {this.state.page} Listings.</div>;
+    const display = <div className="display-info">You have no {this.state.page} Listings.</div>;
     if (this.state.page === 'Interested' && this.state.loaded === true) {
       listings = this.state.interested.map(item =>
         <div className="listing" key={item['Listing_ID']}>

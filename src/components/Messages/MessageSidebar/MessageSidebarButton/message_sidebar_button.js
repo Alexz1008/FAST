@@ -20,7 +20,7 @@ export class MessageSidebarButton extends React.Component {
         <div className="conversation-button-right">
           <div className="conversation-title">{this.props.title}</div>
           <div>{this.props.userID === this.props.listing['Buyer_ID'] ? this.props.listing['Seller_Name'] : this.props.listing['Buyer_Name']}</div>
-          <div>{this.props.listing['Is_Transaction_Log'] ? 'Transaction Complete' : null}</div>
+          <div>{this.props.listing['Is_Transaction_Log'] ? this.props.listing['Buyer_ID'] ? 'Transaction Complete' : 'No Longer Available' : null}</div>
         </div>
       </button>
     );

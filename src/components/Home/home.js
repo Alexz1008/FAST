@@ -157,7 +157,6 @@ export class Home extends React.Component {
       subList = this.state.items;
     }
 
-    console.log(subList);
     if(this.state.loaded) {
       listings = subList.map(item =>
         (item['Listing_Title'].toLowerCase().includes(search) || item['Listing_Description'].toLowerCase().includes(search)) &&

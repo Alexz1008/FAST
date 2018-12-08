@@ -77,7 +77,6 @@ export class Messages extends React.Component {
           buttonClass = 'messages-confirmtransaction-confirm'
         }
       }
-      console.log("Updated button to ", {buttonClick, confirmText, disableButton, buttonClass, activeListing: listing});
       this.setState({buttonClick, confirmText, disableButton, buttonClass, activeListing: listing});
     });
   }
@@ -139,6 +138,10 @@ export class Messages extends React.Component {
       this.getConversations();
     });
   }
+  
+  componentWillUnmount() {
+    this.firebaseRef.off();
+  }
 
   // Create a method to authenticate the user with our existing database
   authListener(callback) {
@@ -161,7 +164,7 @@ export class Messages extends React.Component {
   }
 
   postMessage(e) {
-    if(this.state.message) {
+    if(this.state.message && this.state.currID) {
       const Message = this.state.message;
       const Sender_ID = this.state.user.uid;
       const Conversation_ID = this.state.currID;
@@ -299,8 +302,8 @@ export class Messages extends React.Component {
     var messages = "Loading...";
     if(this.state.messages && this.state.messages.length >= 0) {
       messages = this.state.messages.map(message =>
-        <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent' : 'messages-received'} key={message['Listing_ID']}>
-          <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent-text' : 'messages-received-text'} key={message['Listing_ID']}>
+        <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent' : 'messages-received'} key={message['Message_ID']}>
+          <div className={this.state.user.uid === message['Sender_ID'] ? 'messages-sent-text' : 'messages-received-text'} key={message['Message_ID']}>
             {message['Message']}
           </div>
           <div className="hover">
