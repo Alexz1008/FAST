@@ -53,6 +53,11 @@ export class WriteReview extends React.Component {
     var Is_Seller;
     var Transaction_Date;
 
+    if(Review_Rating < 1 || Review_Rating > 5){
+      alert("Rating must be between 1 and 5.");
+      return;
+    }
+
     fire.database().ref().once('value', snapshot => {
       // Make sure the review ID does not exist yet
       var next_id = snapshot.child("Constants/Next_Review_ID").val();
@@ -110,8 +115,7 @@ export class WriteReview extends React.Component {
 
             <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" maxlength="1" placeholder="Rating 1-5" required/> <br /><br />
       
-            <label htmlFor="review-content" name="review"><strong>Review:</strong></label> <br /> 
-            <textarea onChange={this.handleChange}  name="review" id="review-content" /> <br />
+            <textarea onChange={this.handleChange}  name="review" id="review-content" maxlength="200" placeholder="Review content..."/> <br />
       
             <br />
             <Link to='/home'><button onClick={this.submit_review} className="basic-button" id="create-review-button">Post review</button></Link> <br />
