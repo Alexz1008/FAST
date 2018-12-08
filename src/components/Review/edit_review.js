@@ -68,6 +68,11 @@ export class EditReview extends React.Component {
     const totalReviews = this.state.totalReviews;
     const Reviewed_User = this.state.Reviewed_User;
     
+    if(Review_Rating < 1 || Review_Rating > 5){
+      alert("Rating must be between 1 and 5.");
+      return;
+    }
+    
     // Update the review
     fire.database().ref().child("Review/" + Review_ID).update({Review_Title, Review_Rating, Review_Content});
     
@@ -89,14 +94,11 @@ export class EditReview extends React.Component {
           <div className="content-box">
             <h3 id="create-review-title" className="basic-title">Edit review</h3>
       
-            <label htmlFor="review-title"><strong>Title:</strong></label> <br /> 
             <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" defaultValue="Loading..." required/> <br />
 
-            <label htmlFor="review-rating"><strong>Rating:</strong></label> <br /> 
-            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" defaultValue="Loading..." required/> <br /><br />
+            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" maxlength="1" name="rating" defaultValue="Loading..." required/> <br /><br />
       
-            <label htmlFor="review-content" name="review"><strong>Review:</strong></label> <br /> 
-            <textarea onChange={this.handleChange} id="review-content" name="review" defaultValue="Loading..." /> <br />
+            <textarea onChange={this.handleChange} id="review-content" name="review" maxlength="200" defaultValue="Loading..." /> <br />
       
       
             <br />
