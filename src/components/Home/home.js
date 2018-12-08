@@ -128,11 +128,20 @@ export class Home extends React.Component {
     var subList;
     var tag = this.state.currTag;
 
-    var search = window.location.search.substring(8);	// get search query
-    search = search.split("+");				// replace + with space
-    search = search.join(" ");
-    search = decodeURIComponent(search);		// decode any special characters
-    search = search.toLowerCase();			// convert to lowercase
+    var search = window.location.search			// get querystring from url
+    var searchIndex = search.indexOf("?search=");	// make sure there is search query
+
+    if(searchIndex != -1) {
+      search = search.substring(searchIndex + 8);	// get search query
+      search = search.split("+");			// replace + with space
+      search = search.join(" ");
+      search = decodeURIComponent(search);		// decode any special characters
+      search = search.toLowerCase();			// convert to lowercase
+    } else {
+      search = "";
+    }
+
+    console.log(search);
 
     // get proper sublist of listings
     if (tag === "i-Clickers") {

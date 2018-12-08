@@ -30,74 +30,84 @@ export class MyListings extends React.Component {
           let interested = [];
           let saved = [];
           let posted = [];
-          let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val().split(",");
-          let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val().split(",");
-          let postedlistings = dataSnapshot.child("Users/" + user.uid + "/Posted_Listings").val().split(",");
+          let interestedlistings = dataSnapshot.child("Users/" + user.uid + "/Interest_Listings").val();
+          let savedlistings = dataSnapshot.child("Users/" + user.uid + "/Saved_Listings").val();
+          let postedlistings = dataSnapshot.child("Users/" + user.uid + "/Posted_Listings").val();
+          
+          
           var nextconversationid = dataSnapshot.child("Constants/Next_Conversation_ID").val();
-          
-          // Add all interested items to interested listings
-          var i;
-          for (i = 0; i < interestedlistings.length; i++) {
-            if(interestedlistings[i] !== '' && dataSnapshot.child("Listing/" + interestedlistings[i]).exists()) {
-              let item = dataSnapshot.child("Listing/" + interestedlistings[i]).val();
-              if(item['Is_Transaction_Log'] === false) {
-                if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
-                  item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
-                  fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+          if (interestedlistings){
+            interestedlistings = interestedlistings.split(",");
+            
+            // Add all interested items to interested listings
+            var i;
+            for (i = 0; i < interestedlistings.length; i++) {
+              if(interestedlistings[i] !== '' && dataSnapshot.child("Listing/" + interestedlistings[i]).exists()) {
+                let item = dataSnapshot.child("Listing/" + interestedlistings[i]).val();
+                if(item['Is_Transaction_Log'] === false) {
+                  if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
+                    item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
+                    fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+                  }
+                  item['Next_Conversation_ID'] = nextconversationid;
+                  item['isInterested'] = (interestedlistings) ? (interestedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
+                  item['isSaved'] = (savedlistings) ? (savedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
+                  interested.push(item);
                 }
-                item['Next_Conversation_ID'] = nextconversationid;
-                item['isInterested'] = (interestedlistings) ? (interestedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
-                item['isSaved'] = (savedlistings) ? (savedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
-                interested.push(item);
+              }
+              else {
+                interestedlistings.splice(i, 1);
               }
             }
-            else {
-              interestedlistings.splice(i, 1);
-            }
+            interestedlistings = interestedlistings.join(",");
           }
-          
-          // Add all saved items to saved listings
-          var j;
-          for (j = 0; j < savedlistings.length; j++) {
-            if(savedlistings[j] !== '' && dataSnapshot.child("Listing/" + savedlistings[j]).exists()) {
-              let item = dataSnapshot.child("Listing/" + savedlistings[j]).val();
-              if(item['Is_Transaction_Log'] === false) {
-                if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
-                  item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
-                  fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+          if (savedlistings){
+            savedlistings = savedlistings.split(",");
+            // Add all saved items to saved listings
+            var j;
+            for (j = 0; j < savedlistings.length; j++) {
+              if(savedlistings[j] !== '' && dataSnapshot.child("Listing/" + savedlistings[j]).exists()) {
+                let item = dataSnapshot.child("Listing/" + savedlistings[j]).val();
+                if(item['Is_Transaction_Log'] === false) {
+                  if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
+                    item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
+                    fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+                  }
+                  item['Next_Conversation_ID'] = nextconversationid;
+                  item['isInterested'] = (interestedlistings) ? (interestedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
+                  item['isSaved'] = (savedlistings) ? (savedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
+                  saved.push(item);
                 }
-                item['Next_Conversation_ID'] = nextconversationid;
-                item['isInterested'] = (interestedlistings) ? (interestedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
-                item['isSaved'] = (savedlistings) ? (savedlistings.indexOf("" + item['Listing_ID']) !== -1) : false;
-                saved.push(item);
+              }
+              else {
+                savedlistings.splice(i, 1);
               }
             }
-            else {
-              savedlistings.splice(i, 1);
-            }
+            savedlistings = savedlistings.join(",");
           }
           
           // Add all posted items to posted listings
-          var k;
-          for (k = 0; k < postedlistings.length; k++) {
-            if(postedlistings[k] !== '' && dataSnapshot.child("Listing/" + postedlistings[k]).exists()) {
-              let item = dataSnapshot.child("Listing/" + postedlistings[k]).val();
-              if(item['Is_Transaction_Log'] === false) {
-                if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
-                  item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
-                  fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+          if (postedlistings){
+            postedlistings = postedlistings.split(",");
+            var k;
+            for (k = 0; k < postedlistings.length; k++) {
+              if(postedlistings[k] !== '' && dataSnapshot.child("Listing/" + postedlistings[k]).exists()) {
+                let item = dataSnapshot.child("Listing/" + postedlistings[k]).val();
+                if(item['Is_Transaction_Log'] === false) {
+                  if(item['Seller_Average_Review'] !== dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val()) {
+                    item['Seller_Average_Review'] = dataSnapshot.child("Users/" + item['Seller_ID'] + "/Average_Review").val();
+                    fire.database().ref().child("Listing/" + item['Listing_ID'] + "/Seller_Average_Review").set(item['Seller_Average_Review']);
+                  }
+                  item['Next_Conversation_ID'] = nextconversationid;
+                  posted.push(item);
                 }
-                item['Next_Conversation_ID'] = nextconversationid;
-                posted.push(item);
+              }
+              else {
+                postedlistings.splice(i, 1);
               }
             }
-            else {
-              postedlistings.splice(i, 1);
-            }
+            postedlistings = postedlistings.join(",");
           }
-          interestedlistings = interestedlistings.join(",");
-          savedlistings = savedlistings.join(",");
-          postedlistings = postedlistings.join(",");
           // Push the newly cleaned arrays back to DB (no longer contain nonexistent listings)
           fire.database().ref().child("Users/" + user.uid + "/Interest_Listings").set(interestedlistings);
           fire.database().ref().child("Users/" + user.uid + "/Saved_Listings").set(savedlistings);
@@ -130,6 +140,7 @@ export class MyListings extends React.Component {
 
   render () {
     var listings;
+    const display = <div className="display-info">You Have No {this.state.page} Listing.</div>;
     if (this.state.page === 'Interested' && this.state.loaded === true) {
       listings = this.state.interested.map(item =>
         <div className="listing" key={item['Listing_ID']}>
@@ -175,7 +186,7 @@ export class MyListings extends React.Component {
             </div>
           </div>
           <div className="content-listings">
-            {listings}
+            {listings && listings.length ? listings : display}
           </div>
         </div>
       </div>
