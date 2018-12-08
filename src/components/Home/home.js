@@ -174,7 +174,7 @@ export class Home extends React.Component {
           <Sidebar callbackFunction={this.setTag} currTag ={this.state.currTag}/>
           </div>
           <div className="content-listings">
-            {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings. Come back later or add one yourself.</div> : <div className="loading-circle"><img src={LoadingImg} alt="Loading..."></img></div>}
+            {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings, or has no listings for the currently selected tag. Come back later or add one yourself.</div> : <div className="loading-circle"><img src={LoadingImg} alt="Loading..."></img></div>}
           </div>
         </div>
       </div>
