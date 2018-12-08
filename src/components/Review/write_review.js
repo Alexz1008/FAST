@@ -106,11 +106,9 @@ export class WriteReview extends React.Component {
           <div className="content-box">
             <h3 id="create-review-title" className="basic-title">Write review</h3>
       
-            <label htmlFor="review-title"><strong>Title:</strong></label> <br /> 
-            <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" required/> <br />
+            <input onChange={this.handleChange} id="review-title" type="text" className="review-input" name="title" placeholder="Title" maxlength="20" required/> <br />
 
-            <label htmlFor="review-rating"><strong>Rating:</strong></label> <br /> 
-            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" required/> <br /><br />
+            <input onChange={this.handleChange} id="review-rating" type="number" min="1" max="5" className="review-input" name="rating" maxlength="1" placeholder="Rating 1-5" required/> <br /><br />
       
             <label htmlFor="review-content" name="review"><strong>Review:</strong></label> <br /> 
             <textarea onChange={this.handleChange}  name="review" id="review-content" /> <br />
