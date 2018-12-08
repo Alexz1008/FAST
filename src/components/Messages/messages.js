@@ -77,6 +77,7 @@ export class Messages extends React.Component {
           buttonClass = 'messages-confirmtransaction-confirm'
         }
       }
+      console.log("Updated button to ", {buttonClick, confirmText, disableButton, buttonClass, activeListing: listing});
       this.setState({buttonClick, confirmText, disableButton, buttonClass, activeListing: listing});
     });
   }
@@ -86,7 +87,7 @@ export class Messages extends React.Component {
     let listings = [];
     fire.database().ref().once('value', snapshot => {
       // Check if the user has any conversations
-      let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",");
+      let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",").reverse();;
 
       // Load in every conversation the user has
       var i;
@@ -96,7 +97,7 @@ export class Messages extends React.Component {
           if(snapshot.child("Conversation/" + userConvs[i]).exists()) {
             let id = snapshot.child("Conversation/" + userConvs[i] + "/Listing_ID").val();
             let Buyer_ID = snapshot.child("Conversation/" + userConvs[i] + "/Buyer_ID").val();
-            let listing = snapshot.child("Listing/" + id).val();
+            let listing = snapshot.child("Listing/" + id).val()
             if(listing !== null) {
               listing['Buyer_ID'] = Buyer_ID;
               listing['Conversation_ID'] = userConvs[i];
@@ -110,7 +111,7 @@ export class Messages extends React.Component {
               // Case 1, the listing has already been confirmed
               this.updateButton(listing);
 
-              this.setState({currID: userConvs[i], activeListing: listing}, () => {
+              this.setState({currID: userConvs[0], activeListing: listing}, () => {
                 this.getMessages();
               });
             }
@@ -123,7 +124,7 @@ export class Messages extends React.Component {
       }
       fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.join(","));
 
-      this.setState({conversations: userConvs[i], listings: listings.reverse(), loaded: true});
+      this.setState({conversations: userConvs[0], listings: listings, loaded: true});
     });
   }
 
