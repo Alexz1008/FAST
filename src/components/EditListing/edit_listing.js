@@ -67,8 +67,10 @@ export class EditListing extends React.Component {
             document.getElementById("listing-title").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Title").val();
             document.getElementById("listing-price").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Price").val();
             document.getElementById("listing-content").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Description").val();
-            //TODO: Load in tags too
-            this.setState({loaded: true});
+	    var tags = snapshot.child("Listing/" + Listing_ID + "/Listing_Tag").val();
+            this.setState({loaded: true, tags: tags}, () => {
+	      console.log(tags);
+	    });
           }
         });
       }
@@ -83,11 +85,10 @@ export class EditListing extends React.Component {
   handleSaveChanges() {
     var Listing_ID = this.state.id;
     const { history } = this.props;
-    fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Title").set(this.state.title);
-    fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Price").set(this.state.price);
-    fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Description").set(this.state.content);
-    fire.database().ref().child("Listing/" + Listing_ID + "/Listing_Tag").set(this.state.tags);
-    //history.push("/home");
+    fire.database().ref().child("Listing/" + Listing_ID).update({Listing_Title: this.state.title, Listing_Price: this.state.price, 
+	    	Listing_Description: this.state.content, Listing_Tag: this.state.tags}, () => {
+      history.push("/home"); 
+    });
   }
   
   tagCallback = (tagList) => {
@@ -122,7 +123,7 @@ export class EditListing extends React.Component {
                   <textarea onChange={this.handleChange} name="content" id="listing-content" defaultValue="Loading..."/> <br />
 
                   <label htmlFor="listing-tag"><strong>Add Tags:</strong></label> <br />
-                  <Tag callbackFunction={this.tagCallback} /> <br />
+	          {this.state.loaded && <Tag callbackFunction={this.tagCallback} tags={this.state.tags}/>} <br />
 
                   <br />
 

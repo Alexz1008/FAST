@@ -140,7 +140,7 @@ export class CreateListing extends React.Component{
           <textarea name="desc" id="listing-content" onChange={this.handleChange} placeholder="Describe your listing..." /> <br />
 
           <label htmlFor="tag"><strong>Add Tags:</strong></label> <br />
-          <Tag callbackFunction={this.tagCallback} /> <br />
+          <Tag callbackFunction={this.tagCallback} tags={this.state.tags}/> <br />
 
           <br />
 

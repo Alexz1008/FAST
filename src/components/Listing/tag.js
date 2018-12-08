@@ -5,7 +5,24 @@ class Tag extends Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
-		this.state = {tags: []};
+
+		var tags = this.props.tags;
+		if (tags) {
+		  	tags = this.props.tags.split(",");
+		  	this.state = {tags: tags};
+		} else {
+		  	this.state = {tags: []};
+             	}
+
+		console.log("current tags: " + tags);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.active !== this.props.active) {
+			console.log("current tags: " + tags);
+			var tags = nextProps.tags.split(",");
+			this.setState({tags: tags});
+		}
 	}
 
 	handleChange(e) {
@@ -28,7 +45,7 @@ class Tag extends Component {
 		const tagList = categories.map(item => {
 			return (
 				<div key={item}>
-					<input type="checkbox" name={item} id={item} value={item} onChange={this.handleChange} />
+					<input type="checkbox" checked={this.state.tags.indexOf(item) != -1} name={item} id={item} value={item} onChange={this.handleChange} />
 					<label htmlFor={item}>{item}</label>
 				</div>
 			)
