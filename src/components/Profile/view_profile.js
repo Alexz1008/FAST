@@ -20,7 +20,10 @@ class ViewProfile extends Component {
             : <img className="profile-img" src={userImage} alt="Default Profile"/>
           }
           <br />
+          Average Rating: {this.props.averagereview}
+
           <hr/>
+
           <br />
           Tel: {this.props.tel}
           <br />
@@ -29,8 +32,6 @@ class ViewProfile extends Component {
           Zipcode: {this.props.zipcode}
           <br />
           City: {this.props.city}
-          <br />
-          Average Review Score: {this.props.averagereview}
           <br />
           {this.props.isUser ? <a className="profile-button" href='/edit_profile'>edit profile</a>: null}
         </form>
