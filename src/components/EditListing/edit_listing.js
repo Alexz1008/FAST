@@ -67,10 +67,10 @@ export class EditListing extends React.Component {
             document.getElementById("listing-title").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Title").val();
             document.getElementById("listing-price").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Price").val();
             document.getElementById("listing-content").value = snapshot.child("Listing/" + Listing_ID + "/Listing_Description").val();
-	    var tags = snapshot.child("Listing/" + Listing_ID + "/Listing_Tag").val();
-            this.setState({loaded: true, tags: tags}, () => {
-	      console.log(tags);
-	    });
+	        var tags = snapshot.child("Listing/" + Listing_ID + "/Listing_Tag").val();
+	        var img = snapshot.child("Listing/" + Listing_ID + "/Listing_Pic").val();
+            this.setState({loaded: true, tags: tags, image: img}, () => {
+	        });
           }
         });
       }
@@ -86,7 +86,7 @@ export class EditListing extends React.Component {
     var Listing_ID = this.state.id;
     const { history } = this.props;
     fire.database().ref().child("Listing/" + Listing_ID).update({Listing_Title: this.state.title, Listing_Price: this.state.price, 
-	    	Listing_Description: this.state.content, Listing_Tag: this.state.tags}, () => {
+	    	Listing_Description: this.state.content, Listing_Tag: this.state.tags, Listing_Pic: this.state.image}, () => {
       history.push("/home"); 
     });
   }
