@@ -53,10 +53,10 @@ export class Listing extends React.Component {
 
       // create the new conversation in the database after making sure the id doesn't exist yet
       this.conversationDB.once("value").then(function(snapshot) {
-        idExists = snapshot.child(Conversation_ID).exists();
+        idExists = snapshot.child("Conversation/" + Conversation_ID).exists();
         while(idExists) {
           Conversation_ID += 1;
-          idExists = snapshot.child(Conversation_ID).exists();
+          idExists = snapshot.child("Conversation/" + Conversation_ID).exists();
         }
 
         convDB.child(Conversation_ID).set({Conversation_Title, Buyer_ID, Seller_ID, Listing_ID, Conversation_ID, Buyer_Confirm, Seller_Confirm, Message_List});
