@@ -4,6 +4,8 @@
 
 import firebase from 'firebase';
 
+// Submission DB reference because we want to make sure the limit isn't hit
+
 // New DB reference because we almost hit the limit for the last one
 var config = {
     apiKey: "AIzaSyAWQIHQswUxj1U3G_K_ZrctVNEURVw88V0",
