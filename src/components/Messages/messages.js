@@ -149,7 +149,7 @@ export class Messages extends React.Component {
   }
   
   componentWillUnmount() {
-    this.firebaseRef.off();
+    fire.database().ref().off();
   }
 
   // Create a method to authenticate the user with our existing database
