@@ -62,8 +62,8 @@ export class WriteReview extends React.Component {
       var idExists = snapshot.child("Review/" + next_id).exists();
       const Seller_ID = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val();
       const Buyer_ID = snapshot.child("Listing/" + Listing_ID + "/Buyer_ID").val();
-      var Is_Seller = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID;
-      var Seller = Is_Seller ? "Seller" : "Buyer";
+      var Seller = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID;
+      var Is_Seller = Seller ? "Seller" : "Buyer";
       while(idExists) {
         next_id += 1;
         idExists = snapshot.child("Review/" + next_id).exists();
@@ -72,19 +72,19 @@ export class WriteReview extends React.Component {
       fire.database().ref().child("Constants/Next_Review_ID").set(next_id + 1);
 
       // Check if this review is by the seller or buyer
-      var Reviewed_User = Is_Seller ? Buyer_ID : Seller_ID;
+      var Reviewed_User = Seller ? Buyer_ID : Seller_ID;
       Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
 
       var Reviewer_Name = snapshot.child("Users/" + User_ID + "/Name").val();
       var Seller_Name = snapshot.child("Users/" + Seller_ID + "/Name").val();
-      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Seller, Transaction_Date, Listing_ID, Reviewer_Name, Seller_Name});
+      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Listing_ID, Reviewer_Name, Seller_Name});
 
       // Add to reviewee's review list
-      Is_Seller ? addToUserList(Buyer_ID, next_id, "Reviews") : addToUserList(Seller_ID, next_id, "Reviews");
-      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Reviewed").set(true) : fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Reviewed").set(true);
+      Seller ? addToUserList(Buyer_ID, next_id, "Reviews") : addToUserList(Seller_ID, next_id, "Reviews");
+      Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Reviewed").set(true) : fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Reviewed").set(true);
 
       // Add to the listing's review ID
-      Is_Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Review_ID").set(next_id) :
+      Seller ? fire.database().ref().child("Listing/" + Listing_ID + "/Buyer_Review_ID").set(next_id) :
                   fire.database().ref().child("Listing/" + Listing_ID + "/Seller_Review_ID").set(next_id);
 
       var sumOfReviews = snapshot.child("Users/" + Reviewed_User + "/Sum_Of_Reviews").val() + parseInt(Review_Rating);

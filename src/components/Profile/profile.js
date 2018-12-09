@@ -121,7 +121,7 @@ export class Profile extends React.Component {
     if(this.state.loaded) {
       reviews = this.state.reviews.map(item =>
         <div>
-          <Review seller={item['Seller']} transactiondate={item['Transaction_Date']} reviewrating={item['Review_Rating']}
+          <Review seller={item['Is_Seller']} transactiondate={item['Transaction_Date']} reviewrating={item['Review_Rating']}
           reviewcontent={item['Review_Content']} reviewheader={item['Review_Title']} reviewtitle={item['Listing_Title']}/>
         </div>
       );
