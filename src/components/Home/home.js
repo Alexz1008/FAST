@@ -157,7 +157,7 @@ export class Home extends React.Component {
     }
 
     if(this.state.loaded) {
-      listings = subList.reverse().map(item =>
+      listings = subList.map(item =>
         (item['Listing_Title'].toLowerCase().includes(search) || item['Listing_Description'].toLowerCase().includes(search)) &&
           <div className="listing" key={item['Listing_ID']}>
             <Listing title={item['Listing_Title']} image={item['Listing_Pic'] ? item['Listing_Pic'][item['Listing_Pic'].length-1] : null} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
@@ -174,7 +174,7 @@ export class Home extends React.Component {
           <Sidebar callbackFunction={this.setTag} currTag ={this.state.currTag}/>
           </div>
           <div className="content-listings">
-            {this.state.loaded ? listings.length ? listings : <div className = "content-text"> The Marketplace currently has no listings, or has no listings for the currently selected tag. Come back later or add one yourself.</div> : <div className="loading-circle"><img src={LoadingImg} alt="Loading..."></img></div>}
+            {this.state.loaded ? listings.length ? listings.reverse() : <div className = "content-text"> The Marketplace currently has no listings, or has no listings for the currently selected tag. Come back later or add one yourself.</div> : <div className="loading-circle"><img src={LoadingImg} alt="Loading..."></img></div>}
           </div>
         </div>
       </div>

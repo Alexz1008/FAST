@@ -51,7 +51,7 @@ export class EditListing extends React.Component {
     this.setState({loaded: false});
     var Listing_ID = props.location.search.length >= 4 ? props.location.search.substring(4) : "";
     this.setState({id: Listing_ID})
-    fire.auth().onAuthStateChanged((user) => {
+    var unsubscribe = fire.auth().onAuthStateChanged((user) => {
       if(user) {
 
         // Load in the listing iff it exists and was created by the user
@@ -84,6 +84,7 @@ export class EditListing extends React.Component {
         history.push("/");
       }
     });
+    unsubscribe();
   }
 
   handleSaveChanges() {

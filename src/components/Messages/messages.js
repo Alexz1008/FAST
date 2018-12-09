@@ -95,7 +95,7 @@ export class Messages extends React.Component {
     let listings = [];
     fire.database().ref().once('value', snapshot => {
       // Check if the user has any conversations
-      let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",").reverse();;
+      let userConvs = snapshot.child("Users/" + userID + "/Conversations").val().split(",").reverse();
 
       // Load in every conversation the user has
       var i;
@@ -128,7 +128,7 @@ export class Messages extends React.Component {
           }
         }
       }
-      fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.join(","));
+      fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.reverse().join(","));
 
       this.setState({conversations: userConvs[0], listings: listings, loaded: true});
     });

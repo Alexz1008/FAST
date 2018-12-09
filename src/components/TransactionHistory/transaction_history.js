@@ -58,7 +58,7 @@ export class TransactionHistory extends React.Component {
   
   render () {
     if(this.state.loaded) {
-      var listings = this.state.items.reverse().map(item =>
+      var listings = this.state.items.map(item =>
         <div className="listing" key={item['Listing_ID']}>
           <Listing id={item['Listing_ID']} title={item['Listing_Title']} image={item['Listing_Pic'] ? item['Listing_Pic'][item['Listing_Pic'].length-1] : null} price={item['Listing_Price']} desc={item['Listing_Description']} isLog={true}
           reviewed={item['reviewed']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} rating={item['Seller_Average_Review']} transactiondate={item['Transaction_Date']} buyerreviewid={item['Buyer_Review_ID']} sellerreviewid={item['Seller_Review_ID']}
@@ -69,7 +69,7 @@ export class TransactionHistory extends React.Component {
       <div>
         <Header />
         <div className="content">
-          {this.state.loaded ? listings.length ? listings : <div className = "content-text"> You have no completed transactions.</div> : <div className = "history-loading"><center><img src={LoadingImg} alt="Loading..."></img></center></div>}
+          {this.state.loaded ? listings.length ? listings.reverse() : <div className = "content-text"> You have no completed transactions.</div> : <div className = "history-loading"><center><img src={LoadingImg} alt="Loading..."></img></center></div>}
         </div>
       </div>
     );
