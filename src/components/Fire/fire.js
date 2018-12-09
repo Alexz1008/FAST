@@ -4,7 +4,11 @@
 
 import firebase from 'firebase';
 
-// The following are three databases we used throughout the project
+/* The following are three databases we used throughout the project
+   The database on top is used for submission. The one below was used for testing.
+   The third one was used for development. We had to keep moving due to hitting the
+   10GB datacap on the total bandwidth that Firebase has for free accounts.
+*/
 
 // Submission DB reference because we want to make sure the limit isn't hit (LIMIT EMPTY; DATABASE OPEN)
 var config = {
