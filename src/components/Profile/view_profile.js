@@ -20,7 +20,7 @@ class ViewProfile extends Component {
             : <img className="profile-img" src={userImage} alt="Default Profile"/>
           }
           <br />
-          Average Rating: {this.props.averagereview}
+          Average Rating: {this.props.averagereview === 0 ? "N/A" : this.props.averagereview}
 
           <hr/>
 
