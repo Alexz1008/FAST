@@ -35,9 +35,6 @@ Go to cloudjeremiah.com:3000 in Google Chrome.
 ## Source Code
 https://github.com/Alexz1008/FAST
 
-## Project Demo
-https://youtu.be/JypI3fEkXdk
-
 ## Known Bugs
 Sometimes, an error occurs saying you cannot edit your own listing after switching accounts.  **If this occurs, please close the tab and reopen the app before logging in to the second account.**
 
@@ -45,6 +42,9 @@ In the messaging page, the button for “Confirm Transaction” doesn’t appear
 Changing your name through your profile does not change the name displayed on listings you have already created.
 
 If other bugs are found while the app is running, try to wait longer in between button presses, because Firebase can sometimes be slow to respond.  Also, if something does not load, please try refreshing the page.
+
+## Project Demo Video
+https://youtu.be/JypI3fEkXdk
 
 ## Technical Support
 Alexander Zhou - Project Manager, (909) 816-0372
