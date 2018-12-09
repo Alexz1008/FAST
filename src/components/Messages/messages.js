@@ -331,7 +331,7 @@ export class Messages extends React.Component {
           <MessageSidebar listings={this.state.listings} currID={this.state.currID} callbackFunction={this.getActiveConversation} userID={this.state.user.uid}/>
           <div className="messages-messenger">
             <div className="messages-messages" id="messageBody">
-              {messages ? messages : "You have no messages."}
+              {messages ? messages : <div className = "NoMessages">You have no messages.</div>}
             </div>
             <div className="messages-messenger-container">
               <input className="messages-messenger-input" id="messages-input" onKeyPress={this._handleKeyPress} onChange={this.handleChange}></input>
