@@ -64,13 +64,13 @@ export class Login extends React.Component {
   render () {
     return (
       // Render a form on the front-end to allow users to login with their credentials
-      
+
       <div className="container">
         <div className="center">
           <form className="login-form">
           <div className="content-box">
             <img src = {Logo} width = "200" className = "center" title = "Triton Market" alt="Logo"></img>
-            <h3 className="basic-title">LOG IN</h3><br /><br /> <br /> 
+            <h3 className="basic-title">LOG IN</h3><br /><br /> <br />
 
             <label htmlFor="email"><strong></strong></label> <br />
             <input value={this.state.email} onChange={this.handleChange} placeholder="UCSD Email" type="email" className="basic-input" name="email" id="email" required /> <br />
@@ -78,9 +78,7 @@ export class Login extends React.Component {
             <label htmlFor="password"><strong></strong></label>
             <input value={this.state.password} onChange={this.handleChange} placeholder = "Password" type="password" className="basic-input" name="password" id="password" required /> <br />
 
-          
-
-            <button onClick={this.login} type="submit" className="basic-button" id="login-button" >Login</button> <br /> <br /> <br /> 
+            <button onClick={this.login} type="submit" className="basic-button" id="login-button" >Login</button> <br /> <br /> <br />
               <a id ="create-account" href="/register">Register account</a>
               <a id="login-forgot-pass" href="/forgot_password">Forgot password?</a><br />
           </div>
