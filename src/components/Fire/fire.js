@@ -21,6 +21,12 @@ var config = {
     messagingSenderId: "538016517850"
   };
 
+const fire = firebase.initializeApp(config);
+// Export the database as "fire"
+export default fire;
+
+// These are the previous databases we used.
+
 // Testing DB reference because we almost hit the limit for the last one (LIMIT APPROACHING; DATABASE USABLE)
 /*
 var config = {
@@ -43,6 +49,3 @@ var config = {
   messagingSenderId: "413458791050"
 };
 */
-const fire = firebase.initializeApp(config);
-// Export the database as "fire"
-export default fire;
