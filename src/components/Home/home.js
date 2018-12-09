@@ -158,7 +158,7 @@ export class Home extends React.Component {
     }
 
     if(this.state.loaded) {
-      listings = subList.map(item =>
+      listings = subList.reverse().map(item =>
         (item['Listing_Title'].toLowerCase().includes(search) || item['Listing_Description'].toLowerCase().includes(search)) &&
           <div className="listing" key={item['Listing_ID']}>
             <Listing title={item['Listing_Title']} image={item['Listing_Pic'] ? item['Listing_Pic'][item['Listing_Pic'].length-1] : null} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}

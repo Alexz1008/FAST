@@ -142,7 +142,7 @@ export class MyListings extends React.Component {
     var listings;
     const display = <div className="display-info">You have no {this.state.page} Listings.</div>;
     if (this.state.page === 'Interested' && this.state.loaded === true) {
-      listings = this.state.interested.map(item =>
+      listings = this.state.interested.reverse().map(item =>
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
@@ -151,7 +151,7 @@ export class MyListings extends React.Component {
                 );
     }
     else if (this.state.page === 'Saved' && this.state.loaded === true) {
-      listings = this.state.saved.map(item =>
+      listings = this.state.saved.reverse().map(item =>
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic']} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
@@ -160,7 +160,7 @@ export class MyListings extends React.Component {
                 );
     }
     else if (this.state.page === 'Posted' && this.state.loaded === true) {
-      listings = this.state.posted.map(item =>
+      listings = this.state.posted.reverse().map(item =>
         <div className="listing" key={item['Listing_ID']}>
           <Listing title={item['Listing_Title']} image={item['Listing_Pic'] ? item['Listing_Pic'][item['Listing_Pic'].length-1] : null} price={item['Listing_Price']} desc={item['Listing_Description']} id={item['Listing_ID']} saved={item['Is_Saved']}
                   isMyListing={item['Seller_ID'] === this.state.user.uid} postdate={item['Listing_Post_Date']} sellername={item['Seller_Name']} sellerid={item['Seller_ID']} buyerid={this.state.user.uid}
