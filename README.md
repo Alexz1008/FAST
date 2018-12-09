@@ -6,21 +6,21 @@ We have provided several accounts to test with.  The test cases will prompt when
 
 Timmy Triton
 
-Email:  toh006@ucsd.edu
+  Email:  toh006@ucsd.edu
 
-Password: FAST2018
+  Password: FAST2018
 
 Gary Gillespie:
 
-Email: rhsun@ucsd.edu
+  Email: rhsun@ucsd.edu
 
-Password: FAST2018
+  Password: FAST2018
 
 Alex Triton:
 
-Email:  alz030@ucsd.edu
+  Email:  alz030@ucsd.edu
 
-Password: FAST2018
+  Password: FAST2018
 
 ## Requirements
 This web app is intended to be run on a desktop computer.  It should be run on the latest version of Google Chrome.
