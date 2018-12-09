@@ -128,7 +128,7 @@ export class Messages extends React.Component {
           }
         }
       }
-      fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.join(",").reverse());
+      fire.database().ref().child("Users/" + userID + "/Conversations").set(userConvs.reverse().join(","));
 
       this.setState({conversations: userConvs[0], listings: listings, loaded: true});
     });
