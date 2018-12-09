@@ -39,6 +39,11 @@ export class EditListing extends React.Component {
           }
       })
   }
+
+  componentWillUnmount() {
+    if(fire.database().ref())
+      fire.database().ref().off();
+  }
   componentWillReceiveProps(props) {
     this.loadEditListing(props);
   }
