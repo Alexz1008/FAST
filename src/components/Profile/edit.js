@@ -37,7 +37,6 @@ class Edit extends Component {
         else {
           console.log('no user detected!');
           history.push("/");
-          alert("You must log in!");
         }
       });
     }

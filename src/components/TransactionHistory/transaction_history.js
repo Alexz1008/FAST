@@ -52,7 +52,6 @@ export class TransactionHistory extends React.Component {
         this.firebaseRef = fire.database().ref();
         this.setState({user: null});
         history.push("/");
-        alert("You must log in!");
       }
     });
   }

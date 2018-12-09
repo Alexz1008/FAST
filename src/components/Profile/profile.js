@@ -112,7 +112,6 @@ export class Profile extends React.Component {
       else {
         this.setState({user: null});
         history.push("/");
-        alert("You must log in!");
       }
     });
   }
