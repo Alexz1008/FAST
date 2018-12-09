@@ -49,7 +49,6 @@ export class WriteReview extends React.Component {
     const User_ID = this.state.user.uid;
 
     var Review_ID;
-    var Is_Seller;
     var Transaction_Date;
 
     if(!this.fieldsFilled()){
@@ -63,6 +62,8 @@ export class WriteReview extends React.Component {
       var idExists = snapshot.child("Review/" + next_id).exists();
       const Seller_ID = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val();
       const Buyer_ID = snapshot.child("Listing/" + Listing_ID + "/Buyer_ID").val();
+      var Is_Seller = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID;
+      var Seller = Is_Seller ? "Seller" : "Buyer";
       while(idExists) {
         next_id += 1;
         idExists = snapshot.child("Review/" + next_id).exists();
@@ -71,13 +72,12 @@ export class WriteReview extends React.Component {
       fire.database().ref().child("Constants/Next_Review_ID").set(next_id + 1);
 
       // Check if this review is by the seller or buyer
-      Is_Seller = snapshot.child("Listing/" + Listing_ID + "/Seller_ID").val() === User_ID;
       var Reviewed_User = Is_Seller ? Buyer_ID : Seller_ID;
       Transaction_Date = snapshot.child("Listing/" + Listing_ID + "/Transaction_Date").val();
 
       var Reviewer_Name = snapshot.child("Users/" + User_ID + "/Name").val();
       var Seller_Name = snapshot.child("Users/" + Seller_ID + "/Name").val();
-      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Is_Seller, Transaction_Date, Listing_ID, Reviewer_Name, Seller_Name});
+      fire.database().ref().child("Review/" + next_id).set({Review_Title, Review_Rating, Review_Content, Review_ID, Seller, Transaction_Date, Listing_ID, Reviewer_Name, Seller_Name});
 
       // Add to reviewee's review list
       Is_Seller ? addToUserList(Buyer_ID, next_id, "Reviews") : addToUserList(Seller_ID, next_id, "Reviews");

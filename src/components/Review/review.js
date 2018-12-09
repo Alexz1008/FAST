@@ -12,10 +12,7 @@ export class Review extends React.Component {
         </div>
         <div className="reviews-review-attributes">
           <div className="reviews-review-attribute">
-            Seller: {this.props.sellername}
-          </div>
-          <div className="reviews-review-attribute">
-            Reviewer: {this.props.reviewername}
+            User was: {this.props.seller}
           </div>
           <div className="reviews-review-attribute">
             Date: {this.props.transactiondate}
