@@ -11,7 +11,7 @@ import firebase from 'firebase';
    10GB datacap on the total bandwidth that Firebase has for free accounts.
 */
 
-// Submission DB reference because we want to make sure the limit isn't hit (LIMIT EMPTY; DATABASE OPEN)
+// Submission DB reference because we want to make sure the limit isn't hit (CURRENTLY IN USE, LIMIT NOT HIT; DATABASE OPEN)
 var config = {
     apiKey: "AIzaSyA2yeckyonhkr_AuR4PrPTUEGPoRyrx36Q",
     authDomain: "fast-release.firebaseapp.com",
@@ -27,7 +27,7 @@ export default fire;
 
 // These are the previous databases we used.
 
-// Testing DB reference because we almost hit the limit for the last one (LIMIT APPROACHING; DATABASE USABLE)
+// Testing DB reference because we almost hit the limit for the last one (LIMIT HIT; DATABASE FROZEN)
 /*
 var config = {
     apiKey: "AIzaSyAWQIHQswUxj1U3G_K_ZrctVNEURVw88V0",
