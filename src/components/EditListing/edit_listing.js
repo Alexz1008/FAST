@@ -76,16 +76,15 @@ export class EditListing extends React.Component {
               document.getElementById("listing-price").value = price;
               document.getElementById("listing-content").value = content;
             });
-            unsubscribe();
           }
         });
       }
       else {
         this.setState({user: null});
         history.push("/");
-        unsubscribe();
       }
     });
+    unsubscribe();
   }
 
   handleSaveChanges() {
