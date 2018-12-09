@@ -195,15 +195,11 @@ export class Register extends React.Component {
       <div className="container" id="container">
         <div className="center">
         <form className="register-form">
-
           <div className="content-box" id="reg-content-box">
             <h3 className="basic-title">REGISTER ACCOUNT</h3>
 
             <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" id="email" placeholder="UCSD email" required/> <br />
-
-
             <input value={this.state.password} onChange={this.handleChange} type="password" className="basic-input" name="password" id="password" placeholder="Password" required/> <br />
-
             <input value={this.state.repeat} onChange={this.handleChange} type="password" className="basic-input" name="repass" id="repass" placeholder="Confirm password" required/><br />
 
             <ImageUploader
@@ -215,16 +211,15 @@ export class Register extends React.Component {
               maxFileSize={5242880}
               singleImage={true}
             />
+
             <input className="basic-input" onChange= {e => this.setState({name: e.target.value})} type="text" placeholder="Name" value={this.state.name} required/>
             <br />
-
             <input className="basic-input" onChange= {e => this.setState({tel: e.target.value})} type="text" placeholder="Phone number" value={this.state.tel} required/>
             <br />
-
             <input className="basic-input" onChange= {e => this.setState({zipcode: e.target.value})} type="text" placeholder="ZIP Code" value={this.state.zipcode} required/>
             <br />
-
             <input className="basic-input" onChange= {e => this.setState({city: e.target.value})} type="text" placeholder="City" value={this.state.city} required/> < br/>
+            
             <button onClick={this.register} className="basic-button" type="submit" id="register-button">Register</button>
             <a className= "basic-button-cancel" id="cancel-button" href = "/login">Cancel </a>
           </div>
