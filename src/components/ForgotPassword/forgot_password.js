@@ -49,13 +49,10 @@ export class ForgotPassword extends React.Component {
         <div className="center">
           <form className="forgot-password-form">
           <div className="content-box">
-          
            <img src = {Logo} width = "200" className = "center" title = "Triton Market" alt="Logo"></img>
             <h3 className="basic-title">FORGOT PASSWORD</h3>
 
-
             <input value={this.state.email} onChange={this.handleChange} type="email" className="basic-input" name="email" placeholder="UCSD Email" id="email" required /> <br />
-
             <br />
 
             <button type="submit" onClick={this.forgot} className="basic-button" id="forgot-button">Reset Password</button>
