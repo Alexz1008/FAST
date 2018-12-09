@@ -4,6 +4,8 @@
 
 import firebase from 'firebase';
 
+// The following are three databases we used throughout the project
+
 // Submission DB reference because we want to make sure the limit isn't hit (LIMIT EMPTY; DATABASE OPEN)
 var config = {
     apiKey: "AIzaSyA2yeckyonhkr_AuR4PrPTUEGPoRyrx36Q",
