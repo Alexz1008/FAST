@@ -5,7 +5,6 @@
 import firebase from 'firebase';
 
 // Submission DB reference because we want to make sure the limit isn't hit (LIMIT EMPTY; DATABASE OPEN)
-/*
 var config = {
     apiKey: "AIzaSyA2yeckyonhkr_AuR4PrPTUEGPoRyrx36Q",
     authDomain: "fast-release.firebaseapp.com",
@@ -14,9 +13,9 @@ var config = {
     storageBucket: "fast-release.appspot.com",
     messagingSenderId: "538016517850"
   };
-*/
 
 // Testing DB reference because we almost hit the limit for the last one (LIMIT APPROACHING; DATABASE USABLE)
+/*
 var config = {
     apiKey: "AIzaSyAWQIHQswUxj1U3G_K_ZrctVNEURVw88V0",
     authDomain: "fast-v2-82035.firebaseapp.com",
@@ -24,7 +23,7 @@ var config = {
     projectId: "fast-v2-82035",
     storageBucket: "fast-v2-82035.appspot.com",
     messagingSenderId: "909068737826"
-  };
+  };*/
 
 // Development DB reference in case new one breaks functionality (LIMIT HIT; DATABASE FROZEN)
 /*
