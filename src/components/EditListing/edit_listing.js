@@ -125,10 +125,10 @@ export class EditListing extends React.Component {
                   <h3 id="edit-listing-title" className="basic-title">Edit Listing</h3>
 
                   <label htmlFor="listing-title"><strong>Title:</strong></label> <br />
-                  <input type="text" onChange={this.handleChange} className="basic-input" name="title" id="listing-title" defaultValue="Loading..." required/><br />
+                  <input type="text" onChange={this.handleChange} className="basic-input" name="title" id="listing-title" maxLength="26" defaultValue="Loading..." required/><br />
 
                   <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
-                  <input type="text" onChange={this.handleChange} className="basic-input" name="price" id="listing-price" defaultValue="Loading..."/>
+                  <input type="text" onChange={this.handleChange} className="basic-input" name="price" id="listing-price" maxLength="7" defaultValue="Loading..."/>
                   
                   {this.state.image ? 
                     <img className="listing-img" src ={this.state.image[this.state.image.length-1]} alt="List" /> : null
@@ -144,7 +144,7 @@ export class EditListing extends React.Component {
                   />
 
                   <label htmlFor="listing-content"><strong>Describe your listing:</strong></label> <br />
-                  <textarea onChange={this.handleChange} name="content" id="listing-content" defaultValue="Loading..."/> <br />
+                  <textarea onChange={this.handleChange} name="content" id="listing-content" maxLength="175" defaultValue="Loading..."/> <br />
 
                   <label htmlFor="listing-tag"><strong>Add Tags:</strong></label> <br />
 	          {this.state.loaded && <Tag callbackFunction={this.tagCallback} tags={this.state.tags}/>} <br />

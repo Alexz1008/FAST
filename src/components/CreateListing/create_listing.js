@@ -173,10 +173,10 @@ export class CreateListing extends React.Component{
         <div className="content-box">
           <h3 id="create-listing-title" className="basic-title">CREATE LISTING</h3>
 
-          <input type="text" className="basic-input" placeholder= "Title" maxlength="20" name="title" id="listing-title"
+          <input type="text" className="basic-input" placeholder= "Title" maxlength="26" name="title" id="listing-title"
 	    onChange={this.handleChange} required/> <br />
 
-          <input type="text" className="basic-input" placeholder="Price" name="price" id="listing-price"
+          <input type="text" className="basic-input" placeholder="Price" maxLength="7" name="price" id="listing-price"
 	    onChange={this.handleChange} />
 
           <ImageUploader
