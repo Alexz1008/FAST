@@ -1,39 +1,42 @@
-## Installation
-1. Install NodeJS. Use the labs if you are unsure how to do this.
-1. Create a new folder anywhere, call it anything you want
-2. Navigate to said folder and type: git pull https://github.com/Alexz1008/FAST
-3. Go into the folder that has the "src" folder in it and type:
-4. npm install firebase
-5. npm install expressjs
-6. npm install react-router
-7. npm install react-router-dom
-8. npm install react-images-upload
-8. You should now be able to initialize the webpage with: npm start
+## Introduction
+Online marketplaces are useful for getting rid of unwanted items, such as old textbooks, and getting great deals on products. Unfortunately, there is currently no safe platform protecting students from scams or malicious strangers. We at Team Fast and Sustainable Tritons (FAST) are dedicated to solving this problem with Triton Market, a web application dedicated to providing students at the UCSD the ability to safely and efficiently buy and sell products. Our web application enables students to securely sign up for an account with their UCSD email, browse and engage with listings of items being sold by other members of the UCSD community, and have conversations with other users toward meeting up and completing transactions.
 
-## How to contribute
-0. Before making any changes, be sure to type git pull. This assures that you receive any changes made by the team before you start changing things on your own.
-1. Type git status
-2. Note any files that have changed will be in red. You'll need to add those files and commit them before pushing to our repo.
-3. Type git add filename to add the file to your staged changes.
-4. Then, type git commit -m "Yourname-#: what you did".
-Alternatively, type git commit -a -m "Your-name#: what you did" to automatically add and commit all changed files (this skips part 3).
-5. To push, you should be able to simply type git push origin master.
+## Login Credentials
+We have provided several accounts to test with.  The test cases will prompt when to use each one.  The main testing account will be Timmy Triton, and the other two will be for specific test cases that require more than one user.
 
-## How it works currently
-To be honest, I'm learning at the same time all of you are, so note that most of my explanations for how things work could be flawed or entirely incorrect, but it should be enough to help you have a basic understanding of what's going on. On top of this, note that I have not taken much consideration into the "structuring" that Gary likes so much, so we may need to adjust things as we go.
+Timmy Triton
+Email:  toh006@ucsd.edu
+Password: FAST2018
 
-Index.js is in charge of rendering everything. This means there will be no point where you will actually have to do ReactDOM.render(), as it is already handled. This also means index.js should never actually change. Don't edit this file unless you know what you're doing.
+Gary Gillespie
+rhsun@ucsd.edu
+Password: FAST2018
 
-Components are separated into folders. Some components may just be full pages, like home.js and profile.js, and others may be commonly used parts that can be reused, like listing.js and header.js.
+Alex Triton:
+Email:  alz030@ucsd.edu
+Password: FAST2018
 
-Main.js is responsible for all routing. In other words, Main.js is what handles what component to display when we're at a certain url. This is what you'd need to change if you wanted to add a new page URL in.
+## Requirements
+This web app is intended to be run on a desktop computer.  It should be run on the latest version of Google Chrome.
 
-## Docker
-1. First build the container locally
-	$ docker build -t [tag] .
-2. Login to docker and push it to the repo
-	$ docker login
-	$ docker tag [tag] [docker_username/repository:tag]
-	$ docker push [docker_username/repository:tag]
-3. Now just follow part two of lab7 and upload to aws. Make sure to run below command as stated in the lab.
-	$ docker run -p 443:80 [docker_username/repository:tag]
+## Installation Instructions
+There is no installation required.
+Be sure to download the dependencies folder in the test case file.
+
+## How to Run
+Go to cloudjeremiah.com:3000 in Google Chrome.
+
+## Source Code
+https://github.com/Alexz1008/FAST 
+
+## Known Bugs
+Sometimes, an error occurs saying you cannot edit your own listing after switching accounts.  If this occurs, please close the tab and reopen the app before logging in to the second account.
+
+In the messaging page, the button for “Confirm Transaction” doesn’t appear for the seller until page is reloaded.
+Changing your name through your profile does not change the name displayed on listings you have already created.
+
+If other bugs are found while the app is running, try to wait longer in between button presses, because Firebase can sometimes be slow to respond.  Also, if something does not load, please try refreshing the page.
+
+## Technical Support
+Alexander Zhou - Project Manager, (909) 816-0372
+Evan Okamoto - Software Architect, (310) 707-7130
