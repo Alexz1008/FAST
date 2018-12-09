@@ -39,11 +39,6 @@ export class EditListing extends React.Component {
           }
       })
   }
-
-  componentWillUnmount() {
-    if(fire.database().ref())
-      fire.database().ref().off();
-  }
   componentWillReceiveProps(props) {
     this.loadEditListing(props);
   }
@@ -56,7 +51,7 @@ export class EditListing extends React.Component {
     this.setState({loaded: false});
     var Listing_ID = props.location.search.length >= 4 ? props.location.search.substring(4) : "";
     this.setState({id: Listing_ID})
-    fire.auth().onAuthStateChanged((user) => {
+    var unsubscribe = fire.auth().onAuthStateChanged((user) => {
       if(user) {
 
         // Load in the listing iff it exists and was created by the user
@@ -81,12 +76,14 @@ export class EditListing extends React.Component {
               document.getElementById("listing-price").value = price;
               document.getElementById("listing-content").value = content;
             });
+            unsubscribe();
           }
         });
       }
       else {
         this.setState({user: null});
         history.push("/");
+        unsubscribe();
       }
     });
   }
