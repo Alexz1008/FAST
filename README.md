@@ -5,15 +5,21 @@ Online marketplaces are useful for getting rid of unwanted items, such as old te
 We have provided several accounts to test with.  The test cases will prompt when to use each one.  The main testing account will be Timmy Triton, and the other two will be for specific test cases that require more than one user.
 
 Timmy Triton
+
 Email:  toh006@ucsd.edu
+
 Password: FAST2018
 
-Gary Gillespie
-rhsun@ucsd.edu
+Gary Gillespie:
+
+Email: rhsun@ucsd.edu
+
 Password: FAST2018
 
 Alex Triton:
+
 Email:  alz030@ucsd.edu
+
 Password: FAST2018
 
 ## Requirements
