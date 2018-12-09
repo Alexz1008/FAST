@@ -4,19 +4,19 @@ Online marketplaces are useful for getting rid of unwanted items, such as old te
 ## Login Credentials
 We have provided several accounts to test with.  The test cases will prompt when to use each one.  The main testing account will be Timmy Triton, and the other two will be for specific test cases that require more than one user.
 
-**Timmy Triton:
+**Timmy Triton**:
 
   Email:  toh006@ucsd.edu
 
   Password: FAST2018
 
-**Gary Gillespie:
+**Gary Gillespie**:
 
   Email: rhsun@ucsd.edu
 
   Password: FAST2018
 
-**Alex Triton:
+**Alex Triton**:
 
   Email:  alz030@ucsd.edu
 
@@ -36,7 +36,7 @@ Go to cloudjeremiah.com:3000 in Google Chrome.
 https://github.com/Alexz1008/FAST 
 
 ## Known Bugs
-Sometimes, an error occurs saying you cannot edit your own listing after switching accounts.  **If this occurs, please close the tab and reopen the app before logging in to the second account.
+Sometimes, an error occurs saying you cannot edit your own listing after switching accounts.  **If this occurs, please close the tab and reopen the app before logging in to the second account.**
 
 In the messaging page, the button for “Confirm Transaction” doesn’t appear for the seller until page is reloaded.
 Changing your name through your profile does not change the name displayed on listings you have already created.
