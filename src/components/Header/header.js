@@ -33,7 +33,6 @@ export class Header extends React.Component {
       else {
         this.setState({user: null});
         history.push("/");
-        alert("You must log in!");
         //localStorage.removeItem('user');
       }
     });
@@ -81,7 +80,7 @@ export class Header extends React.Component {
                           <form action='/home' className="navbar-search-form">
                               <input type="text" name="search" className="navbar-search-input"/>
                               <button type="submit" className="navbar-search-button">
-                                <img className="navbar-search-image" 
+                                <img className="navbar-search-image"
                                 src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png"
                                 alt="Search"/>
                               </button>
@@ -103,4 +102,3 @@ export class Header extends React.Component {
 }
 
 export default Header
-

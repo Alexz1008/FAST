@@ -40,14 +40,13 @@ export class CreateListing extends React.Component{
       else {
           this.setState({user: null});
           history.push("/");
-          alert("You must log in!");
           //localStorage.removeItem('user');
       }
     });
   }
 
   createListing(e) {
-    
+
     const Listing_Title = this.state.title;
     const Listing_Pic = this.state.image;
     const Listing_Price = this.state.price;
@@ -76,7 +75,7 @@ export class CreateListing extends React.Component{
     //Ensure that profile picture is added
     if(! this.imageAdded()){
       return;
-    }    
+    }
 
     // Save the new listing to the database after making sure the id doesn't exist yet
     const { history } = this.props;
@@ -134,7 +133,7 @@ export class CreateListing extends React.Component{
     }
     return true;
   }
-  
+
 
   fieldsFilled(){
     const Listing_Title = this.state.title;

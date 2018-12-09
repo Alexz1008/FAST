@@ -21,7 +21,7 @@ export class EditListing extends React.Component {
       tags: ""
     }
   }
-  
+
   componentDidMount(){
       const { history } = this.props;
       fire.auth().onAuthStateChanged((user) => {
@@ -35,7 +35,6 @@ export class EditListing extends React.Component {
           else {
               this.setState({user: null});
               history.push("/");
-              alert("You must log in!");
               //localStorage.removeItem('user');
           }
       })
@@ -46,7 +45,7 @@ export class EditListing extends React.Component {
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value});
   }
-  
+
   loadEditListing(props) {
     const { history } = this.props;
     this.setState({loaded: false});
@@ -54,7 +53,7 @@ export class EditListing extends React.Component {
     this.setState({id: Listing_ID})
     fire.auth().onAuthStateChanged((user) => {
       if(user) {
-        
+
         // Load in the listing iff it exists and was created by the user
         fire.database().ref().once("value", snapshot => {
           if(!(snapshot.child("Listing/" + Listing_ID).exists()) || Listing_ID === "") {
@@ -83,32 +82,31 @@ export class EditListing extends React.Component {
       else {
         this.setState({user: null});
         history.push("/");
-        alert("You must log in!");
       }
     });
   }
-  
+
   handleSaveChanges() {
     var Listing_ID = this.state.id;
     const { history } = this.props;
-    fire.database().ref().child("Listing/" + Listing_ID).update({Listing_Title: this.state.title, Listing_Price: this.state.price, 
+    fire.database().ref().child("Listing/" + Listing_ID).update({Listing_Title: this.state.title, Listing_Price: this.state.price,
 	    	Listing_Description: this.state.content, Listing_Tag: this.state.tags, Listing_Pic: this.state.image}, () => {
-      history.push("/home"); 
+      history.push("/home");
     });
   }
-  
+
   tagCallback = (tagList) => {
     var separator = ",";
     var tags = tagList.join(separator);
     this.setState({tags: tags});
   }
-  
+
   // upload the image
   onDrop(file, picture) {
-    //when there was a image, concat the new one 
+    //when there was a image, concat the new one
     console.log(this.state.image);
     if (this.state.image){
-      this.setState({image: this.state.image.concat(picture)});        
+      this.setState({image: this.state.image.concat(picture)});
     }
     else{
       this.setState({image:picture});
@@ -119,7 +117,7 @@ export class EditListing extends React.Component {
     return (
       <div className="center">
           <Header />
-          {this.state.loaded? 
+          {this.state.loaded?
           <form className="listing-form" autoComplete="off">
               <div className="content-box">
                   <h3 id="edit-listing-title" className="basic-title">Edit Listing</h3>
@@ -129,8 +127,8 @@ export class EditListing extends React.Component {
 
                   <label htmlFor="listing-price"><strong>Price:</strong></label> <br />
                   <input type="text" onChange={this.handleChange} className="basic-input" name="price" id="listing-price" maxLength="7" defaultValue="Loading..."/>
-                  
-                  {this.state.image ? 
+
+                  {this.state.image ?
                     <img className="listing-img" src ={this.state.image[this.state.image.length-1]} alt="List" /> : null
                   }
                   <ImageUploader

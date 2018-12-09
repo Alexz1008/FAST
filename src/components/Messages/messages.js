@@ -115,7 +115,7 @@ export class Messages extends React.Component {
               listing['Buyer_Name'] = (snapshot.child("Users/" + Buyer_ID + "/Name").val());
               listings.push(listing);
 
-              
+
               this.updateButton(listing);
               this.setState({currID: userConvs[0], activeListing: listing}, () => {
                 this.getMessages();
@@ -147,7 +147,7 @@ export class Messages extends React.Component {
       this.getConversations();
     });
   }
-  
+
   componentWillUnmount() {
     fire.database().ref().off();
   }
@@ -163,7 +163,6 @@ export class Messages extends React.Component {
       else {
         this.setState({user: null});
           history.push("/");
-          alert("You must log in!");
       }
     });
   }
