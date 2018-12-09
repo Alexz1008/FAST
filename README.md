@@ -39,4 +39,5 @@ If other bugs are found while the app is running, try to wait longer in between 
 
 ## Technical Support
 Alexander Zhou - Project Manager, (909) 816-0372
+
 Evan Okamoto - Software Architect, (310) 707-7130
