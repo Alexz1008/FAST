@@ -41,10 +41,11 @@ export class EditReview extends React.Component {
           var title = snapshot.child("Review/" + Review_ID + "/Review_Title").val();
           var rating = snapshot.child("Review/" + Review_ID + "/Review_Rating").val();
           var review = snapshot.child("Review/" + Review_ID + "/Review_Content").val();
-          this.setState({listingID: listing_id, loaded: true, Is_Seller, Review_ID, oldSum, oldRating, Reviewed_User, title, rating, review, totalReviews});
-          document.getElementById("review-title").value = title;
-          document.getElementById("review-rating").value = rating;
-          document.getElementById("review-content").value = review;
+          this.setState({listingID: listing_id, loaded: true, Is_Seller, Review_ID, oldSum, oldRating, Reviewed_User, title, rating, review, totalReviews}, () => {
+          	document.getElementById("review-title").value = title;
+          	document.getElementById("review-rating").value = rating;
+          	document.getElementById("review-content").value = review;
+	  });
         });
       }
       else {
