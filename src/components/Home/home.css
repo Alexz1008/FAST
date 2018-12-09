@@ -18,11 +18,13 @@
    position: absolute;
    top: 50%;
    left: 30%;
+  font-size: 20px;
+  font-weight: 300;
 }
 .loading-circle{
    display: flex;
    justify-content: center;
    position: absolute;
-   top: 50%;
-   left: 50%;
+  top: 50%;
+   left: 20%;
 }
