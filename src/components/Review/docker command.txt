@@ -1,2 +1,0 @@
-docker build -t triton-market .
-docker run -p 3000:80 triton-market
